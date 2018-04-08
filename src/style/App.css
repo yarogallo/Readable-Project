@@ -1,7 +1,12 @@
 body {
   font-family: 'Roboto Condensed', sans-serif;
+  background-color: #D5D5D5;
   width: 100%;
   height: 100%;;
+}
+
+button {
+  outline: none;
 }
 
 .container {
@@ -15,4 +20,19 @@ body {
   text-transform: uppercase;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.readable-controls{
+  background-color: #6D7993; 
+}
+
+.readable-dropdown button {
+  background-color: transparent;
+  outline: transparent;
+  color: #ffffff;
+}
+
+.add-button {
+  background-color: transparent;
+  color: #ffffff;
 }
