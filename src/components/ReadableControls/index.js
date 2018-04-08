@@ -7,7 +7,9 @@ function ReadableControls(props) {
 		className,
 		onAddPost,
 	} = props;
+	
 	const customClass = `readable-controls row ${className}`;
+	
 	return (
 		<section className={customClass}>
 			<div className="col-6">

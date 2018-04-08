@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import ReadableHeader from './ReadableHeader';
-import ReadableControls from './ReadableControls'; 
+import ReadableControls from './ReadableControls';
+import ReadablePosts from './ReadablePosts';
 import '../style/App.css';
 
 class App extends Component {
@@ -10,6 +11,7 @@ class App extends Component {
       <section className="container">
         <ReadableHeader title="readable"/>
         <ReadableControls/>
+        <ReadablePosts/>
       </section>
     );
   }

@@ -9,6 +9,7 @@ function DropDown(props) {
 	} = props;
 	
 	const customClass = `readable-dropdown btn-group ${className}`;
+	
 	return (
 		<div className={customClass}>
   			<button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -1,6 +1,5 @@
 body {
   font-family: 'Roboto Condensed', sans-serif;
-  background-color: #D5D5D5;
   width: 100%;
   height: 100%;;
 }
@@ -18,12 +17,14 @@ button {
   color: #ffffff;
   text-align: center;
   text-transform: uppercase;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .readable-controls{
   background-color: #6D7993; 
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .readable-dropdown button {
@@ -35,4 +36,36 @@ button {
 .add-button {
   background-color: transparent;
   color: #ffffff;
+}
+
+.posts-list {
+  padding: 15px;
+}
+
+.posts-list header{
+  padding: 20px;
+}
+
+.post-info a {
+  color: #6D7993;
+}
+
+.nro-comments {
+  font-size: 15px;
+  color:  #96858F;
+  margin-right: 20px;
+}
+
+.score {
+  color: #6D7993;
+}
+
+.score button {
+   background-color: transparent;
+   border: 0;
+   outline: transparent;
+}
+
+.score button:hover {
+  cursor: pointer;
 }
