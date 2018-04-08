@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+
+import ReadableHeader from './ReadableHeader';
 import '../style/App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        
-      </div>
+      <section className="container">
+        <ReadableHeader title="readable"/>
+      </section>
     );
   }
 }
