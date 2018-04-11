@@ -5,18 +5,15 @@ import ScoreMenu from '../ScoreMenu';
 
 function ThumbnailPostList(props) {
 	const {
-		className,
 		visiblePostList = [1,2,3],
 		onSelectPost	
 	} = props;
 	
-	const composeClass = `col-12 col-sm-10 ${className}`;
-	
 	return (
-		<div className={composeClass} role="group">
+		<div className="col-12 col-sm-10" role="group">
 			<ul className="list-group list-group-flush">
 				{ visiblePostList.map( post => (
-					<li className="list-group-item" key={post}>
+					<li className="list-group-item post-thumbnail" key={post}>
 						<a href="#"><h5>Cras justo odio</h5></a>					
 						<ScoreMenu/>
 						<small>comments: 5</small>						
@@ -27,9 +24,7 @@ function ThumbnailPostList(props) {
 	);
 }
 
-ThumbnailPostList.protoTypes = {
-	//css class
-	className: PropTypes.string,
+ThumbnailPostList.propTypes = {
 	//all visible posts
 	visiblePostList: PropTypes.array,
 	//call on select post

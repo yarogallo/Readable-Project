@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 function ScoreMenu(props) {
 	const {
 		className,
-		scoreValue = "5",
-		
+		scoreValue = "5",		
 	} = props;
 	
 	const composeClass = `score-menu ${className}`;
@@ -18,7 +17,7 @@ function ScoreMenu(props) {
 	);
 }
 
-ScoreMenu.protoTypes = {
+ScoreMenu.propTypes = {
 	// css class
 	className: PropTypes.string,
 }
