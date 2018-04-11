@@ -8,64 +8,42 @@ button {
   outline: none;
 }
 
-.container {
+.container-fluid{
+  max-width: 1600px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.readable-header {
-  background-color: #96858F;
-  color: #ffffff;
-  text-align: center;
-  text-transform: uppercase;
-  padding-top: 20px;
-  padding-bottom: 20px;
+.home-page-header {
+  padding: 20px 10px;
+  background-color: #4ABDAC;
 }
 
-.readable-controls{
-  background-color: #6D7993; 
-  padding-top: 20px;
-  padding-bottom: 20px;
+.home-page-header a {
+  background-color: #FC4A1A;
+  padding: 16px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
-.readable-dropdown button {
-  background-color: transparent;
-  outline: transparent;
-  color: #ffffff;
+.sort-menu {
+  padding: 10px 0;
 }
 
-.add-button {
-  background-color: transparent;
-  color: #ffffff;
-}
-
-.posts-list {
-  padding: 15px;
-}
-
-.posts-list header{
-  padding: 20px;
-}
-
-.post-info a {
-  color: #6D7993;
-}
-
-.nro-comments {
-  font-size: 15px;
-  color:  #96858F;
+.score-menu {
   margin-right: 20px;
 }
 
-.score {
-  color: #6D7993;
+.score-menu button {
+  background-color: transparent;
+  border: none;
+  outline: transparent;
 }
 
-.score button {
-   background-color: transparent;
-   border: 0;
-   outline: transparent;
-}
-
-.score button:hover {
+.score-menu button:hover {
   cursor: pointer;
+}
+
+
+@media (min-width: 768px) {
+    
 }
