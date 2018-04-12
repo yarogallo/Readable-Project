@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import HomePage from './HomePage';
 import CategoryView from './CategoryView';
@@ -10,10 +11,23 @@ class App extends Component {
   render() {
     return (
       <section className="app">
-        <HomePage/>
-        <CategoryView/>
-        <PostDetailView/>
-        <AddPostView/>
+      
+        <Route exact path="/" render={() => (
+          <HomePage/>
+        )}/>
+        
+        <Route path="/CategoryView/"render={() => (
+          <CategoryView/>
+        )}/>
+    
+        <Route exact path="/PostDetailView/" render={() => (
+          <PostDetailView/>
+        )}/>
+          
+        <Route exact path="/AddPostView/" render={() => (
+          <AddPostView/>
+        )}/>
+
       </section>
     );
   }

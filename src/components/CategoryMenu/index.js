@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 function CategoryMenu(props) {
 	const {
@@ -8,10 +9,10 @@ function CategoryMenu(props) {
 	
 	return(
 		<nav className="col-12 col-sm-2 nav flex-column">
-			<a className="nav-link text-center disabled" href="#catMenu">Categories:</a>
+			<a className="nav-link text-center disabled text-uppercase" href="#catMenu">Categories:</a>
 			<div id="catMenu">
 				{ categories.map( categ => (
-					<a className="nav-link active text-center" key={categ} href="../CategoryMenu">{categ}</a>
+					<Link className="nav-link active text-center" key={categ} to="/CategoryView">{categ}</Link>
 				))}
 			</div>
 		</nav>		

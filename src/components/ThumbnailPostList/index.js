@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import ScoreMenu from '../ScoreMenu';
 
@@ -14,7 +15,7 @@ function ThumbnailPostList(props) {
 			<ul className="list-group list-group-flush">
 				{ visiblePostList.map( post => (
 					<li className="list-group-item post-thumbnail" key={post}>
-						<a href="#"><h5>Cras justo odio</h5></a>					
+						<Link to="/PostDetailView"><h5>Cras justo odio</h5></Link>					
 						<ScoreMenu/>
 						<small>comments: 5</small>						
 					</li>
@@ -27,8 +28,6 @@ function ThumbnailPostList(props) {
 ThumbnailPostList.propTypes = {
 	//all visible posts
 	visiblePostList: PropTypes.array,
-	//call on select post
-	onSelectPost: PropTypes.func,	
 }
 
 export default ThumbnailPostList;

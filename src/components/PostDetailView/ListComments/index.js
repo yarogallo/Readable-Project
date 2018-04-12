@@ -1,75 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 
 import Comment from './Comment';
 
-const customStyles = {
-	content : {
-	  top : '50%',
-	  left: '50%',
-	  right: 'auto',
-	  bottom : 'auto',
-	  marginRight: '-50%',
-	  transform : 'translate(-50%, -50%)'
-	}
-};
 
-Modal.setAppElement('#root');
-
-class ListComments extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			modalIsOpen: false,
-		};
-		
-		this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
-	}
-	
-	openModal() {
-		this.setState({
-			modalIsOpen: true
-		});
-	}
-	
-	closeModal() {
-		this.setState({
-			modalIsOpen: false
-		});
-	}
-	
-	render() {
-		const {comments=[1, 5, 6, 8, 6]} = this.props;
-		return(
-			<div className="col-12 col-md-8 text-right">
-				<button type="button" className="btn btn-primary" onClick={() => {
-					this.openModal();
-				}}>Add Comment</button>
-				
-				<Modal
-					isOpen={this.state.modalIsOpen}
-					style={customStyles}
-					contentLabel="add comments"
-				>
-					<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {
-						this.closeModal();
-					}}>
-          				<span aria-hidden="true">&times;</span>
-       				</button>
-					<form>
-  						<div className="form-group">
-   						 	<label htmlFor="input-author">name</label>
-    						<input type="text" className="form-control" id="input-author" placeholder="author name"/>					
-  						</div>
-  						<div className="form-group">
-    						<label htmlFor="input-comment">Comment</label>
-    						<textarea type="text" className="form-control" id="input-comment" placeholder="comment..."></textarea>
-  						</div>
-  						<button type="submit" className="btn btn-primary">Submit</button>
-					</form>
-				</Modal>
+function ListComments(props) {
+	const {comments} = props;
+	return(
+		<div className="col-12 col-md-8 text-right">
+			<div>
 				<ul className="list-group">
 					<Comment/>
 					<Comment/>
@@ -77,8 +16,26 @@ class ListComments extends Component {
 					<Comment/>
 				</ul>
 			</div>
-		);
-	}
+			<div>
+				<a className="btn btn-link text-info text-uppercase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					add comment
+				</a>
+				<div className="collapse" id="collapseExample">
+					<form>
+						<div className="form-group">
+							<label className="float-left" htmlFor="input-author">author</label>
+							<input type="text" className="form-control" id="input-author" placeholder="author name"/>					
+						</div>
+						<div className="form-group">
+							<label className="float-left" htmlFor="input-comment">Comment</label>
+							<textarea type="text" className="form-control" id="input-comment" placeholder="comment..."></textarea>
+						</div>
+						<button type="submit" className="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 ListComments.propTypes = {

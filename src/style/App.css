@@ -5,31 +5,26 @@ body {
 }
 
 button {
-  outline: none;
+  outline: transparent;
 }
 
 .container-fluid{
   max-width: 1600px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 header {
   padding: 20px 10px;
-  background-color: #4ABDAC;
 }
 
-section {
-  padding: 20px 0;
+.container-fluid section {
+  padding: 10px 0;
 }
 
 header .navbar-brand {
   padding: 16px;
   border-radius: 50%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-}
-
-.home-page-header .navbar-brand {
-  background-color: #FC4A1A;
 }
 
 .sort-menu {
@@ -43,7 +38,6 @@ header .navbar-brand {
 .score-menu button {
   background-color: transparent;
   border: none;
-  outline: transparent;
 }
 
 .score-menu button:hover {
@@ -55,10 +49,6 @@ header .navbar-brand {
 }
 .post-thumbnail{
   padding-bottom: 30px;
-}
-.post-detail-header .navbar-brand,
-.category-page-header .navbar-brand{
-  background-color: #DFDCE3;
 }
 
 ul.list-group {

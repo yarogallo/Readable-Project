@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 
 function ScoreMenu(props) {
 	const {
-		className,
-		scoreValue = "5",		
+		scoreValue = 5,		
 	} = props;
 	
-	const composeClass = `score-menu ${className}`;
 	return (
-		<span className={composeClass}>
+		<span className="score-menu">
 			<button><img src="icons/thumbs-up.svg" alt="increment score"/></button>
 			<small>{scoreValue}</small>
 			<button><img src="icons/thumbs-down.svg" alt="decrement score"/></button>
@@ -18,8 +16,7 @@ function ScoreMenu(props) {
 }
 
 ScoreMenu.propTypes = {
-	// css class
-	className: PropTypes.string,
+	scoreValue: PropTypes.number,
 }
 
 

@@ -11,14 +11,15 @@ function Comment(props) {
 	return (
 		<li className="list-group-item d-flex flex-column flex-sm-row justify-content-between">
 			<div className="border-top-0 text-left">							
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <b className="text-capitalize">by: yanita</b> </p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>
+				<b><u className="text-capitalize text-info">by: yanita</u></b></p>
 				<ScoreMenu/>							
 			</div>
 			<div className="btn-group d-flex flex-sm-column" role="group">
-				<a className="btn" href="#"><img src="icons/edit.svg" alt="edit icon"/></a>
-				<a className="btn" onClick={(evt) => {
-					evt.preventDefault();
-					this.openModal();
+				<a className="btn" href="#"><img src="icons/edit.svg" alt="edit comment icon"/></a>
+				
+				<a className="btn" href="#" onClick={() => {	
+					window.confirm('Shure you want delete this comment???');
 				}}><img src="icons/remove.svg" alt="delete comment icon"/></a>
 			</div>
 		</li>
