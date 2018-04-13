@@ -5,15 +5,17 @@ import Comment from './Comment';
 
 
 function ListComments(props) {
-	const {comments} = props;
-	return(
+	const {
+		listComments
+	} = props;
+	
+	return (
 		<div className="col-12 col-md-8 text-right">
 			<div>
 				<ul className="list-group">
-					<Comment/>
-					<Comment/>
-					<Comment/>
-					<Comment/>
+					{listComments.map( comment => (
+						<Comment key={comment.id} comment={comment}/>
+					))}
 				</ul>
 			</div>
 			<div>
@@ -40,7 +42,15 @@ function ListComments(props) {
 
 ListComments.propTypes = {
 	//all comments from specific post
-	comments: PropTypes.array
-}
+	listComments: PropTypes.array,
+};
+
+ListComments.defaultProps = {
+	listComments: [{
+		body: "esto es pa probar lmkljhgjhkftygfgcr mjkhbufjyt  terscydurtyf  ytuiyguyghiuh ty ftudtrdrt yitrvftyrvuytr uyguyviyg",
+		author: "me",
+		voteScore: 10,
+	}],
+};
 
 export default ListComments;

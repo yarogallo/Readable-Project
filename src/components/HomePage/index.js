@@ -33,7 +33,11 @@ function HomePage(props) {
 
 HomePage.propTypes = {
 	//posts to display
-	visiblePostList: PropTypes.array
-}
+	visiblePostList: PropTypes.array,
+};
+
+HomePage.defaultProps = {
+	visiblePostList: [],
+};
 
 export default HomePage;

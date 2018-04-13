@@ -1,52 +1,141 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import logo from './left-arrow.svg';
 
-function AddPostView(props) {
+function input(id, label, placeholder, value, onChangeValue) {
 	return (
-		<section className="container-fluid">
-			<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-success">
-				<nav className="col-12 col-sm-2 col-lg-1 navbar">
-					<Link to="/" className="navbar-brand bg-light"><img src="icons/left-arrow.svg" alt="back home page"/></Link>
-				</nav>	
-				<h2 className="col-12 col-sm text-sm-center text-uppercase">Add Post</h2>			
-			</header>
-			<section className="row d-flex justify-content-around bg-light text-capitalize">
-				<form className="col-12 col-md-10 col-lg-8">
-					<div className="form-group">
-						<label htmlFor="post-title">title</label>
-						<input type="text" className="form-control" id="post-title" placeholder="Ex: Learning react from cero"/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="post-author">author</label>
-						<input type="text" className="form-control" id="post-author" placeholder="Ex: Jonh Doe"/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="post-body">Content</label>
-						<textarea type="text" className="form-control" id="post-body" placeholder="Post content...."></textarea>
-					</div>
-					<div className="form-group">
-						<label htmlFor="category-selector">Select category</label>
-						<select className="form-control" id="category-selector">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</div>	
-					<button type="submit" className="btn bg-success">Submit</button>
-				</form>
-			</section>
-		</section>
+		<div className="form-group">
+			<label htmlFor={id}>{label}</label>
+			<input 
+				type="text" 
+				className="form-control" 
+				placeholder={placeholder}
+				id={id} 
+				value={value}
+				onChange={ evt => {
+					onChangeValue(evt.target.value);
+				}}/>
+		</div>
 	);
+}
+
+function textarea(id, label, placeholder, value, onChangeValue) {
+	return (
+		<div className="form-group">
+			<label htmlFor={id}>{label}</label>
+			<textarea 
+				type="text" 
+				className="form-control"
+				rows="3"
+				placeholder={placeholder}
+				id={id} 
+				value={value}
+				onChange={(evt) => {
+					onChangeValue(evt.target.value);
+				}}></textarea>
+		</div>
+	);
+}
+
+function select(id, label, postCategories, selectedCategory) {
+	return (
+		<div className="form-group">
+			<label htmlFor={id}>{label}</label>
+			<select className="form-control" id={id} defaultValue={selectedCategory}>
+				{ postCategories.map( category => (
+					<option key={category}>{category}</option>
+				))}
+			</select>
+		</div>	
+	);
+}
+
+class AddPostView extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			titleValue: this.props.postToEdit.title || "",
+			authorValue: this.props.postToEdit.author || "",
+			bodyValue: this.props.postToEdit.body || ""
+		}
+		this.onChangeTitle = this.onChangeTitle.bind(this);
+		this.onChangeAuthor = this.onChangeAuthor.bind(this);
+		this.onChangeBody = this.onChangeBody.bind(this);
+	}
+	
+	onChangeTitle( titleValue ) {
+		this.setState({
+			titleValue,
+		});
+	}
+	
+	onChangeAuthor(authorValue) {
+		this.setState({
+			authorValue,
+		});
+	}
+	
+	onChangeBody(bodyValue) {
+		this.setState({
+			bodyValue
+		});	
+	}
+	
+	render() {
+		const {
+			postCategories,
+			postToEdit 
+		} = this.props;
+		
+		const { 
+			titleValue,
+			authorValue,
+			bodyValue
+		} = this.state
+		
+		return (
+			<section className="container-fluid">
+				<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-success">
+					<nav className="col-12 col-sm-2 col-lg-1 navbar">
+						<Link to="/" className="navbar-brand bg-light"><img src={logo} alt="back homepage icon"/></Link>
+					</nav>	
+					<h2 className="col-12 col-sm text-sm-center text-uppercase">Add/Edit Post</h2>			
+				</header>
+				
+				<section className="row d-flex justify-content-around bg-light text-capitalize">			
+					<form className="col-12 col-md-10 col-lg-8">			
+						{ input("post-title", "title", "Ex: Learning react from cero", titleValue, this.onChangeTitle) }
+						{ textarea("post-body", "content", "content....", bodyValue, this.onChangeBody) }
+						{ !postToEdit.id && input("post-author", "author", "Ex: Jonh Doe", authorValue, this.onChangeAuthor)}
+						{ select("post-categories", "categories", postCategories, postToEdit.category) }
+						{postToEdit.id ? 
+							(<button type="submit" datatype="edit" className="btn bg-success">Save</button>) : 
+							(<button type="submit"datatype="add" className="btn bg-success">Submit</button>)
+						}
+					</form>
+				</section>
+			</section>
+		);
+	}
 }
 
 AddPostView.propTypes = {
 	//if there is a post to edited
 	postToEdit: PropTypes.object,
 	//list of categories for select
-	categories: PropTypes.array,
+	postCategories: PropTypes.array.isRequired,
+	//edit post
+	onEditPost: PropTypes.func,
+	//add new post
+	onAddPost: PropTypes.func,	
+}
+
+AddPostView.defaultProps = {
+	postToEdit: {},
+	postCategories: [],
+	onEditPost: () => {},
+	onAddPost: () => {},
 }
 
 export default AddPostView;

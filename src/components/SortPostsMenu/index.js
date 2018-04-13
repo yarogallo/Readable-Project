@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 
 function SortPostsMenu(props) {
 	const {
-		sortValues=['newest', 'oldest', 'score'],
+		sortValues,
+		onSelectedPost
 	} = props;
-	
-	
+		
 	return (
-		// <div className="col-12 sort-menu d-flex flex-column flex-sm-row justify-content-center btn-group" role="group">
-		// 	<button type="button" className="btn btn-light" disabled>Sort By: </button>
-		// 	{ sortValues.map( value => (
-		// 		<button type="button" key={value} className="btn btn-light">{value}</button>
-		// 	)) }
-		// </div>
 		<div className="col-12 sort-menu d-flex flex-column flex-sm-row justify-content-end btn-group" role="group">
 			<ul className="nav" id="sort-list">
 				<li className="nav-item">
@@ -31,7 +25,14 @@ function SortPostsMenu(props) {
 
 SortPostsMenu.propTypes = {
 	//sort list criterias
-	sortValues: PropTypes.array
-}
+	sortValues: PropTypes.array.isRequired,
+	//action to be executed when a sort is selected
+	onSelectSort: PropTypes.func
+};
+
+SortPostsMenu.defaultProps = {
+	sortValues: [],
+	onSelectSort: () => {}, 
+};
 
 export default SortPostsMenu;
