@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import logo from './left-arrow.svg';
+import backIcon from './icons/left-arrow.svg';
 
 function input(id, label, placeholder, value, onChangeValue) {
 	return (
@@ -98,7 +98,7 @@ class AddPostView extends Component {
 			<section className="container-fluid">
 				<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-success">
 					<nav className="col-12 col-sm-2 col-lg-1 navbar">
-						<Link to="/" className="navbar-brand bg-light"><img src={logo} alt="back homepage icon"/></Link>
+						<Link to="/" className="navbar-brand bg-light"><img src={backIcon} alt="back homepage icon"/></Link>
 					</nav>	
 					<h2 className="col-12 col-sm text-sm-center text-uppercase">Add/Edit Post</h2>			
 				</header>

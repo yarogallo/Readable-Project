@@ -13,7 +13,7 @@ function CategoryMenu(props) {
 			<a className="nav-link text-center disabled text-uppercase" href="#catMenu">Categories:</a>
 			<div id="catMenu">
 				{ postCategories.map( category => (
-					<Link className="nav-link active text-center" key={category} to="/CategoryView">{category}</Link>
+					<Link className="nav-link active text-center" key={category} to="/categories">{category}</Link>
 				))}
 			</div>
 		</nav>		

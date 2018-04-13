@@ -17,7 +17,7 @@ function HomePage(props) {
 			<header className="row flex-column flex-sm-row d-flex align-items-baseline home-page-header text-uppercase text-white bg-primary">
 				<h1 className="col-12 col-sm">Readable App</h1>
 				<nav className="col-12 col-sm-2 col-lg-1 navbar">
-					<Link to="/AddPostView/" className="navbar-brand text-uppercase text-white bg-success">add</Link>
+					<Link to="/add-post" className="navbar-brand text-uppercase text-white bg-success">add</Link>
 				</nav>				
 			</header>
 			<section className="row bg-light">
@@ -34,6 +34,7 @@ function HomePage(props) {
 HomePage.propTypes = {
 	//posts to display
 	visiblePostList: PropTypes.array,
+	test: PropTypes.func
 };
 
 HomePage.defaultProps = {

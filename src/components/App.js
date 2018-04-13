@@ -16,15 +16,15 @@ class App extends Component {
           <HomePage/>
         )}/>
         
-        <Route path="/CategoryView/"render={() => (
+        <Route path="/categories"render={() => (
           <CategoryView/>
         )}/>
     
-        <Route exact path="/PostDetailView/" render={() => (
+        <Route exact path="/post-details" render={() => (
           <PostDetailView/>
         )}/>
           
-        <Route exact path="/AddPostView/" render={() => (
+        <Route exact path="/add-post" render={() => (
           <AddPostView/>
         )}/>
 

@@ -6,7 +6,7 @@ import ScoreMenu from '../ScoreMenu';
 
 function ThumbnailPostList(props) {
 	const {
-		visiblePostList = [1,2,3],
+		visiblePostList,
 		onSelectPost,
 		onVote,
 	} = props;
@@ -16,7 +16,7 @@ function ThumbnailPostList(props) {
 			<ul className="list-group list-group-flush">
 				{ visiblePostList.map( post => (
 					<li className="list-group-item post-thumbnail" key={post}>
-						<Link to="/PostDetailView"><h5>this is the post title</h5></Link>					
+						<Link to="/post-details"><h5>this is the post title</h5></Link>					
 						<ScoreMenu/>
 						<small className="text-info">comments: 5</small>						
 					</li>
@@ -32,7 +32,13 @@ ThumbnailPostList.propTypes = {
 	//action to be executed when post is selected
 	onSelectPost: PropTypes.func,
 	//action on vote
-	onVote: PropTypes.func,
-}
+	onVotePost: PropTypes.func,
+};
+
+ThumbnailPostList.defaultProps = {
+	visiblePostList: [],
+	onSelectPost: () => {},
+	onVotePost: () => {},
+};
 
 export default ThumbnailPostList;
