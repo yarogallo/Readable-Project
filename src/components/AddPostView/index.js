@@ -126,7 +126,7 @@ AddPostView.propTypes = {
 	//list of categories for select
 	postCategories: PropTypes.array.isRequired,
 	//edit post
-	onEditPost: PropTypes.func,
+	onSavePost: PropTypes.func,
 	//add new post
 	onAddPost: PropTypes.func,	
 }
@@ -134,7 +134,7 @@ AddPostView.propTypes = {
 AddPostView.defaultProps = {
 	postToEdit: {},
 	postCategories: [],
-	onEditPost: () => {},
+	onSavePost: () => {},
 	onAddPost: () => {},
 }
 

@@ -46,11 +46,7 @@ ListComments.propTypes = {
 };
 
 ListComments.defaultProps = {
-	listComments: [{
-		body: "esto es pa probar lmkljhgjhkftygfgcr mjkhbufjyt  terscydurtyf  ytuiyguyghiuh ty ftudtrdrt yitrvftyrvuytr uyguyviyg",
-		author: "me",
-		voteScore: 10,
-	}],
+	listComments: [],
 };
 
 export default ListComments;
