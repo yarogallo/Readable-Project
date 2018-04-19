@@ -1,40 +1,22 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import remove from './icons/remove.svg';
-import edit from './icons/edit.svg';
+import {connect} from 'react-redux';
+
+import {
+	deleteComment,
+	editComment,
+} from '../../../../actions';
+import removeIcon from './icons/remove.svg';
+import editIcon from './icons/edit.svg';
 
 import ScoreMenu from '../../../ScoreMenu';
-
-function editForm(value, editComment, onChangeValue) {
-	return (
-		<form id="edit-comment-form">
-			<button className="btn btn-link float-right text-info" type="submit">save</button>
-			<textarea disabled={editComment} 
-				className="form-control" 
-				value={value}
-				onChange={evt => {
-					onChangeValue(evt.target.value);
-				}}></textarea>
-			
-		</form>
-	);
-}
-
-function commentForm(body, author) {
-	return (
-		<div>
-			<i>{`By: ${author}`}</i>
-			<p className="text-muted">{body}</p>
-		</div>
-	);
-}
 
 class Comment extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			editComment: true,
-			commentBody: this.props.comment.body	
+			editComment: false,
+			value: this.props.comment.body	
 		};
 		this.onChangeValue= this.onChangeValue.bind(this);
 	}
@@ -47,10 +29,46 @@ class Comment extends Component {
 		});
 	}
 	
+	closeEditHandler() {
+		this.setState(prevState => {
+			return {
+				editComment: false
+			};
+		});
+	}
+	
 	onChangeValue(value) {
 		this.setState({
-			commentBody: value,
+			value,
 		});
+	}
+	
+	editForm() {
+		return (
+			<form id="edit-comment-form" onSubmit={evt => {
+				evt.preventDefault();
+				this.state.value !== this.props.comment.body && this.props.onEditComment(this.props.comment.id, this.state.value);
+				this.closeEditHandler();
+			}}>
+				<button className="btn btn-link float-right text-info" type="submit">save</button>
+				<textarea
+					className="form-control" 
+					value={this.state.value}
+					onChange={evt => {
+						this.onChangeValue(evt.target.value);
+					}}></textarea>
+				
+			</form>
+		);
+	}
+	
+	commentForm() {
+		return (
+			<div>
+				<i>{`By: ${this.props.comment.author}`}</i>
+				<p className="text-muted">{this.props.comment.body}</p>
+			</div>
+		);
 	}
 	
 	render() {
@@ -61,28 +79,25 @@ class Comment extends Component {
 			onDeleteComment,		
 		} = this.props;
 		
-		const {
-			editComment,
-			commentBody,
-		} = this.state;
-		
 		return (
 			<li className="list-group-item d-flex flex-column flex-sm-row justify-content-between row">
 				<div className="text-left col-12 col-sm-10">							
-					{editComment? 
-						commentForm(comment.body, comment.author): 
-						editForm(commentBody, editComment, this.onChangeValue)}
+					{!this.state.editComment? 
+						this.commentForm(): 
+						this.editForm()}
 					<ScoreMenu scoreValue={comment.voteScore}/>							
 				</div>
 				<div className="btn-group d-flex flex-row-reverse flex-sm-column" role="group">
 					<a className="btn" href="#edit-comment-form" onClick={() => {
 						this.toggleEditHandler();}}>
-						<img src={edit} alt="edit comment icon"/>
+						<img src={editIcon} alt="edit comment icon"/>
 					</a>
 					
 					<a className="btn" href="#" onClick={() => {	
-						window.confirm('Shure you want delete this comment???');}}>
-						<img src={remove} alt="delete comment icon"/>
+							const confirmDelete = window.confirm('Shure you want delete this comment???');
+							confirmDelete && onDeleteComment(comment.id);
+						}}>
+						<img src={removeIcon} alt="delete comment icon"/>
 					</a>
 				</div>
 			</li>
@@ -108,4 +123,11 @@ Comment.defaultProps = {
 	onDeleteComment: () => {},
 };
 
-export default Comment;
+function dispatchStateToProps(dispatch) {
+	return {
+		onEditComment: (id, body) => dispatch(editComment(id, body)),
+		onDeleteComment: commentId => dispatch(deleteComment(commentId))	
+	};
+}
+
+export default connect(null, dispatchStateToProps)(Comment);

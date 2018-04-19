@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import SortPostsMenu from '../SortPostsMenu';
 import ThumbnailPostList from '../ThumbnailPostList';
@@ -11,7 +12,6 @@ function HomePage(props) {
 	const {
 		visiblePostList
 	} = props;
-	
 	return (
 		<section className="container-fluid">
 			<header className="row flex-column flex-sm-row d-flex align-items-baseline home-page-header text-uppercase text-white bg-primary">
@@ -29,6 +29,7 @@ function HomePage(props) {
 			</section>	
 		</section>
 	);
+
 }
 
 HomePage.propTypes = {
@@ -40,4 +41,16 @@ HomePage.defaultProps = {
 	visiblePostList: [],
 };
 
-export default HomePage;
+function mapStateToProps(state) {
+	if(!state.posts.idsArr){
+		return {
+			visiblePostList: []
+		};
+	}
+	const {idsArr, byId} = state.posts;
+	return {
+		visiblePostList: idsArr.map(id => byId[id])
+	};
+}
+
+export default connect(mapStateToProps)(HomePage);

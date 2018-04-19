@@ -57,13 +57,12 @@ export const getCategoryPost = function(category) {
 
 //Get all of the posts.
 export const getAllPosts = function() {
-	get('posts')
-		.then(response => response.json() )
-		.then(data => data)
-		.catch(err => handleErr(err));
+	return	get('posts')
+				.then(response => response.json())
+				.catch(err => handleErr(err));
 };
 
-//	Add a new post.
+//Add a new post.
 export const addNewPost = function(newPost) {
 	post('posts', newPost)
 		.then(result => result.ok)
@@ -72,10 +71,9 @@ export const addNewPost = function(newPost) {
 
 //Get the details of a single post
 export const getPostDetail = function(id) {
-	get(`posts/${id}`)
-		.then(result => result.json())
-		.then(data => data)
-		.catch(err => handleErr(err));
+	return get(`posts/${id}`)
+			.then(result => result.json())
+			.catch(err => handleErr(err));
 };
 
 //Used for voting on a post
@@ -106,17 +104,16 @@ export const deletePost = function(id) {
 
 //Get all the comments for a single post.
 export const getPostComments = function(id) {
-	get(`posts/${id}/comments`)
-		.then(result => result.json())
-		.then(data => data)
-		.catch( err => handleErr(err) );
+	return get(`posts/${id}/comments`)
+			.then(result => result.json())
+			.catch( err => handleErr(err) );
 };
 
 //Add a comment to a post
 export const addCommentToPost = function(comment) {
-	post(`comments`, comment)
-		.then( result => result )
-		.catch( err => handleErr(err) );
+	return post(`comments`, comment)
+			.then( result => result )
+			.catch( err => handleErr(err) );
 };
 
 //Get the details for a single comment.
@@ -138,17 +135,17 @@ export const voteComment = function(id, option) {
 
 //Edit the details of an existing comment.
 export const editCommentDetail = function(id, timestamp, body) {
-	put(`comments/${id}`, {	
+	return put(`comments/${id}`, {	
 			timestamp,
 			body		
-	})
+		})
 		.then(result => result.ok)
 		.catch(err => handleErr(err));
 };
 
 //Sets a comment's deleted flag to true
-export const deleteComment = function(id) {
-	remove(`comments/${id}`)
-		.then(result => result.ok)
-		.catch( err => handleErr(err) );
+export const deletePostComment = function(id) {
+	return remove(`comments/${id}`)
+			.then(result => result.ok)
+			.catch( err => handleErr(err) );
 };
