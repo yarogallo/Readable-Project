@@ -1,13 +1,30 @@
 import { combineReducers } from 'redux';
 import { sortList,
 	ALL_POSTS_SUCCESS,
-	DISPLAY_POST_DETAIL,
+	ALL_CATEGORIES_SUCCESS,
+	SELECT_SORT,
+	CHANGE_POST_SCORE,
+	
+	DISPLAY_COMMENTS_ACTIVE,
+	DISPLAY_POST_ACTIVE,
+	
 	DELETED_COMMENT,
 	ADDED_COMMENT,
-	EDITED_COMMENT
+	EDITED_COMMENT,
+	
 } from '../actions';
 
-function postsReducer(state={}, action) {
+const initialPosts = {
+	byId: {},
+	idsArr: []
+};
+
+const initialActivePost = {
+	post: {},
+	comments: []
+};
+
+function postsReducer(state=initialPosts, action) {
 	switch (action.type) {
 		case ALL_POSTS_SUCCESS:
 			return {
@@ -17,37 +34,72 @@ function postsReducer(state={}, action) {
 				}, {}),
 				idsArr: action.posts.map(post => post.id)	
 			};
+		case CHANGE_POST_SCORE:
+			return {
+				...state,
+				byId: {
+					...state.byId,
+					[action.id]: {
+						...state.byId[action.id],
+						voteScore: action.voteText === "upVote" ? state.byId[action.id].voteScore + 1 : state.byId[action.id].voteScore - 1
+					}
+				},
+			};	
 		default:
 			return state;
 	}
 }
 
-function activePostReducer(state={}, action) {
+function categoriesReducer(state=[], action) {
 	switch (action.type) {
-		case DISPLAY_POST_DETAIL:
-			return {
-				postId: action.id,
-				comments: action.comments
-			};
-		case DELETED_COMMENT: 
+		case ALL_CATEGORIES_SUCCESS:
+			return [...action.categories];
+		default:
+			return state;
+	}
+}
+
+function currentSortReducer(state='none', action) {
+	switch (action.type) {
+		case SELECT_SORT:
+			return action.sort;
+		default:
+			return state;
+	}
+}
+
+function activePostReducer(state=initialActivePost, action) {
+	switch (action.type) {
+		case DISPLAY_POST_ACTIVE:
 			return {
 				...state,
-				comments: state.comments.filter( comment => comment.id !== action.id)
+				post: {...action.post} 
 			};
-		case ADDED_COMMENT: 
+		case DISPLAY_COMMENTS_ACTIVE: 
+		console.log(action);
 			return {
 				...state,
-				comments: [...state.comments, action.comment]	
-			};
-		case EDITED_COMMENT:
-			return {
-				...state,
-				comments: state.comments.map( comment => {
-					return comment.id === action.id
-						? {...comment, body: action.body, timestamp: action.timestamp}
-						: comment
-				})
-			};
+				comments: [...action.comments]
+			};	
+		// case DELETED_COMMENT: 
+		// 	return {
+		// 		...state,
+		// 		comments: state.comments.filter( comment => comment.id !== action.id)
+		// 	};
+		// case ADDED_COMMENT: 
+		// 	return {
+		// 		...state,
+		// 		comments: [...state.comments, action.comment]	
+		// 	};
+		// case EDITED_COMMENT:
+		// 	return {
+		// 		...state,
+		// 		comments: state.comments.map( comment => {
+		// 			return comment.id === action.id
+		// 				? {...comment, body: action.body, timestamp: action.timestamp}
+		// 				: comment
+		// 		})
+		// 	};
 		default:
 			return state;
 	}
@@ -58,7 +110,9 @@ function activePostReducer(state={}, action) {
 
 const rootReducer = combineReducers({
 	posts: postsReducer,
-	activePost: activePostReducer
+	activePost: activePostReducer,
+	categories: categoriesReducer,
+	currentSort: currentSortReducer
 	//comments: commentsReducer,
 	//currentSort: currentSortReducer,
 	//currentCategory: currentCategoryReducer

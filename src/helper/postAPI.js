@@ -41,10 +41,9 @@ const handleErr = function(err) {
 
 //Get all of the categories available
 export const getAllCategories = function() {
-	get('categories')
-		.then(response => response.json())
-		.then(data => data.categories)
-		.catch(err => handleErr(err));
+	return get('categories')
+			.then(response => response.json())
+			.catch(err => handleErr(err));
 };
 
 //Get all of the posts for a particular category
@@ -78,11 +77,11 @@ export const getPostDetail = function(id) {
 
 //Used for voting on a post
 export const votePost = function(id, option){
-	post(`posts/${id}`, { 
-		option 
-	})
-		.then( result => result.ok)
-		.catch( err => handleErr(err) );	
+	return post(`posts/${id}`, { 
+			option 
+		})
+			.then( result => result.ok)
+			.catch( err => handleErr(err) );	
 };
 
 //Edit the details of an existing post
@@ -118,10 +117,9 @@ export const addCommentToPost = function(comment) {
 
 //Get the details for a single comment.
 export const getDetailComment = function(id) {
-	get(`comments/${id}`)
-		.then(result => result.json())
-		.then(data => data)
-		.catch( err => handleErr(err) );
+	return get(`comments/${id}`)
+			.then(result => result.json())
+			.catch( err => handleErr(err) );
 };
 
 //Used for voting on a comment

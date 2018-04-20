@@ -84,7 +84,7 @@ class AddPostView extends Component {
 	
 	render() {
 		const {
-			postCategories,
+			categories,
 			postToEdit 
 		} = this.props;
 		
@@ -108,7 +108,7 @@ class AddPostView extends Component {
 						{ input("post-title", "title", "Ex: Learning react from cero", titleValue, this.onChangeTitle) }
 						{ textarea("post-body", "content", "content....", bodyValue, this.onChangeBody) }
 						{ !postToEdit.id && input("post-author", "author", "Ex: Jonh Doe", authorValue, this.onChangeAuthor)}
-						{ select("post-categories", "categories", postCategories, postToEdit.category) }
+						{ select("post-categories", "categories", categories, postToEdit.category) }
 						{postToEdit.id ? 
 							(<button type="submit" datatype="edit" className="btn bg-success">Save</button>) : 
 							(<button type="submit"datatype="add" className="btn bg-success">Submit</button>)
@@ -124,7 +124,7 @@ AddPostView.propTypes = {
 	//if there is a post to edited
 	postToEdit: PropTypes.object,
 	//list of categories for select
-	postCategories: PropTypes.array.isRequired,
+	categories: PropTypes.array.isRequired,
 	//edit post
 	onSavePost: PropTypes.func,
 	//add new post
@@ -133,7 +133,7 @@ AddPostView.propTypes = {
 
 AddPostView.defaultProps = {
 	postToEdit: {},
-	postCategories: [],
+	categories: [],
 	onSavePost: () => {},
 	onAddPost: () => {},
 }

@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
 
 import SortPostsMenu from '../SortPostsMenu';
-import ThumbnailPostList from '../ThumbnailPostList';
+import ThumbnailPostListContainer from '../../container/ThumbnailPostListContainer';
 import CategoryMenu from '../CategoryMenu';
 
 
 function HomePage(props) {
 	const {
-		visiblePostList
+		posts,
+		categories,
+		sorts,
+		onSelectSort,
 	} = props;
 	return (
 		<section className="container-fluid">
@@ -21,11 +23,11 @@ function HomePage(props) {
 				</nav>				
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu/>
+				<SortPostsMenu sortValues={sorts} onSelectSort={onSelectSort}/>
 			</section>
 			<section className="row bg-light">
-				<CategoryMenu/>
-				<ThumbnailPostList visiblePostList={visiblePostList}/>				
+				<CategoryMenu categories={categories}/>
+				<ThumbnailPostListContainer posts={posts}/>				
 			</section>	
 		</section>
 	);
@@ -34,23 +36,22 @@ function HomePage(props) {
 
 HomePage.propTypes = {
 	//posts to display
-	visiblePostList: PropTypes.array
+	posts: PropTypes.array.isRequired,
+	//all post categories
+	categories: PropTypes.array.isRequired,
+	//sort criterias list
+	sorts: PropTypes.array.isRequired,
+	//when a sort value is selected
+	onSelectSort: PropTypes.func,
+	//when a post is voted
+	onVotePost: PropTypes.func
 };
 
 HomePage.defaultProps = {
-	visiblePostList: [],
+	posts: [],
+	categories: [],
+	sorts: [],
+	onSelectSort: () => {},
 };
 
-function mapStateToProps(state) {
-	if(!state.posts.idsArr){
-		return {
-			visiblePostList: []
-		};
-	}
-	const {idsArr, byId} = state.posts;
-	return {
-		visiblePostList: idsArr.map(id => byId[id])
-	};
-}
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

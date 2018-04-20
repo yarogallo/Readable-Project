@@ -11,9 +11,13 @@ function ScoreMenu(props) {
 	
 	return (
 		<span className="score-menu">
-			<button><img src={up} alt="increment score"/></button>
+			<button><img src={up} alt="increment score" onClick={ () => {
+				onVote("upVote");
+			}}/></button>
 			<small>{scoreValue}</small>
-			<button><img src={down} alt="decrement score"/></button>
+			<button><img src={down} alt="decrement score" onClick={() => {
+				onVote("downVote");
+			}}/></button>
 		</span>
 	);
 }

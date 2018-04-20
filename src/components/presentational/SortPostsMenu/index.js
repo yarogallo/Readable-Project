@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function SortPostsMenu(props) {
 	const {
 		sortValues,
-		onSelectedPost
+		onSelectSort
 	} = props;
 		
 	return (
@@ -14,8 +14,12 @@ function SortPostsMenu(props) {
 					<a className="nav-link disabled" href="#sort-list" disabled>Sort By:</a>
 				</li>
 				{ sortValues.map( value => (
-					<li className="nav-item" key={value}>
-						<a className="nav-link" href="#sort-list">{value}</a>
+					<li className="nav-item" key={value} >
+						<a className="nav-link" href="#sort-list" onClick={ evt => {
+							console.log(value);
+							evt.preventDefault();
+							onSelectSort(value);
+						}}>{value}</a>
 					</li>
 				)) }
 			</ul>

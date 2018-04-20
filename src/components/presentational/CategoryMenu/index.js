@@ -4,16 +4,15 @@ import {Link} from 'react-router-dom';
 
 function CategoryMenu(props) {
 	const {
-		postCategories,
-		onSelectCategory
+		categories,
 	} = props;
 	
 	return(
 		<nav className="col-12 col-sm-2 nav flex-column">
 			<a className="nav-link text-center disabled text-uppercase" href="#catMenu">Categories:</a>
 			<div id="catMenu">
-				{ postCategories.map( category => (
-					<Link className="nav-link active text-center" key={category} to="/categories">{category}</Link>
+				{ categories.map( category => (
+					<Link className="nav-link active text-center" key={category} to={`/categories/${category}`}>{category}</Link>
 				))}
 			</div>
 		</nav>		
@@ -22,14 +21,11 @@ function CategoryMenu(props) {
 
 CategoryMenu.propTypes = {
 	//list categories filters
-	postCategories: PropTypes.array.isRequired,
-	//To be executed when a category is selected
-	onSelectCategory: PropTypes.func
+	categories: PropTypes.array.isRequired,
 };
 
 CategoryMenu.defaultProps = {
-	postCategories: [],
-	onSelectCategory: () => {}
+	categories: [],
 }
 
 export default CategoryMenu;

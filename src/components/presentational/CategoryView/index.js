@@ -4,14 +4,17 @@ import {Link} from 'react-router-dom';
 import backIcon from './icons/left-arrow.svg';
 
 import SortPostsMenu from '../SortPostsMenu';
-import ThumbnailPostList from '../ThumbnailPostList';
+import ThumbnailPostListContainer from '../../container/ThumbnailPostListContainer';
 import CategoryMenu from '../CategoryMenu';
 
 
 function CategoryView(props) {
 	const {
-		currentCategory,
-		visiblePostList	
+		category,
+		posts,
+		categories,
+		sorts,
+		onSelectSort
 	} = props;
 	
 	return(
@@ -22,14 +25,14 @@ function CategoryView(props) {
 						<img src={backIcon} alt="back"/>
 					</Link>
 				</nav>
-				<h2 className="col-12 col-sm text-sm-right text-capitalize text-white">{currentCategory}</h2>			
+				<h2 className="col-12 col-sm text-sm-right text-capitalize text-white">{category}</h2>			
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu/>
+				<SortPostsMenu onSelectSort={onSelectSort} sortValues={sorts}/>
 			</section>
 			<section className="row bg-light">
-				<CategoryMenu/>
-				<ThumbnailPostList visiblePostList={visiblePostList}/>				
+				<CategoryMenu categories={categories}/>
+				<ThumbnailPostListContainer posts={posts}/>				
 			</section>	
 		</section>
 	);
@@ -37,14 +40,23 @@ function CategoryView(props) {
 
 CategoryView.propTypes = {
 	//Selected Category
-	currentCategory: PropTypes.string,
+	category: PropTypes.string.isRequired,
 	//all post in the selected category
-	visiblePostList: PropTypes.array,
+	posts: PropTypes.array.isRequired,
+	//all categories available
+	categories: PropTypes.array.isRequired,
+	 //al sorts value
+	 sorts: PropTypes.array.isRequired,
+	//onSelect sort
+	onSelectSort: PropTypes.func
 };
 
 CategoryView.defaultProps = {
-	currentCategory: "",
-	visiblePostList: [],
+	category: "",
+	posts: [],
+	categories: [],
+	sorts: [],
+	onSelectSort: () => {}
 };
 
 export default CategoryView

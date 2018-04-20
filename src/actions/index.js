@@ -4,20 +4,22 @@ import {
 	getPostComments,
 	deletePostComment,
 	addCommentToPost,
-	editCommentDetail
+	editCommentDetail,
+	getAllCategories,
+	votePost,
+	getPostDetail,
 } from '../helper/postAPI';
 
 //actions types 
-export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
 export const ALL_POSTS_SUCCESS = 'ALL_POSTS_SUCCESS';
-
+export const ALL_CATEGORIES_SUCCESS = 'ALL_CATEGORIES_SUCCESS';
 export const SELECT_SORT = 'SELECT_SORT';
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
+export const DISPLAY_COMMENTS_ACTIVE = 'DISPLAY_COMMENTS_ACTIVE';
+export const DISPLAY_POST_ACTIVE = 'DISPLAY_POST_ACTIVE';
 
-export const FETCH_POST_COMMENTS = 'FETCH_POST_COMMENTS';
-export const DISPLAY_POST_DETAIL = 'DISPLAY_POST_DETAIL';
+export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
 
-export const VOTE_POST = 'VOTE_POST';
+////--------------------/////
 export const ADD_NEW_POST = 'ADD_NEW_POST';
 
 export const DELETE_POST = 'DELETE_POST';
@@ -35,10 +37,9 @@ export const sortList = {
 	newest: 'NEWEST',
 	oldest: 'OLDEST',
 	max_score: 'MAX_SCORE', 
-	min_score: 'MIN_AVG', 
+	min_score: 'MIN_AVG',
 };
 
-//action creators
 //fetch all posts 
 export function fetchAllPosts() {
 	return dispatch => {
@@ -59,6 +60,24 @@ function allPostsSuccess(posts) {
 	};
 }
 
+// all categories
+
+export function fetchAllCategories() {
+	return dispath => {
+		getAllCategories()
+			.then(data => data.categories && dispath(allCategoriesSuccess(data.categories)))
+	};
+}
+
+function allCategoriesSuccess(categories) {
+	return {
+		type: ALL_CATEGORIES_SUCCESS,
+		categories,
+	};
+}
+
+// select sort
+
 export function selectSort(sort) {
 	return {
 		type: SELECT_SORT,
@@ -66,38 +85,64 @@ export function selectSort(sort) {
 	};
 }
 
-export function selectCategory(category) {
-	return {
-		type: SELECT_CATEGORY,
-		category	
-	};
-}
 
+// vote post
 
-//fetch specific posts details
-
-export function fetchPostComments(id) {
+export function votePostScore(id, voteText) {
 	return dispatch => {
-		getPostComments(id)
-			.then(data => dispatch(displayPostDetail(id, data)));
-	}
-}
-
-function displayPostDetail(id, comments) {
-	return {
-		type: DISPLAY_POST_DETAIL,
-		id,
-		comments
+		votePost(id, voteText)
+			.then(data => data && dispatch(changedPostScore(id, voteText)));
 	};
 }
 
-export function votePost(id, voteText) {
+function changedPostScore(id, voteText) {
 	return {
-		type: VOTE_POST,
+		type: CHANGE_POST_SCORE,
 		id,
 		voteText
 	};
 }
+
+//Fetch active post detail
+
+export function fetchActivePost(id) {
+	return (dispatch, getState) => {
+		const data = getState().posts.byId[id];
+		if (!data) {
+			getPostDetail(id)
+				.then(data => data && dispatch(displayPostActive(data)));
+		} else {
+			dispatch(displayPostActive(data));
+		}
+	};
+}
+
+export function fetchActiveComments(id) {
+	return dispatch => {
+		getPostComments(id)
+			.then(data => dispatch(displayCommentsActive(data)));
+	};
+}
+
+function displayCommentsActive(comments) {
+	return {
+		type: DISPLAY_COMMENTS_ACTIVE,
+		comments,
+	};
+}
+
+function displayPostActive(post) {
+	return {
+		type: DISPLAY_POST_ACTIVE,
+		post,
+	};
+}
+
+
+
+
+
+
 
 export function addNewPost(title, body, author, category) {
 	return {

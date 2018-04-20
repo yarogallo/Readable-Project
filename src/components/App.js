@@ -1,51 +1,30 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import {connect} from 'react-redux';
-import { fetchAllPosts } from '../actions';
 
-import HomePage from './HomePage';
-import CategoryView from './CategoryView';
-import PostDetailView from './PostDetailView';
-import AddPostView from './AddPostView';
+import HomePageContainer from './container/HomePageContainer';
+import CategoryViewContainer from './container/CategoryViewContainer';
+import PostDetailViewContainer from './container/PostDetailViewContainer';
+import AddPostView from './presentational/AddPostView';
 import '../style/App.css';
 
 class App extends Component {
-  constructor() {
-		super();
-	}
-	componentDidMount() {
-		this.props.fetchPosts();
-	}
   render() {
     return (
       <BrowserRouter>
         <section className="app">
-        
-          <Route exact path="/" render={() => (
-            <HomePage/>
-          )}/>
           
-          <Route path="/categories"render={() => (
-            <CategoryView/>
-          )}/>
+          <Route exact path="/"  component={HomePageContainer}/>
+            
+          <Route path="/categories/:category" component={CategoryViewContainer}/>
+        
+          <Route path="/post-details/:id" component={PostDetailViewContainer}/>
+        
+          <Route path="/add-post" component={AddPostView}/>
       
-          <Route path="/post-details/:id" component={PostDetailView}/>
-      
-          <Route exact path="/add-post" render={() => (
-            <AddPostView/>
-          )}/>
-
         </section>
       </BrowserRouter>
     );
-  }
+  };
 }
 
-function mapDispatchToProps(dispatch) {
-	return {
-		fetchPosts: () => dispatch(fetchAllPosts())
-	};
-}
-
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;
