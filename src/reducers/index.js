@@ -5,8 +5,11 @@ import { sortList,
 	SELECT_SORT,
 	CHANGE_POST_SCORE,
 	
-	DISPLAY_COMMENTS_ACTIVE,
-	DISPLAY_POST_ACTIVE,
+	POST_ACTIVE_ID,
+	POST_ACTIVE_COMMENTS,
+	
+	ADD_FETCHED_POST,
+	DELETED_POST,
 	
 	DELETED_COMMENT,
 	ADDED_COMMENT,
@@ -20,7 +23,7 @@ const initialPosts = {
 };
 
 const initialActivePost = {
-	post: {},
+	postId: '',
 	comments: []
 };
 
@@ -34,6 +37,14 @@ function postsReducer(state=initialPosts, action) {
 				}, {}),
 				idsArr: action.posts.map(post => post.id)	
 			};
+		case ADD_FETCHED_POST: 
+			return {
+				...state,
+				byId: {
+					...state.byId,
+					[action.post.id]: action.post
+				}
+			};	
 		case CHANGE_POST_SCORE:
 			return {
 				...state,
@@ -44,7 +55,18 @@ function postsReducer(state=initialPosts, action) {
 						voteScore: action.voteText === "upVote" ? state.byId[action.id].voteScore + 1 : state.byId[action.id].voteScore - 1
 					}
 				},
-			};	
+			};
+		case DELETED_POST: 
+			return {
+				...state,
+				byId: {
+					...state.byId,
+					[action.id]: {
+						...state.byId[action.id],
+						deleted: true
+					}
+				}
+			};		
 		default:
 			return state;
 	}
@@ -70,16 +92,19 @@ function currentSortReducer(state='none', action) {
 
 function activePostReducer(state=initialActivePost, action) {
 	switch (action.type) {
-		case DISPLAY_POST_ACTIVE:
+		case POST_ACTIVE_ID:
 			return {
 				...state,
-				post: {...action.post} 
+				postId: action.id
 			};
-		case DISPLAY_COMMENTS_ACTIVE: 
-		console.log(action);
+		case POST_ACTIVE_COMMENTS:
 			return {
 				...state,
 				comments: [...action.comments]
+			};
+		case DELETED_POST: 
+			return {
+				...initialActivePost
 			};	
 		// case DELETED_COMMENT: 
 		// 	return {

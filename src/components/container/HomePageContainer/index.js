@@ -38,7 +38,7 @@ class HomePageContainer extends Component {
 function mapStateToProps(state) {
 	return {
 		categories: state.categories.map( category => category.name),
-		posts: state.posts.idsArr.map(id => state.posts.byId[id]),
+		posts: state.posts.idsArr.map(id => !state.posts.byId[id].deleted),
 		sorts: Object.keys(sortList)
 	}
 }

@@ -8,21 +8,23 @@ import {
 	getAllCategories,
 	votePost,
 	getPostDetail,
+	deletePost
 } from '../helper/postAPI';
 
 //actions types 
 export const ALL_POSTS_SUCCESS = 'ALL_POSTS_SUCCESS';
 export const ALL_CATEGORIES_SUCCESS = 'ALL_CATEGORIES_SUCCESS';
 export const SELECT_SORT = 'SELECT_SORT';
-export const DISPLAY_COMMENTS_ACTIVE = 'DISPLAY_COMMENTS_ACTIVE';
-export const DISPLAY_POST_ACTIVE = 'DISPLAY_POST_ACTIVE';
+
+export const POST_ACTIVE_ID = 'POST_ACTIVE_ID';
+export const POST_ACTIVE_COMMENTS = 'POST_ACTIVE_COMMENTS';
 
 export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
 
-////--------------------/////
-export const ADD_NEW_POST = 'ADD_NEW_POST';
+export const ADD_FETCHED_POST = 'ADD_FETCHED_POST';
+export const DELETED_POST = 'DELETED_POST';
 
-export const DELETE_POST = 'DELETE_POST';
+///------------///
 
 export const EDIT_POST = 'EDIT_POST';
 export const SAVE_POST = 'SAVE_POST';
@@ -110,55 +112,64 @@ export function fetchActivePost(id) {
 		const data = getState().posts.byId[id];
 		if (!data) {
 			getPostDetail(id)
-				.then(data => data && dispatch(displayPostActive(data)));
-		} else {
-			dispatch(displayPostActive(data));
-		}
+				.then(data => data && dispatch(addFetchedPost(data)));
+		} 
+		dispatch(postActiveId(id));
 	};
 }
 
 export function fetchActiveComments(id) {
 	return dispatch => {
 		getPostComments(id)
-			.then(data => dispatch(displayCommentsActive(data)));
+			.then(data => dispatch(postActiveComments(data)));
 	};
 }
 
-function displayCommentsActive(comments) {
+function postActiveComments(comments) {
 	return {
-		type: DISPLAY_COMMENTS_ACTIVE,
+		type: POST_ACTIVE_COMMENTS,
 		comments,
 	};
 }
 
-function displayPostActive(post) {
+function postActiveId(id) {
 	return {
-		type: DISPLAY_POST_ACTIVE,
-		post,
+		type: POST_ACTIVE_ID,
+		id,
 	};
 }
 
+//add new post
+
+// function addPost(post){
+// 	return (dispatch, getState) => {
+// 		if(getState().posts.idsArr.indeOf() !== -1) {
+// 			addNewPost()
+// 		}
+// 	};
+// }
 
 
 
-
-
-
-export function addNewPost(title, body, author, category) {
+export function addFetchedPost(post) {
 	return {
-		type: ADD_NEW_POST,
-		id: uuid(),
-		title,
-		body,
-		author,
-		category,
-		timeStamp: Date.now()
+		type: ADD_FETCHED_POST,
+		post
 	};
 }
 
-export function deletePost(id) {
+//delete post
+
+export function deleteThisPost(id) {
+	return dispatch => {
+		deletePost(id)
+			.then(data => data && dispatch(deletedPost(id)));
+	};
+}
+
+function deletedPost(id) {
 	return {
-		type: DELETE_POST,
+		type: DELETED_POST,
 		id
 	};
 }

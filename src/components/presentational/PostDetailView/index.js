@@ -36,14 +36,13 @@ function PostDetailView(props) {
 				</p>
 				<div className="col-12 col-md-8 d-flex justify-content-between">
 					<ScoreMenu scoreValue={post.voteScore} onVote={(voteText) => {
-						debugger;
 						onVotePost(post.id, voteText);
 					}}/>
 					<div className="btn-group text-capitalize" role="group">
 						<Link className="btn text-info" to={`/add-post/${post.id}`}>edit</Link>
-						<a className="btn text-info" href="#post-details" onClick={() => {
-							onDeletePost();	
-						}}>delete</a>
+						<Link className="btn text-info" to="/" onClick={() => {
+							window.confirm('Are you shure you want to delete this post') && onDeletePost(post.id);	
+						}}>delete</Link>
 					</div>
 				</div>
 			</section>

@@ -3,14 +3,15 @@ import {connect} from 'react-redux';
 import {
 	votePostScore,
 	fetchActivePost,
-	fetchActiveComments
+	fetchActiveComments,
+	deleteThisPost
 } from '../../../actions';
 import PostDetailView from '../../presentational/PostDetailView';
 
 class PostDetailViewContainer extends Component {
 	componentDidMount() {
-		this.props.getPost(this.props.postId);
-		this.props.getComments(this.props.postId);
+		this.props.getPost(this.props.match.params.id);
+		this.props.getComments(this.props.match.params.id);
 	}
 	render() {
 		const {
@@ -29,20 +30,19 @@ class PostDetailViewContainer extends Component {
 	}
 }
 
-function mapStateToProps(state, {match}) {
-	const postId = match.params.id;
+function mapStateToProps(state) {
+	const allPosts = state.posts.byId;
 	return {
-		postId: match.params.id,
-		post: {...state.activePost.post},
+		post: {...allPosts[state.activePost.postId]},
 		comments: [...state.activePost.comments]
 	};
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
 	return {
 		getPost: id => dispatch(fetchActivePost(id)),
 		getComments: id => dispatch(fetchActiveComments(id)),
-		onDeletePost: () => {},
+		onDeletePost: id => dispatch(deleteThisPost(id)),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
 	}
 }

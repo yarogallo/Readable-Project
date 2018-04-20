@@ -63,9 +63,9 @@ export const getAllPosts = function() {
 
 //Add a new post.
 export const addNewPost = function(newPost) {
-	post('posts', newPost)
-		.then(result => result.ok)
-		.catch(err => handleErr(err));
+	return post('posts', newPost)
+			.then(result => result.ok)
+			.catch(err => handleErr(err));
 };
 
 //Get the details of a single post
@@ -96,9 +96,9 @@ export const editPost = function(id, title, body) {
 
 //Sets the deleted flag for a post to 'true' and the post comments
 export const deletePost = function(id) {
-	remove(`posts/${id}`)
-		.then(result => result.ok)
-		.catch( err => handleErr(err) );
+	return remove(`posts/${id}`)
+			.then(result => result.ok)
+			.catch( err => handleErr(err) );
 };
 
 //Get all the comments for a single post.
