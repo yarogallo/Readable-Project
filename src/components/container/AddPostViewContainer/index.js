@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AddPostView from '../../presentational/AddPostView';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 import { 
 	fetchAllCategories,
@@ -9,24 +10,65 @@ import {
  } from '../../../actions';
 
 class AddPostViewContainer extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			fireRedirect: false
+		};
+		this.handlerEditPost = this.handlerEditPost.bind(this);
+		this.handlerNewPost = this.handlerNewPost.bind(this);
+	}
+	
 	componentDidMount() {
 		if (!this.props.categories.length) {
 			this.props.getCategories();
 		}
 	}
 	
-	render() {
+	handlerEditPost(title, body) {
+		this.props.onEditPost(this.props.postToEdit.id, title, body);
+		this.setState({
+			fireRedirect: true
+		});
+	}
+	
+	handlerNewPost(title, body, author, category) {
+		this.props.onAddPost(title, body, author, category);
+		this.setState({
+			fireRedirect: true
+		});
+	}
+	
+	renderEditView() {
 		const {
 			categories,
-			onAddPost,
-			onEditPost,
 			postToEdit,
 		} = this.props;
+		
 		return (
-			postToEdit
-				? <AddPostView categories={categories} postToEdit={postToEdit} onSubmit={onEditPost}/> 
-				: <AddPostView categories={categories} onSubmit={onAddPost}/> 
-		);			
+			this.state.fireRedirect 
+				? <Redirect to={`/post-details/${this.props.postToEdit.id}`}/>
+				: <AddPostView categories={categories} postToEdit={postToEdit} onSubmit={this.handlerEditPost}/>
+		);
+	}
+	
+	renderAddView() {
+		const {
+			categories,
+		} = this.props;
+		
+		return (
+			this.state.fireRedirect 
+				? <Redirect to="/"/>
+				: <AddPostView categories={categories} onSubmit={this.handlerNewPost}/>
+		);
+	}
+	
+	render() {
+		const {
+			postToEdit,
+		} = this.props;
+		return postToEdit ?  this.renderEditView() : this.renderAddView();			
 	}
 
 }

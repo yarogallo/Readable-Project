@@ -49,6 +49,7 @@ class AddPostView extends Component {
 	}
 	
 	handleSubmitForm(evt) {
+		evt.preventDefault();
 		const { 
 			title,
 			author,
@@ -58,11 +59,9 @@ class AddPostView extends Component {
 		
 		if(this.state.mode === 'add') {
 			this.props.onSubmit(title, body, author, category);
-			this.handleResetForm();
 		} else {
-			this.props.onSubmit(this.props.postToEdit.id, title, body);
+			this.props.onSubmit(title, body);
 		}
-		evt.preventDefault();
 	}
 	
 	completeForm() {
