@@ -23,9 +23,19 @@ class AddPostView extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
+		const currentPost = this.props.postToEdit;
+		
 		if(!this.state.category) {
 			this.setState({
 				category: nextProps.categories[0]
+			});
+		}
+		if(currentPost && Object.keys(currentPost).length === 0) {
+			this.setState({
+				title: nextProps.postToEdit.title,
+				author: nextProps.postToEdit.author,
+				body: nextProps.postToEdit.body,
+				category: nextProps.postToEdit.category,
 			});
 		}
 	}

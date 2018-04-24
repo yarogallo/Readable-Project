@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom';
 import { 
 	fetchAllCategories,
 	addThisNewPost,
+	fetchActivePost,
 	savePost
  } from '../../../actions';
 
@@ -23,6 +24,8 @@ class AddPostViewContainer extends Component {
 		if (!this.props.categories.length) {
 			this.props.getCategories();
 		}
+		console.log(this.props);
+		this.props.getPostToEdit(this.props.match.params.id);
 	}
 	
 	handlerEditPost(title, body) {
@@ -75,9 +78,11 @@ class AddPostViewContainer extends Component {
 
 function mapStateToProps(state, {match}) {
 	const postId = match.params.id;
+	const allPosts = state.posts.byId;
+	
 	const postToEdit = !postId 
 		? null 
-		: {...state.posts.byId[postId]};
+		: {...allPosts[state.activePost.postId]};
 	return {
 		postToEdit,
 		categories: state.categories.map( category => category.name)
@@ -86,6 +91,7 @@ function mapStateToProps(state, {match}) {
 
 function mapDispatchToProps(dispatch) {
 	return {
+		getPostToEdit: id => dispatch(fetchActivePost(id)),
 		getCategories: () => dispatch(fetchAllCategories()),
 		onAddPost: (title, body, author, category) => dispatch(addThisNewPost(title, body, author, category)),
 		onEditPost: (id, title, body) => dispatch(savePost(id, title, body))

@@ -52,9 +52,9 @@ function postsReducer(state=initialPosts, action) {
 					...state.byId,
 					[action.post.id]: {
 						...action.post
-					},
+					}
+				},
 				idsArr: state.idsArr.concat(action.post.id)
-				}
 			};	
 		case DELETED_POST: 
 			return {
