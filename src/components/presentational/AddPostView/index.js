@@ -18,6 +18,8 @@ class AddPostView extends Component {
 			mode: this.props.postToEdit ? 'edit' : 'add',
 		};	
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleResetForm = this.handleResetForm.bind(this);
+		this.handleSubmitForm = this.handleSubmitForm.bind(this);
 	}
 	
 	componentWillReceiveProps(nextProps) {
@@ -37,11 +39,35 @@ class AddPostView extends Component {
 		});
 	}
 	
+	handleResetForm() {
+		this.setState({
+			title: '',
+			author: '',
+			body: '',
+			category: this.props.categories[0]
+		});
+	}
+	
+	handleSubmitForm(evt) {
+		const { 
+			title,
+			author,
+			body,
+			category
+		} = this.state;
+		
+		if(this.state.mode === 'add') {
+			this.props.onSubmit(title, body, author, category);
+			this.handleResetForm();
+		} else {
+			this.props.onSubmit(this.props.postToEdit.id, title, body);
+		}
+		evt.preventDefault();
+	}
+	
 	completeForm() {
 		const {
-			categories,
-			postToEdit,
-			onSubmit,
+			categories
 		} = this.props;
 		
 		const { 
@@ -53,12 +79,7 @@ class AddPostView extends Component {
 		
 		const label = this.state.mode === 'add' ? 'submit' : 'save';
 		return (
-			<form className="col-12 col-md-10 col-lg-8" onSubmit={ evt => {
-				evt.preventDefault();
-				this.state.mode === 'add'
-					? onSubmit(title, body, author, category)
-					: onSubmit(postToEdit.id, title, body)
-			}}>
+			<form className="col-12 col-md-10 col-lg-8" onSubmit={ evt => this.handleSubmitForm(evt)}>
 				<InputForm name="title" label="title" value={title} onChange={this.handleInputChange}/>
 				<TextareaForm name="body" label="content" value={body} onChange={this.handleInputChange}/>
 				{ this.state.mode === 'edit' 
