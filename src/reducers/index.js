@@ -74,8 +74,8 @@ function postsReducer(state=initialPosts, action) {
 						...state.byId,
 						[action.id]: {
 							...state.byId[action.id],
-							body: action.body,
-							title: action.title
+							title: action.title,
+							body: action.body,							
 						}
 				}
 			};	

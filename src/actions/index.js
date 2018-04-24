@@ -187,20 +187,20 @@ function deletedPost(id) {
 
 //edit post
 
-export function savePost(id, body, title) {
+export function savePost(id, title, body) {
 	return dispatch => {
-		editPost(id, body, title)
-			.then(data => data && dispatch(savedPost(id, body, title)));
+		editPost(id, title, body)
+			.then(data => data && dispatch(savedPost(id, title, body)));
 		
 	};
 }
 
-function savedPost(id, body, title) {
+function savedPost(id, title, body) {
 	return {
 		type: SAVED_POST,
 		id,
-		body,
-		title
+		title,
+		body
 	};
 }
 
