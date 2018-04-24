@@ -8,6 +8,7 @@ import {
 	POST_ACTIVE_ID,
 	POST_ACTIVE_COMMENTS,
 	
+	ADD_POST,
 	DELETED_POST,
 	SAVED_POST,
 	
@@ -44,6 +45,17 @@ function postsReducer(state=initialPosts, action) {
 					}
 				},
 			};
+		case ADD_POST: 
+			return {
+				...state,
+				byId: {
+					...state.byId,
+					[action.post.id]: {
+						...action.post
+					},
+				idsArr: state.idsArr.concat(action.post.id)
+				}
+			};	
 		case DELETED_POST: 
 			return {
 				...state,

@@ -23,6 +23,7 @@ export const POST_ACTIVE_COMMENTS = 'POST_ACTIVE_COMMENTS';
 
 export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
 
+export const ADD_POST = 'ADD_POST';
 export const DELETED_POST = 'DELETED_POST';
 export const SAVED_POST = 'SAVED_POST';
 
@@ -112,10 +113,16 @@ export function fetchActivePost(id) {
 		const data = getState().posts.byId[id];
 		if (!data) {
 			getPostDetail(id)
-				.then(data => data && dispatch(postActiveId(id)));
-		} else {
-			dispatch(postActiveId(id));
+				.then(data => data && dispatch(addPostState(data)));
 		}
+		dispatch(postActiveId(id));	
+	};
+}
+
+function addPostState(post) {
+	return {
+		type: ADD_POST,
+		post,
 	};
 }
 
