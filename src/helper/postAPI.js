@@ -86,12 +86,12 @@ export const votePost = function(id, option){
 
 //Edit the details of an existing post
 export const editPost = function(id, title, body) {
-	put(`posts/${id}`, {
-		title,
-		body
-	})
-		.then(result => result.ok)
-		.catch( err => handleErr(err) );
+	return put(`posts/${id}`, {
+			title,
+			body
+		})
+			.then(result => result.ok)
+			.catch( err => handleErr(err) );
 };
 
 //Sets the deleted flag for a post to 'true' and the post comments

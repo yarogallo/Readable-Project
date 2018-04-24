@@ -8,7 +8,9 @@ import {
 	getAllCategories,
 	votePost,
 	getPostDetail,
-	deletePost
+	deletePost,
+	addNewPost,
+	editPost
 } from '../helper/postAPI';
 
 //actions types 
@@ -21,13 +23,13 @@ export const POST_ACTIVE_COMMENTS = 'POST_ACTIVE_COMMENTS';
 
 export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
 
-export const ADD_FETCHED_POST = 'ADD_FETCHED_POST';
 export const DELETED_POST = 'DELETED_POST';
+export const SAVED_POST = 'SAVED_POST';
+
+
 
 ///------------///
 
-export const EDIT_POST = 'EDIT_POST';
-export const SAVE_POST = 'SAVE_POST';
 
 export const ADDED_COMMENT = 'ADDED_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
@@ -65,10 +67,8 @@ function allPostsSuccess(posts) {
 // all categories
 
 export function fetchAllCategories() {
-	return dispath => {
-		getAllCategories()
-			.then(data => data.categories && dispath(allCategoriesSuccess(data.categories)))
-	};
+	return dispath => getAllCategories()
+			.then(data => data.categories && dispath(allCategoriesSuccess(data.categories)));
 }
 
 function allCategoriesSuccess(categories) {
@@ -112,12 +112,21 @@ export function fetchActivePost(id) {
 		const data = getState().posts.byId[id];
 		if (!data) {
 			getPostDetail(id)
-				.then(data => data && dispatch(addFetchedPost(data)));
-		} 
-		dispatch(postActiveId(id));
+				.then(data => data && dispatch(postActiveId(id)));
+		} else {
+			dispatch(postActiveId(id));
+		}
 	};
 }
 
+function postActiveId(id) {
+	return {
+		type: POST_ACTIVE_ID,
+		id,
+	};
+}
+
+//fetch comments of an active post
 export function fetchActiveComments(id) {
 	return dispatch => {
 		getPostComments(id)
@@ -132,30 +141,25 @@ function postActiveComments(comments) {
 	};
 }
 
-function postActiveId(id) {
-	return {
-		type: POST_ACTIVE_ID,
-		id,
-	};
-}
-
 //add new post
 
-// function addPost(post){
-// 	return (dispatch, getState) => {
-// 		if(getState().posts.idsArr.indeOf() !== -1) {
-// 			addNewPost()
-// 		}
-// 	};
-// }
-
-
-
-export function addFetchedPost(post) {
-	return {
-		type: ADD_FETCHED_POST,
-		post
+export function addThisNewPost(title, body, author, category) {
+	return dispatch => {
+		const newPost = {
+			id: uuid(),
+			timestamp: Date.now(),
+			title,
+			body,
+			author,
+			category,
+		};
+		addNewPost(newPost).then(result => {
+			if (!result) {
+				window.alert('there was a problem, try again');
+			}
+		});
 	};
+		
 }
 
 //delete post
@@ -174,21 +178,29 @@ function deletedPost(id) {
 	};
 }
 
-export function editPost(id) {
-	return {
-		type: EDIT_POST,
-		id
+//edit post
+
+export function savePost(id, body, title) {
+	return dispatch => {
+		editPost(id)
+			.then(data => data && dispatch(savedPost(id, body, title)));
+		
 	};
 }
 
-export function savePost(id, body, title) {
+function savedPost(id, body, title) {
 	return {
-		type: SAVE_POST,
+		type: SAVED_POST,
 		id,
 		body,
 		title
 	};
 }
+
+
+
+
+
 
 export function voteComment(id, voteText) {
 	return {

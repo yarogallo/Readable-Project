@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import HomePageContainer from './container/HomePageContainer';
 import CategoryViewContainer from './container/CategoryViewContainer';
 import PostDetailViewContainer from './container/PostDetailViewContainer';
-import AddPostView from './presentational/AddPostView';
+import AddPostViewContainer from './container/AddPostViewContainer';
 import '../style/App.css';
 
 class App extends Component {
@@ -19,7 +19,8 @@ class App extends Component {
         
           <Route path="/post-details/:id" component={PostDetailViewContainer}/>
         
-          <Route path="/add-post" component={AddPostView}/>
+          <Route exact path="/add-post" component={AddPostViewContainer}/>
+          <Route exact path="/add-post/:id" component={AddPostViewContainer}/>
       
         </section>
       </BrowserRouter>

@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 import ScoreMenu from '../ScoreMenu';
 
 function ThumbnailPostList(props) {
-	console.log(props);
 	const {
 		posts,
 		onVotePost,

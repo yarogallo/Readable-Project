@@ -13,9 +13,7 @@ class HomePageContainer extends Component {
 		if(!this.props.categories.length) {
 			this.props.fetchCategories();
 		}
-		if(!this.props.posts.length) {
-			this.props.fetchPosts();
-		}
+		this.props.fetchPosts();
 	}
 	
 	render() {
@@ -38,7 +36,7 @@ class HomePageContainer extends Component {
 function mapStateToProps(state) {
 	return {
 		categories: state.categories.map( category => category.name),
-		posts: state.posts.idsArr.map(id => !state.posts.byId[id].deleted),
+		posts: state.posts.idsArr.map(id => state.posts.byId[id]),
 		sorts: Object.keys(sortList)
 	}
 }

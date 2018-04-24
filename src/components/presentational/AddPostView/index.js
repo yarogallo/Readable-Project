@@ -1,99 +1,79 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+
 import backIcon from './icons/left-arrow.svg';
-
-function input(id, label, placeholder, value, onChangeValue) {
-	return (
-		<div className="form-group">
-			<label htmlFor={id}>{label}</label>
-			<input 
-				type="text" 
-				className="form-control" 
-				placeholder={placeholder}
-				id={id} 
-				value={value}
-				onChange={ evt => {
-					onChangeValue(evt.target.value);
-				}}/>
-		</div>
-	);
-}
-
-function textarea(id, label, placeholder, value, onChangeValue) {
-	return (
-		<div className="form-group">
-			<label htmlFor={id}>{label}</label>
-			<textarea 
-				type="text" 
-				className="form-control"
-				rows="3"
-				placeholder={placeholder}
-				id={id} 
-				value={value}
-				onChange={(evt) => {
-					onChangeValue(evt.target.value);
-				}}></textarea>
-		</div>
-	);
-}
-
-function select(id, label, postCategories, selectedCategory) {
-	return (
-		<div className="form-group">
-			<label htmlFor={id}>{label}</label>
-			<select className="form-control" id={id} defaultValue={selectedCategory}>
-				{ postCategories.map( category => (
-					<option key={category}>{category}</option>
-				))}
-			</select>
-		</div>	
-	);
-}
+import TextareaForm from './TextareaForm';
+import InputForm from './InputForm';
+import SelectForm from './SelectForm';
 
 class AddPostView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			titleValue: this.props.postToEdit.title || "",
-			authorValue: this.props.postToEdit.author || "",
-			bodyValue: this.props.postToEdit.body || ""
+			title: this.props.postToEdit ? this.props.postToEdit.title : "",
+			author: this.props.postToEdit ? this.props.postToEdit.author : "",
+			body: this.props.postToEdit ? this.props.postToEdit.body : "",
+			category: this.props.postToEdit ? this.props.postToEdit.category : this.props.categories[0],
+			mode: this.props.postToEdit ? 'edit' : 'add',
+		};	
+		this.handleInputChange = this.handleInputChange.bind(this);
+	}
+	
+	componentWillReceiveProps(nextProps) {
+		if(!this.state.category) {
+			this.setState({
+				category: nextProps.categories[0]
+			});
 		}
-		this.onChangeTitle = this.onChangeTitle.bind(this);
-		this.onChangeAuthor = this.onChangeAuthor.bind(this);
-		this.onChangeBody = this.onChangeBody.bind(this);
 	}
 	
-	onChangeTitle( titleValue ) {
+	handleInputChange(evt) {
+		const value = evt.target.value;
+		const name = evt.target.name;
+		
 		this.setState({
-			titleValue,
+			[name]: value
 		});
 	}
 	
-	onChangeAuthor(authorValue) {
-		this.setState({
-			authorValue,
-		});
-	}
-	
-	onChangeBody(bodyValue) {
-		this.setState({
-			bodyValue
-		});	
-	}
-	
-	render() {
+	completeForm() {
 		const {
 			categories,
-			postToEdit 
+			postToEdit,
+			onSubmit,
 		} = this.props;
 		
 		const { 
-			titleValue,
-			authorValue,
-			bodyValue
-		} = this.state
+			title,
+			author,
+			body,
+			category
+		} = this.state;
 		
+		const label = this.state.mode === 'add' ? 'submit' : 'save';
+		return (
+			<form className="col-12 col-md-10 col-lg-8" onSubmit={ evt => {
+				evt.preventDefault();
+				this.state.mode === 'add'
+					? onSubmit(title, body, author, category)
+					: onSubmit(postToEdit.id, title, body)
+			}}>
+				<InputForm name="title" label="title" value={title} onChange={this.handleInputChange}/>
+				<TextareaForm name="body" label="content" value={body} onChange={this.handleInputChange}/>
+				{ this.state.mode === 'edit' 
+					? null 
+					: <div>
+							<SelectForm name="category" label="categories" value={category} options={categories} onChange={this.handleInputChange}/>
+							<InputForm name="author" label="author" value={author} onChange={this.handleInputChange}/>
+						</div>
+				}
+				<button type="submit" datatype="edit" className="btn bg-success">{label}</button>
+			</form>
+		);
+	}
+	
+	render() {
 		return (
 			<section className="container-fluid">
 				<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-success">
@@ -101,19 +81,9 @@ class AddPostView extends Component {
 						<Link to="/" className="navbar-brand bg-light"><img src={backIcon} alt="back homepage icon"/></Link>
 					</nav>	
 					<h2 className="col-12 col-sm text-sm-center text-uppercase">Add/Edit Post</h2>			
-				</header>
-				
-				<section className="row d-flex justify-content-around bg-light text-capitalize">			
-					<form className="col-12 col-md-10 col-lg-8">			
-						{ input("post-title", "title", "Ex: Learning react from cero", titleValue, this.onChangeTitle) }
-						{ textarea("post-body", "content", "content....", bodyValue, this.onChangeBody) }
-						{ !postToEdit.id && input("post-author", "author", "Ex: Jonh Doe", authorValue, this.onChangeAuthor)}
-						{ select("post-categories", "categories", categories, postToEdit.category) }
-						{postToEdit.id ? 
-							(<button type="submit" datatype="edit" className="btn bg-success">Save</button>) : 
-							(<button type="submit"datatype="add" className="btn bg-success">Submit</button>)
-						}
-					</form>
+				</header>				
+				<section className="row d-flex justify-content-around bg-light text-capitalize">														
+					{this.completeForm()}					
 				</section>
 			</section>
 		);
@@ -126,16 +96,12 @@ AddPostView.propTypes = {
 	//list of categories for select
 	categories: PropTypes.array.isRequired,
 	//edit post
-	onSavePost: PropTypes.func,
-	//add new post
-	onAddPost: PropTypes.func,	
+	onSubmit: PropTypes.func,
 }
 
 AddPostView.defaultProps = {
-	postToEdit: {},
 	categories: [],
-	onSavePost: () => {},
-	onAddPost: () => {},
+	onSubmit: () => {},
 }
 
 export default AddPostView;

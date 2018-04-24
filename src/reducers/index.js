@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { sortList,
+import {
 	ALL_POSTS_SUCCESS,
 	ALL_CATEGORIES_SUCCESS,
 	SELECT_SORT,
@@ -8,12 +8,8 @@ import { sortList,
 	POST_ACTIVE_ID,
 	POST_ACTIVE_COMMENTS,
 	
-	ADD_FETCHED_POST,
 	DELETED_POST,
-	
-	DELETED_COMMENT,
-	ADDED_COMMENT,
-	EDITED_COMMENT,
+	SAVED_POST,
 	
 } from '../actions';
 
@@ -32,19 +28,11 @@ function postsReducer(state=initialPosts, action) {
 		case ALL_POSTS_SUCCESS:
 			return {
 				byId: action.posts.reduce( (postObj, post) => {
-					postObj[post.id] = postObj[post.id] ||post;
+					postObj[post.id] = postObj[post.id] || post;
 					return postObj;
 				}, {}),
 				idsArr: action.posts.map(post => post.id)	
 			};
-		case ADD_FETCHED_POST: 
-			return {
-				...state,
-				byId: {
-					...state.byId,
-					[action.post.id]: action.post
-				}
-			};	
 		case CHANGE_POST_SCORE:
 			return {
 				...state,
@@ -66,7 +54,22 @@ function postsReducer(state=initialPosts, action) {
 						deleted: true
 					}
 				}
-			};		
+			};
+		case SAVED_POST: 
+			return {
+				...state,
+				posts: {
+					...state.posts,
+					byId: {
+						...state.posts.byId,
+						[action.id]: {
+							...state.posts.byId[action.id],
+							body: action.body,
+							title: action.title
+						}
+					}
+				}
+			};	
 		default:
 			return state;
 	}
@@ -106,41 +109,15 @@ function activePostReducer(state=initialActivePost, action) {
 			return {
 				...initialActivePost
 			};	
-		// case DELETED_COMMENT: 
-		// 	return {
-		// 		...state,
-		// 		comments: state.comments.filter( comment => comment.id !== action.id)
-		// 	};
-		// case ADDED_COMMENT: 
-		// 	return {
-		// 		...state,
-		// 		comments: [...state.comments, action.comment]	
-		// 	};
-		// case EDITED_COMMENT:
-		// 	return {
-		// 		...state,
-		// 		comments: state.comments.map( comment => {
-		// 			return comment.id === action.id
-		// 				? {...comment, body: action.body, timestamp: action.timestamp}
-		// 				: comment
-		// 		})
-		// 	};
 		default:
 			return state;
 	}
 }
-//function commentsReducer(state={}, action) {}
-//function currentSortReducer(state=sortList[0], action) {}
-//function currentCategoryReducer(state='', action) {}
-
 const rootReducer = combineReducers({
 	posts: postsReducer,
 	activePost: activePostReducer,
 	categories: categoriesReducer,
 	currentSort: currentSortReducer
-	//comments: commentsReducer,
-	//currentSort: currentSortReducer,
-	//currentCategory: currentCategoryReducer
 });
 export default rootReducer;
 

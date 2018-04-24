@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
 import Comment from './Comment';
 import AddCommentForm from './AddCommentForm';
 
