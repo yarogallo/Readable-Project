@@ -182,7 +182,7 @@ function deletedPost(id) {
 
 export function savePost(id, body, title) {
 	return dispatch => {
-		editPost(id)
+		editPost(id, body, title)
 			.then(data => data && dispatch(savedPost(id, body, title)));
 		
 	};

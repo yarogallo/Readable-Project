@@ -58,16 +58,13 @@ function postsReducer(state=initialPosts, action) {
 		case SAVED_POST: 
 			return {
 				...state,
-				posts: {
-					...state.posts,
 					byId: {
-						...state.posts.byId,
+						...state.byId,
 						[action.id]: {
-							...state.posts.byId[action.id],
+							...state.byId[action.id],
 							body: action.body,
 							title: action.title
 						}
-					}
 				}
 			};	
 		default:
