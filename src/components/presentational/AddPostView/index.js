@@ -100,7 +100,7 @@ class AddPostView extends Component {
 					<nav className="col-12 col-sm-2 col-lg-1 navbar">
 						<Link to="/" className="navbar-brand bg-light"><img src={backIcon} alt="back homepage icon"/></Link>
 					</nav>	
-					<h2 className="col-12 col-sm text-sm-center text-uppercase">Add/Edit Post</h2>			
+					<h2 className="col-12 col-sm text-sm-center text-uppercase">{`${this.state.mode} form`}</h2>			
 				</header>				
 				<section className="row d-flex justify-content-around bg-light text-capitalize">														
 					{this.completeForm()}					
