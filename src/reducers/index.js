@@ -12,6 +12,8 @@ import {
 	DELETED_POST,
 	SAVED_POST,
 	
+	ADDED_COMMENT,
+	
 } from '../actions';
 
 const initialPosts = {
@@ -117,7 +119,12 @@ function activePostReducer(state=initialActivePost, action) {
 		case DELETED_POST: 
 			return {
 				...initialActivePost
-			};	
+			};
+		case ADDED_COMMENT:
+			return {
+				...state,
+				comments: [...state.comments, action.comment]
+			};		
 		default:
 			return state;
 	}

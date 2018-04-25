@@ -38,13 +38,14 @@ class PostDetailView extends Component{
 	handleDelete() {
 		this.props.onDeletePost(this.props.post.id);
 	}
-
+	
 	render(){
 		const {
 			post,
 			comments,
 			onVotePost,
 			onDeletePost,
+			onAddNewComment
 		} = this.props;
 		
 		const postDate = getPostDate(post.timestamp);
@@ -83,7 +84,9 @@ class PostDetailView extends Component{
 					path="/"
 					onDelete={this.handleDelete}/>
 				<section className="row d-flex justify-content-around">	
-					<ListComments comments={comments}/>
+					<ListComments 
+						comments={comments} 
+						addNewComment={onAddNewComment}/>
 				</section>
 			</section>
 			);
@@ -100,13 +103,16 @@ PostDetailView.propTypes = {
 	onVotePost: PropTypes.func,
 	//delete the post
 	onDeletePost: PropTypes.func,
+	//add new comment to the active post
+	onAddNewComment: PropTypes.func,
 };
 
 PostDetailView.defaultProps = {
 	post: {},
 	comments: [],
 	onVotePost: () => {},
-	onDeletePost: () => {}
+	onDeletePost: () => {},
+	onAddNewComment: () => {}
 };
 
 export default PostDetailView;

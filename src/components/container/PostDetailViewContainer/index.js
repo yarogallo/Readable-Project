@@ -4,28 +4,37 @@ import {
 	votePostScore,
 	fetchActivePost,
 	fetchActiveComments,
-	deleteThisPost
+	deleteThisPost,
+	addComment,
 } from '../../../actions';
 import PostDetailView from '../../presentational/PostDetailView';
 
 class PostDetailViewContainer extends Component {
+	constructor(props) {
+		super(props);
+		this.handleAddCommentToPost = this.handleAddCommentToPost.bind(this);
+	}
 	componentDidMount() {
 		this.props.getPost(this.props.match.params.id);
 		this.props.getComments(this.props.match.params.id);
+	}
+	handleAddCommentToPost(author, body) {
+		this.props.onAddNewCommentToPost(this.props.post.id, author, body);
 	}
 	render() {
 		const {
 			post,
 			comments,
 			onVotePost,
-			onDeletePost
+			onDeletePost,
 		} = this.props;
 		return (
 			<PostDetailView 
 				post={post}
 				comments={comments}
 				onVotePost={onVotePost}
-				onDeletePost={onDeletePost}/>
+				onDeletePost={onDeletePost}
+				onAddNewComment={this.handleAddCommentToPost}/>
 		);
 	}
 }
@@ -44,7 +53,8 @@ function mapDispatchToProps(dispatch) {
 		getComments: id => dispatch(fetchActiveComments(id)),
 		onDeletePost: id => dispatch(deleteThisPost(id)),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
-	}
+		onAddNewCommentToPost: (parentId, author, body) => dispatch(addComment(parentId, author, body)),
+	};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailViewContainer);

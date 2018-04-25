@@ -30,7 +30,14 @@ class AddCommentForm extends Component {
 	
 	render() {
 		return (
-			<form>
+			<form onSubmit={(evt) => {
+				evt.preventDefault();
+				this.props.onSubmitForm(
+					this.state.author,
+					this.state.body
+				);
+				this.resetValues();
+			}}>
 				<div className="form-group">
 					<label className="float-left" htmlFor="input-author">author</label>
 					<input 
@@ -63,11 +70,11 @@ class AddCommentForm extends Component {
 }
 
 AddCommentForm.propTypes = {
-	onSubmitNewComment: PropTypes.func
+	onSubmitForm: PropTypes.func
 };
 
 AddCommentForm.defaultProps = {
-	onSubmitNewComment: () => {}
+	onSubmitForm: () => {}
 }
 
 export default AddCommentForm;

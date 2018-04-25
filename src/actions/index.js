@@ -204,37 +204,7 @@ function savedPost(id, title, body) {
 	};
 }
 
-
-
-
-
-
-export function voteComment(id, voteText) {
-	return {
-		type: VOTE_COMMENT,
-		id,
-		voteText
-	};
-}
-
-export function editComment(id, body) {
-	return dispatch => {
-		const timestamp = Date.now();
-		editCommentDetail(id, timestamp, body)
-			.then((result) =>  {
-				return result && dispatch(editedComment(id, timestamp, body));
-			});
-	};
-}
-
-function editedComment(id, timestamp, body) {
-	return {
-		type: EDITED_COMMENT,
-		id,
-		body,
-		timestamp,
-	};
-}
+// add comment to active post
 
 export function addComment(parentId, author, body) {
 	const comment = {
@@ -256,6 +226,43 @@ function addedComment(comment) {
 		comment
 	};
 }
+
+//edit an existent comment
+
+export function editComment(id, body) {
+	return dispatch => {
+		const timestamp = Date.now();
+		editCommentDetail(id, timestamp, body)
+			.then((result) =>  {
+				return result && dispatch(editedComment(id, timestamp, body));
+			});
+	};
+}
+
+function editedComment(id, timestamp, body) {
+	return {
+		type: EDITED_COMMENT,
+		id,
+		body,
+		timestamp,
+	};
+}
+
+/////////////////////////////////////
+
+
+
+
+
+export function voteComment(id, voteText) {
+	return {
+		type: VOTE_COMMENT,
+		id,
+		voteText
+	};
+}
+
+
 
 export function deleteComment(id) {
 	return dispatch => {
