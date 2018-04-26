@@ -6,7 +6,8 @@ import {
 	fetchActiveComments,
 	deleteThisPost,
 	addComment,
-	editComment
+	editComment,
+	deleteComment
 } from '../../../actions';
 import PostDetailView from '../../presentational/PostDetailView';
 
@@ -28,7 +29,8 @@ class PostDetailViewContainer extends Component {
 			comments,
 			onVotePost,
 			onDeletePost,
-			onEditPostComment
+			onEditPostComment,
+			onDeletePostComment
 		} = this.props;
 		return (
 			<PostDetailView 
@@ -37,7 +39,8 @@ class PostDetailViewContainer extends Component {
 				onVotePost={onVotePost}
 				onDeletePost={onDeletePost}
 				onAddNewComment={this.handleAddCommentToPost}
-				onEditComment={onEditPostComment}/>
+				onEditComment={onEditPostComment}
+				onDeleteComment={onDeletePostComment}/>
 		);
 	}
 }
@@ -57,9 +60,8 @@ function mapDispatchToProps(dispatch) {
 		onDeletePost: id => dispatch(deleteThisPost(id)),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
 		onAddNewCommentToPost: (parentId, author, body) => dispatch(addComment(parentId, author, body)),
-		onEditPostComment: (id, body) => {
-			console.log(id, body);
-			dispatch(editComment(id, body))}
+		onEditPostComment: (id, body) => dispatch(editComment(id, body)),
+		onDeletePostComment: id => dispatch(deleteComment(id))
 	};
 }
 

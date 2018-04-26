@@ -14,6 +14,7 @@ import {
 	
 	ADDED_COMMENT,
 	EDITED_COMMENT,
+	DELETED_COMMENT,
 	
 } from '../actions';
 
@@ -59,7 +60,7 @@ function postsReducer(state=initialPosts, action) {
 				},
 				idsArr: state.idsArr.concat(action.post.id)
 			};	
-		case DELETED_POST: 
+		case DELETED_POST:
 			return {
 				...state,
 				byId: {
@@ -134,7 +135,12 @@ function activePostReducer(state=initialActivePost, action) {
 						? {...comment, body: action.body, timestamp: action.timestamp}
 						: comment
 				})
-			}			
+			}
+		case DELETED_COMMENT: 
+			return {
+				...state,
+				comments: state.comments.filter(comment => comment.id !== action.id)
+			};
 		default:
 			return state;
 	}

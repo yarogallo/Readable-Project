@@ -8,7 +8,8 @@ function ListComments(props) {
 	const {
 		comments,
 		addNewComment,
-		editComment
+		editComment,
+		deleteComment
 	} = props;
 			
 	return (
@@ -17,7 +18,7 @@ function ListComments(props) {
 				<ul className="list-group">
 					{comments.map( comment => (
 						<li key={comments.id}>
-							<Comment comment={comment} onSaveComment={editComment}/>
+							<Comment comment={comment} onSaveComment={editComment} onDeleteComment={deleteComment}/>
 						</li>
 					))}
 				</ul>
@@ -41,12 +42,14 @@ ListComments.propTypes = {
 	addNewComment: PropTypes.func,
 	//edit a comment
 	editComment: PropTypes.func,
+	deleteComment: PropTypes.func,
 };
 
 ListComments.defaultProps = {
 	comments: [],
 	addNewComment: () => {},
-	editComment: () => {}
+	editComment: () => {},
+	deleteComment: () => {},
 };
 
 export default ListComments;

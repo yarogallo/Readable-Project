@@ -27,15 +27,17 @@ export const ADD_POST = 'ADD_POST';
 export const DELETED_POST = 'DELETED_POST';
 export const SAVED_POST = 'SAVED_POST';
 
+export const ADDED_COMMENT = 'ADDED_COMMENT';
+export const DELETED_COMMENT = 'DELETED_COMMENT';
+export const EDITED_COMMENT = 'EDITED_COMMENT';
+
 
 
 ///------------///
 
-
-export const ADDED_COMMENT = 'ADDED_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
-export const EDITED_COMMENT = 'EDITED_COMMENT';
-export const DELETED_COMMENT = 'DELETED_COMMENT';
+
+
 
 export const sortList = {
 	none: 'NONE',
@@ -248,6 +250,22 @@ function editedComment(id, timestamp, body) {
 	};
 }
 
+// delete a comment
+
+export function deleteComment(id) {
+	return dispatch => {
+		deletePostComment(id)
+			.then(data => data && dispatch(commentDeleted(id)));
+	};
+}
+
+function commentDeleted(id) {
+	return {
+		type: DELETED_COMMENT,
+		id
+	};
+}
+
 /////////////////////////////////////
 
 
@@ -264,21 +282,5 @@ export function voteComment(id, voteText) {
 
 
 
-export function deleteComment(id) {
-	return dispatch => {
-		deletePostComment(id)
-			.then(data => {
-				if(data) {
-					dispatch(commentDeleted(id));
-				}
-			});
-	};
-}
 
-function commentDeleted(id) {
-	return {
-		type: DELETED_COMMENT,
-		id
-	};
-}
 

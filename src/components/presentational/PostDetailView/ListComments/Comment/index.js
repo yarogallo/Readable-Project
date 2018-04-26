@@ -92,7 +92,7 @@ class Comment extends Component {
 					</button>					
 					<button className="btn" onClick={() => {	
 							const confirmDelete = window.confirm('Shure you want delete this comment???');
-							confirmDelete && onDeleteComment();
+							confirmDelete && onDeleteComment(comment.id);
 						}}>
 						<img src={removeIcon} alt="delete comment icon"/>
 					</button>
