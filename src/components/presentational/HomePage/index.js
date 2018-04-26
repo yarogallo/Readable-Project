@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import SortPostsMenu from '../SortPostsMenu';
-import ThumbnailPostListContainer from '../../container/ThumbnailPostListContainer';
+import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
 
 
@@ -13,6 +13,7 @@ function HomePage(props) {
 		categories,
 		sorts,
 		onSelectSort,
+		onVotePost
 	} = props;
 	return (
 		<section className="container-fluid">
@@ -27,7 +28,7 @@ function HomePage(props) {
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories}/>
-				<ThumbnailPostListContainer posts={posts}/>				
+				<ThumbnailPostList posts={posts} onVotePost={onVotePost}/>				
 			</section>	
 		</section>
 	);
@@ -52,6 +53,7 @@ HomePage.defaultProps = {
 	categories: [],
 	sorts: [],
 	onSelectSort: () => {},
+	onVotePost: () => {},
 };
 
 export default HomePage;

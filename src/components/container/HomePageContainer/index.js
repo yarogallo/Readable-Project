@@ -4,7 +4,8 @@ import {
 	sortList, 
 	fetchAllCategories,
 	fetchAllPosts,
-	selectSort
+	selectSort,
+	votePostScore
 } from '../../../actions';
 import {connect} from 'react-redux';
 
@@ -21,14 +22,16 @@ class HomePageContainer extends Component {
 			categories,
 			posts,
 			sorts,
-			onSelectSort
+			onSelectSort,
+			onVotePost,
 		} = this.props;
 		return(
 			<HomePage 
 				posts={posts} 
 				categories={categories}
 				sorts={sorts} 
-				onSelectSort={onSelectSort}/>
+				onSelectSort={onSelectSort}
+				onVotePost={onVotePost}/>
 		);
 	}
 }
@@ -50,7 +53,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		fetchCategories: () => dispatch(fetchAllCategories()),
 		fetchPosts: () => dispatch(fetchAllPosts()),
-		onSelectSort: sort => dispatch(selectSort(sort))
+		onSelectSort: sort => dispatch(selectSort(sort)),
+		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
 	};
 }
 

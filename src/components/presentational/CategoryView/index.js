@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import backIcon from './icons/left-arrow.svg';
 
 import SortPostsMenu from '../SortPostsMenu';
-import ThumbnailPostListContainer from '../../container/ThumbnailPostListContainer';
+import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
 
 
@@ -14,7 +14,8 @@ function CategoryView(props) {
 		posts,
 		categories,
 		sorts,
-		onSelectSort
+		onSelectSort,
+		onVotePost
 	} = props;
 	
 	return(
@@ -32,7 +33,7 @@ function CategoryView(props) {
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories}/>
-				<ThumbnailPostListContainer posts={posts}/>				
+				<ThumbnailPostList posts={posts} onVotePost={onVotePost}/>				
 			</section>	
 		</section>
 	);
@@ -48,7 +49,9 @@ CategoryView.propTypes = {
 	 //al sorts value
 	 sorts: PropTypes.array.isRequired,
 	//onSelect sort
-	onSelectSort: PropTypes.func
+	onSelectSort: PropTypes.func,
+	//vote post
+	onVotePost: PropTypes.func,
 };
 
 CategoryView.defaultProps = {
@@ -56,7 +59,8 @@ CategoryView.defaultProps = {
 	posts: [],
 	categories: [],
 	sorts: [],
-	onSelectSort: () => {}
+	onSelectSort: () => {},
+	onVotePost: () => {},
 };
 
 export default CategoryView

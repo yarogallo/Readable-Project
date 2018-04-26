@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {
 	sortList,
 	fetchAllPosts,
-	fetchAllCategories
+	fetchAllCategories,
+	votePostScore
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
@@ -23,10 +24,16 @@ class CategoryViewContainer extends Component {
 			category,
 			posts,
 			categories,
-			sorts
+			sorts,
+			onVotePost,
 		} = this.props;
 		return (
-			<CategoryView posts={posts} category={category} categories={categories} sorts={sorts}/>
+			<CategoryView 
+				posts={posts} 
+				category={category} 
+				categories={categories}
+				sorts={sorts}
+				onVotePost={onVotePost}/>
 		);
 	}
 }
@@ -50,7 +57,8 @@ function mapStateToProps(state, {match}) {
 function mapDispatchToProps(dispatch) {
 	return {
 		fetchPosts: () => dispatch(fetchAllPosts()),
-		fetchCategories: () => dispatch(fetchAllCategories())
+		fetchCategories: () => dispatch(fetchAllCategories()),
+		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText))
 	}
 }
 
