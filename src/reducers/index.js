@@ -13,6 +13,7 @@ import {
 	SAVED_POST,
 	
 	ADDED_COMMENT,
+	EDITED_COMMENT,
 	
 } from '../actions';
 
@@ -124,7 +125,16 @@ function activePostReducer(state=initialActivePost, action) {
 			return {
 				...state,
 				comments: [...state.comments, action.comment]
-			};		
+			};
+		case EDITED_COMMENT: 
+			return {
+				...state,
+				comments: state.comments.map( comment => {
+					return comment.id === action.id	
+						? {...comment, body: action.body, timestamp: action.timestamp}
+						: comment
+				})
+			}			
 		default:
 			return state;
 	}

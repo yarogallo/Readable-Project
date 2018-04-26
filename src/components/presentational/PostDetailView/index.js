@@ -45,7 +45,8 @@ class PostDetailView extends Component{
 			comments,
 			onVotePost,
 			onDeletePost,
-			onAddNewComment
+			onAddNewComment,
+			onEditComment,
 		} = this.props;
 		
 		const postDate = getPostDate(post.timestamp);
@@ -86,7 +87,8 @@ class PostDetailView extends Component{
 				<section className="row d-flex justify-content-around">	
 					<ListComments 
 						comments={comments} 
-						addNewComment={onAddNewComment}/>
+						addNewComment={onAddNewComment}
+						editComment={onEditComment}/>
 				</section>
 			</section>
 			);
@@ -105,6 +107,8 @@ PostDetailView.propTypes = {
 	onDeletePost: PropTypes.func,
 	//add new comment to the active post
 	onAddNewComment: PropTypes.func,
+	//edit an existent comment
+	onEditComment: PropTypes.func,
 };
 
 PostDetailView.defaultProps = {
@@ -112,7 +116,8 @@ PostDetailView.defaultProps = {
 	comments: [],
 	onVotePost: () => {},
 	onDeletePost: () => {},
-	onAddNewComment: () => {}
+	onAddNewComment: () => {},
+	onEditComment: () => {}
 };
 
 export default PostDetailView;

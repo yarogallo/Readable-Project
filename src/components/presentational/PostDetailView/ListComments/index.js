@@ -7,7 +7,8 @@ import AddCommentForm from './AddCommentForm';
 function ListComments(props) {
 	const {
 		comments,
-		addNewComment
+		addNewComment,
+		editComment
 	} = props;
 			
 	return (
@@ -16,7 +17,7 @@ function ListComments(props) {
 				<ul className="list-group">
 					{comments.map( comment => (
 						<li key={comments.id}>
-							<Comment comment={comment}/>
+							<Comment comment={comment} onSaveComment={editComment}/>
 						</li>
 					))}
 				</ul>
@@ -37,12 +38,15 @@ ListComments.propTypes = {
 	//all comments from specific post
 	comments: PropTypes.array,
 	//for add a new comment
-	addNewComment: PropTypes.func
+	addNewComment: PropTypes.func,
+	//edit a comment
+	editComment: PropTypes.func,
 };
 
 ListComments.defaultProps = {
 	comments: [],
-	addNewComment: () => {}
+	addNewComment: () => {},
+	editComment: () => {}
 };
 
 export default ListComments;

@@ -40,7 +40,14 @@ class Comment extends Component {
 	
 	editForm() {
 		return (
-			<form id="edit-comment-form">
+			<form id="edit-comment-form" onSubmit={(evt) => {
+				this.props.onSaveComment(
+					this.props.comment.id, 
+					this.state.value
+				);
+				evt.preventDefault();
+				this.closeEditHandler();
+			}}>
 				<button className="btn btn-link float-right text-info" type="submit">save</button>
 				<textarea
 					className="form-control" 
@@ -65,7 +72,6 @@ class Comment extends Component {
 		const {
 			comment,
 			onVoteComment,
-			onSaveComment,
 			onDeleteComment,		
 		} = this.props;
 		
@@ -79,16 +85,17 @@ class Comment extends Component {
 					<ScoreMenu scoreValue={comment.voteScore} onVote={onVoteComment}/>							
 				</div>
 				<div className="btn-group d-flex flex-row-reverse flex-sm-column" role="group">
-					<a className="btn" href="#edit-comment-form" onClick={() => {
-						this.toggleEditHandler();}}>
+					<button className="btn" onClick={() => {
+							this.toggleEditHandler();
+						}}>
 						<img src={editIcon} alt="edit comment icon"/>
-					</a>					
-					<a className="btn" href="#" onClick={() => {	
+					</button>					
+					<button className="btn" onClick={() => {	
 							const confirmDelete = window.confirm('Shure you want delete this comment???');
 							confirmDelete && onDeleteComment();
 						}}>
 						<img src={removeIcon} alt="delete comment icon"/>
-					</a>
+					</button>
 				</div>
 			</div>
 		);
@@ -101,7 +108,7 @@ Comment.propTypes = {
 	//vote for a comment
 	onVoteComment: PropTypes.func,
 	//action delete a specific comment,
-	ononEditMode: PropTypes.func,
+	onSaveComment: PropTypes.func,
 	//action edit a comment
 	onDeleteComment: PropTypes.func,	
 };
