@@ -3,7 +3,6 @@ import {
 	ALL_POSTS_SUCCESS,
 	ALL_CATEGORIES_SUCCESS,
 	SELECT_SORT,
-	CHANGE_POST_SCORE,
 	
 	POST_ACTIVE_ID,
 	POST_ACTIVE_COMMENTS,
@@ -11,10 +10,12 @@ import {
 	ADD_POST,
 	DELETED_POST,
 	SAVED_POST,
+	CHANGE_POST_SCORE,
 	
 	ADDED_COMMENT,
 	EDITED_COMMENT,
 	DELETED_COMMENT,
+	CHANGE_COMMENT_SCORE,
 	
 } from '../actions';
 
@@ -141,6 +142,16 @@ function activePostReducer(state=initialActivePost, action) {
 				...state,
 				comments: state.comments.filter(comment => comment.id !== action.id)
 			};
+		case CHANGE_COMMENT_SCORE:
+			return {
+				...state,
+				comments: state.comments.map( comment => {
+					if (comment.id === action.id) {
+						comment.voteScore = action.voteText === "upVote" ? comment.voteScore + 1 : comment.voteScore - 1;
+					}
+					return comment;
+				})	
+			};	
 		default:
 			return state;
 	}

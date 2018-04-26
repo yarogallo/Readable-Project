@@ -13,7 +13,8 @@ class Comment extends Component {
 			onEditMode: false,
 			value: this.props.comment.body	
 		};
-		this.onChangeValue= this.onChangeValue.bind(this);
+		this.onChangeValue = this.onChangeValue.bind(this);
+		this.handleVoteComment = this.handleVoteComment.bind(this); 
 	}
 	
 	toggleEditHandler() {
@@ -68,6 +69,13 @@ class Comment extends Component {
 		);
 	}
 	
+	handleVoteComment(voteText) {
+		this.props.onChangeScore(
+			this.props.comment.id,
+			voteText
+		);
+	}
+	
 	render() {
 		const {
 			comment,
@@ -82,7 +90,7 @@ class Comment extends Component {
 						? this.editForm()
 						: this.commentForm()
 					}
-					<ScoreMenu scoreValue={comment.voteScore} onVote={onVoteComment}/>							
+					<ScoreMenu scoreValue={comment.voteScore} onVote={this.handleVoteComment}/>							
 				</div>
 				<div className="btn-group d-flex flex-row-reverse flex-sm-column" role="group">
 					<button className="btn" onClick={() => {
@@ -110,7 +118,9 @@ Comment.propTypes = {
 	//action delete a specific comment,
 	onSaveComment: PropTypes.func,
 	//action edit a comment
-	onDeleteComment: PropTypes.func,	
+	onDeleteComment: PropTypes.func,
+	//change score
+	onChangeScore: PropTypes.func	
 };
 
 Comment.defaultProps = {
@@ -118,6 +128,7 @@ Comment.defaultProps = {
 	onVoteComment: () => {},
 	onSaveComment: () => {},
 	onDeleteComment: () => {},
+	onChangeScore: () => {},
 };
 
 export default Comment;

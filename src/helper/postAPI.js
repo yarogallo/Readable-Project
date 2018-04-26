@@ -48,31 +48,30 @@ export const getAllCategories = function() {
 
 //Get all of the posts for a particular category
 export const getCategoryPost = function(category) {
-	get(`${category}/posts`)
+	return get(`${category}/posts`)
 		.then(response => response.json())
-		.then(data => data )
 		.catch(err => handleErr(err));
 };
 
 //Get all of the posts.
 export const getAllPosts = function() {
 	return	get('posts')
-				.then(response => response.json())
-				.catch(err => handleErr(err));
+		.then(response => response.json())
+		.catch(err => handleErr(err));
 };
 
 //Add a new post.
 export const addNewPost = function(newPost) {
 	return post('posts', newPost)
-			.then(result => result.ok)
-			.catch(err => handleErr(err));
+		.then(result => result.ok)
+		.catch(err => handleErr(err));
 };
 
 //Get the details of a single post
 export const getPostDetail = function(id) {
 	return get(`posts/${id}`)
-			.then(result => result.json())
-			.catch(err => handleErr(err));
+		.then(result => result.json())
+		.catch(err => handleErr(err));
 };
 
 //Used for voting on a post
@@ -80,8 +79,8 @@ export const votePost = function(id, option){
 	return post(`posts/${id}`, { 
 			option 
 		})
-			.then( result => result.ok)
-			.catch( err => handleErr(err) );	
+		.then( result => result.ok)
+		.catch( err => handleErr(err) );	
 };
 
 //Edit the details of an existing post
@@ -90,43 +89,43 @@ export const editPost = function(id, title, body) {
 			title,
 			body
 		})
-			.then(result => result.ok)
-			.catch( err => handleErr(err) );
+		.then(result => result.ok)
+		.catch( err => handleErr(err) );
 };
 
 //Sets the deleted flag for a post to 'true' and the post comments
 export const deletePost = function(id) {
 	return remove(`posts/${id}`)
-			.then(result => result.ok)
-			.catch( err => handleErr(err) );
+		.then(result => result.ok)
+		.catch( err => handleErr(err) );
 };
 
 //Get all the comments for a single post.
 export const getPostComments = function(id) {
 	return get(`posts/${id}/comments`)
-			.then(result => result.json())
-			.catch( err => handleErr(err) );
+		.then(result => result.json())
+		.catch( err => handleErr(err) );
 };
 
 //Add a comment to a post
 export const addCommentToPost = function(comment) {
 	return post(`comments`, comment)
-			.then( result => result )
-			.catch( err => handleErr(err) );
+		.then( result => result )
+		.catch( err => handleErr(err) );
 };
 
 //Get the details for a single comment.
 export const getDetailComment = function(id) {
 	return get(`comments/${id}`)
-			.then(result => result.json())
-			.catch( err => handleErr(err) );
+		.then(result => result.json())
+		.catch( err => handleErr(err) );
 };
 
 //Used for voting on a comment
 export const voteComment = function(id, option) {
-	post(`comments/${id}`, {
+	return post(`comments/${id}`, {
 			option
-	})
+		})
 		.then(result => result.ok)
 		.catch(err => handleErr(err));
 };
@@ -144,6 +143,6 @@ export const editCommentDetail = function(id, timestamp, body) {
 //Sets a comment's deleted flag to true
 export const deletePostComment = function(id) {
 	return remove(`comments/${id}`)
-			.then(result => result.ok)
-			.catch( err => handleErr(err) );
+		.then(result => result.ok)
+		.catch( err => handleErr(err) );
 };

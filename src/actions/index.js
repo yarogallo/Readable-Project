@@ -5,12 +5,13 @@ import {
 	deletePostComment,
 	addCommentToPost,
 	editCommentDetail,
+	voteComment,
 	getAllCategories,
 	votePost,
 	getPostDetail,
 	deletePost,
 	addNewPost,
-	editPost
+	editPost,
 } from '../helper/postAPI';
 
 //actions types 
@@ -21,22 +22,15 @@ export const SELECT_SORT = 'SELECT_SORT';
 export const POST_ACTIVE_ID = 'POST_ACTIVE_ID';
 export const POST_ACTIVE_COMMENTS = 'POST_ACTIVE_COMMENTS';
 
-export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
-
 export const ADD_POST = 'ADD_POST';
 export const DELETED_POST = 'DELETED_POST';
 export const SAVED_POST = 'SAVED_POST';
+export const CHANGE_POST_SCORE = 'CHANGE_POST_SCORE';
 
 export const ADDED_COMMENT = 'ADDED_COMMENT';
 export const DELETED_COMMENT = 'DELETED_COMMENT';
 export const EDITED_COMMENT = 'EDITED_COMMENT';
-
-
-
-///------------///
-
-export const VOTE_COMMENT = 'VOTE_COMMENT';
-
+export const CHANGE_COMMENT_SCORE = 'CHANGE_COMMENT_SCORE';
 
 
 export const sortList = {
@@ -266,19 +260,29 @@ function commentDeleted(id) {
 	};
 }
 
-/////////////////////////////////////
+//vote comment
 
-
-
-
-
-export function voteComment(id, voteText) {
-	return {
-		type: VOTE_COMMENT,
-		id,
-		voteText
+export function voteCommentScore(id, voteText) {
+	return dispatch => {
+		voteComment(id, voteText)
+			.then( data => data && dispatch(changeCommentScore(id, voteText)));
 	};
 }
+
+function changeCommentScore(id, voteText) {
+	debugger;
+	return {
+		type: CHANGE_COMMENT_SCORE,
+		id,
+		voteText	
+	};
+}
+
+
+
+
+
+
 
 
 

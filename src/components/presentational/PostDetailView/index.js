@@ -48,6 +48,7 @@ class PostDetailView extends Component{
 			onAddNewComment,
 			onEditComment,
 			onDeleteComment,
+			onVoteComment
 		} = this.props;
 		
 		const postDate = getPostDate(post.timestamp);
@@ -90,7 +91,8 @@ class PostDetailView extends Component{
 						comments={comments} 
 						addNewComment={onAddNewComment}
 						editComment={onEditComment}
-						deleteComment={onDeleteComment}/>
+						deleteComment={onDeleteComment}
+						voteComment={onVoteComment}/>
 				</section>
 			</section>
 			);
@@ -113,6 +115,8 @@ PostDetailView.propTypes = {
 	onEditComment: PropTypes.func,
 	//delete a comment
 	onDeleteComment: PropTypes.func,
+	//vote comment
+	onVoteComment: PropTypes.func
 };
 
 PostDetailView.defaultProps = {
@@ -123,6 +127,7 @@ PostDetailView.defaultProps = {
 	onAddNewComment: () => {},
 	onEditComment: () => {},
 	onDeleteComment: () => {},
+	onVoteComment: () => {},
 };
 
 export default PostDetailView;
