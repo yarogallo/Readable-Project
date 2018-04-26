@@ -5,15 +5,20 @@ import {Link} from 'react-router-dom';
 function CategoryMenu(props) {
 	const {
 		categories,
+		currentCategory
 	} = props;
+	const createLink = function(category) {
+		return (category === currentCategory 
+			? <Link className="nav-link active text-center text-danger" key={category} to={`/categories/${category}`}>{category}</Link>
+			: <Link className="nav-link active text-center" key={category} to={`/categories/${category}`}>{category}</Link>
+		);
+	}
 	
 	return(
 		<nav className="col-12 col-sm-2 nav flex-column">
 			<a className="nav-link text-center disabled text-uppercase" href="#catMenu">Categories:</a>
 			<div id="catMenu">
-				{ categories.map( category => (
-					<Link className="nav-link active text-center" key={category} to={`/categories/${category}`}>{category}</Link>
-				))}
+				{categories.map( category => createLink(category))}
 			</div>
 		</nav>		
 	);
@@ -22,10 +27,13 @@ function CategoryMenu(props) {
 CategoryMenu.propTypes = {
 	//list categories filters
 	categories: PropTypes.array.isRequired,
+	//selected category
+	currentCategory: PropTypes.string
 };
 
 CategoryMenu.defaultProps = {
 	categories: [],
+	currentCategory: ''
 }
 
 export default CategoryMenu;

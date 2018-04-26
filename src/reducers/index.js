@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 import {
 	ALL_POSTS_SUCCESS,
+	
 	ALL_CATEGORIES_SUCCESS,
+	ALL_POST_CATEGORY_SUCCESS,
+	
 	SELECT_SORT,
 	
 	POST_ACTIVE_ID,
@@ -27,6 +30,11 @@ const initialPosts = {
 const initialActivePost = {
 	postId: '',
 	comments: []
+};
+
+const initialCategories = {
+	allCategories: {},
+	categoriesNames: []
 };
 
 function postsReducer(state=initialPosts, action) {
@@ -89,10 +97,17 @@ function postsReducer(state=initialPosts, action) {
 	}
 }
 
-function categoriesReducer(state=[], action) {
+function categoriesReducer(state=initialCategories, action) {
 	switch (action.type) {
 		case ALL_CATEGORIES_SUCCESS:
-			return [...action.categories];
+			return {
+				...state,
+				allCategories: action.categories.reduce((acc, category) => {
+					acc[category.name] = category;
+					return acc;
+				}, {}),
+				categoriesNames: action.categories.map(category => category.name)
+			};
 		default:
 			return state;
 	}

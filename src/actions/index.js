@@ -7,6 +7,7 @@ import {
 	editCommentDetail,
 	voteComment,
 	getAllCategories,
+	getCategoryPost,
 	votePost,
 	getPostDetail,
 	deletePost,
@@ -16,7 +17,10 @@ import {
 
 //actions types 
 export const ALL_POSTS_SUCCESS = 'ALL_POSTS_SUCCESS';
+
 export const ALL_CATEGORIES_SUCCESS = 'ALL_CATEGORIES_SUCCESS';
+export const ALL_POST_CATEGORY_SUCCESS = 'ALL_POST_CATEGORY_SUCCESS';
+
 export const SELECT_SORT = 'SELECT_SORT';
 
 export const POST_ACTIVE_ID = 'POST_ACTIVE_ID';
@@ -72,6 +76,15 @@ function allCategoriesSuccess(categories) {
 	return {
 		type: ALL_CATEGORIES_SUCCESS,
 		categories,
+	};
+}
+
+// all posts for a specific category
+
+export function fetchAllPostCategory(category) {
+	return dispatch => {
+		getCategoryPost(category)
+			.then(data => data && dispatch(allPostsSuccess(data)));
 	};
 }
 

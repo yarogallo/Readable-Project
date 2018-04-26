@@ -85,7 +85,7 @@ function mapStateToProps(state, {match}) {
 		: {...allPosts[state.activePost.postId]};
 	return {
 		postToEdit,
-		categories: state.categories.map( category => category.name)
+		categories: [...state.categories.categoriesNames]
 	};
 }
 

@@ -15,7 +15,7 @@ function CategoryView(props) {
 		categories,
 		sorts,
 		onSelectSort,
-		onVotePost
+		onVotePost,
 	} = props;
 	
 	return(
@@ -32,7 +32,7 @@ function CategoryView(props) {
 				<SortPostsMenu onSelectSort={onSelectSort} sortValues={sorts}/>
 			</section>
 			<section className="row bg-light">
-				<CategoryMenu categories={categories}/>
+				<CategoryMenu categories={categories} currentCategory={category}/>
 				<ThumbnailPostList posts={posts} onVotePost={onVotePost}/>				
 			</section>	
 		</section>
@@ -47,7 +47,7 @@ CategoryView.propTypes = {
 	//all categories available
 	categories: PropTypes.array.isRequired,
 	 //al sorts value
-	 sorts: PropTypes.array.isRequired,
+	sorts: PropTypes.array.isRequired,
 	//onSelect sort
 	onSelectSort: PropTypes.func,
 	//vote post

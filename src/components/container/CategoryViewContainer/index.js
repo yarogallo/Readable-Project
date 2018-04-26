@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 import {
 	sortList,
-	fetchAllPosts,
 	fetchAllCategories,
+	fetchAllPostCategory,
 	votePostScore
 } from '../../../actions';
 
@@ -12,11 +12,18 @@ import CategoryView from '../../presentational/CategoryView';
 
 class CategoryViewContainer extends Component {
 	componentDidMount() {
-		if (!this.props.posts.length){
-			this.props.fetchPosts();
-		}
+		this.props.fetchPostCategory(
+				this.props.category
+			);
 		if (!this.props.categories.length) {
 			this.props.fetchCategories();
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if(this.props.category !== nextProps.category) {
+			this.props.fetchPostCategory(
+				nextProps.category
+			);
 		}
 	}
 	render() {
@@ -43,7 +50,7 @@ function mapStateToProps(state, {match}) {
 	const { posts, categories } = state;
 	return {
 		category: currentCategory,
-		categories: categories.map(category => category.name),
+		categories: [...state.categories.categoriesNames],
 		posts: posts.idsArr.reduce((acc, id) => {
 			if(posts.byId[id].category === currentCategory) {
 				acc.push(posts.byId[id]);
@@ -56,7 +63,7 @@ function mapStateToProps(state, {match}) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		fetchPosts: () => dispatch(fetchAllPosts()),
+		fetchPostCategory: (category) => {dispatch(fetchAllPostCategory(category))},
 		fetchCategories: () => dispatch(fetchAllCategories()),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText))
 	}
