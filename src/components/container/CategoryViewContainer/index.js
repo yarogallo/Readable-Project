@@ -50,7 +50,7 @@ function mapStateToProps(state, {match}) {
 	const { posts, categories } = state;
 	return {
 		category: currentCategory,
-		categories: [...state.categories.categoriesNames],
+		categories: [...categories.categoriesNames],
 		posts: posts.idsArr.reduce((acc, id) => {
 			if(posts.byId[id].category === currentCategory) {
 				acc.push(posts.byId[id]);

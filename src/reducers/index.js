@@ -3,7 +3,6 @@ import {
 	ALL_POSTS_SUCCESS,
 	
 	ALL_CATEGORIES_SUCCESS,
-	ALL_POST_CATEGORY_SUCCESS,
 	
 	SELECT_SORT,
 	
@@ -36,6 +35,8 @@ const initialCategories = {
 	allCategories: {},
 	categoriesNames: []
 };
+
+const initialSort = '';
 
 function postsReducer(state=initialPosts, action) {
 	switch (action.type) {
@@ -113,7 +114,7 @@ function categoriesReducer(state=initialCategories, action) {
 	}
 }
 
-function currentSortReducer(state='none', action) {
+function currentSortReducer(state=initialSort, action) {
 	switch (action.type) {
 		case SELECT_SORT:
 			return action.sort;

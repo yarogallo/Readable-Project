@@ -283,7 +283,6 @@ export function voteCommentScore(id, voteText) {
 }
 
 function changeCommentScore(id, voteText) {
-	debugger;
 	return {
 		type: CHANGE_COMMENT_SCORE,
 		id,

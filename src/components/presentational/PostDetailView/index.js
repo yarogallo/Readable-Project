@@ -44,7 +44,6 @@ class PostDetailView extends Component{
 			post,
 			comments,
 			onVotePost,
-			onDeletePost,
 			onAddNewComment,
 			onEditComment,
 			onDeleteComment,

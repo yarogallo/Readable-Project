@@ -79,7 +79,6 @@ class Comment extends Component {
 	render() {
 		const {
 			comment,
-			onVoteComment,
 			onDeleteComment,		
 		} = this.props;
 		
