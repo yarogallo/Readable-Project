@@ -12,15 +12,18 @@ class App extends Component {
     return (
       <BrowserRouter>
         <section className="app">
-          
-          <Route exact path="/"  component={HomePageContainer}/>
-            
-          <Route path="/categories/:category" component={CategoryViewContainer}/>
         
-          <Route path="/post-details/:id" component={PostDetailViewContainer}/>
+        
+          <Route exact path="/"  component={HomePageContainer}/>
+          <Route exact path="/sort-by/:sort"  component={HomePageContainer}/>
+            
+          <Route exact path="/categories/:category" component={CategoryViewContainer}/>
+          <Route exact path="/categories/:category/sort-by/:sort" component={CategoryViewContainer}/>
+        
+          <Route exact path="/post-details/:id" component={PostDetailViewContainer}/>
         
           <Route exact path="/add-post" component={AddPostViewContainer}/>
-          <Route exact path="/add-post/:id" component={AddPostViewContainer}/>
+          <Route exact path="/edit-post/:id" component={AddPostViewContainer}/>
       
         </section>
       </BrowserRouter>

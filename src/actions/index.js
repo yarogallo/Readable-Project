@@ -13,6 +13,7 @@ import {
 	deletePost,
 	addNewPost,
 	editPost,
+
 } from '../helper/postAPI';
 
 //actions types 
@@ -38,11 +39,10 @@ export const CHANGE_COMMENT_SCORE = 'CHANGE_COMMENT_SCORE';
 
 
 export const sortList = {
-	none: 'NONE',
-	newest: 'NEWEST',
-	oldest: 'OLDEST',
-	max_score: 'MAX_SCORE', 
-	min_score: 'MIN_AVG',
+	newest: 'newest',
+	oldest: 'oldest',
+	max_score: 'max_score', 
+	min_score: 'min_score',
 };
 
 //fetch all posts 

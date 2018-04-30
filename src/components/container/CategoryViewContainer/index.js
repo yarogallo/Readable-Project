@@ -5,7 +5,8 @@ import {
 	sortList,
 	fetchAllCategories,
 	fetchAllPostCategory,
-	votePostScore
+	votePostScore,
+	selectSort
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
@@ -33,6 +34,7 @@ class CategoryViewContainer extends Component {
 			categories,
 			sorts,
 			onVotePost,
+			onSelectSort,
 		} = this.props;
 		return (
 			<CategoryView 
@@ -40,24 +42,43 @@ class CategoryViewContainer extends Component {
 				category={category} 
 				categories={categories}
 				sorts={sorts}
-				onVotePost={onVotePost}/>
+				onVotePost={onVotePost}
+				onSelectSort={onSelectSort}
+				path={`/categories/${category}`}/>
 		);
 	}
 }
 
-function mapStateToProps(state, {match}) {
+function applySort(arr, sort) {
+	switch (sort) {
+		case sortList.newest:
+			return arr.sort((a, b) => a.timestamp - b.timestamp).reverse();
+		case sortList.oldest:
+			return arr.sort((a, b) => a.timestamp - b.timestamp);
+		case sortList.max_score:
+			return arr.sort((a, b) => a.voteScore - b.votePostScore);
+		case sortList.min_score:
+			return arr.sort((a, b) => a.voteScore - b.votePostScore).reverse();		
+		default:
+			return arr;
+	}
+}
+
+function mapStateToProps(state, {match,location}) {
 	const currentCategory = match.params.category;
-	const { posts, categories } = state;
+	const { posts, categories, currentSort } = state;
+	const arrPost = posts.idsArr.reduce((acc, id) => {
+		if(posts.byId[id].category === currentCategory) {
+			acc.push(posts.byId[id]);
+		}
+		return acc;
+	}, [])
+	
 	return {
 		category: currentCategory,
 		categories: [...categories.categoriesNames],
-		posts: posts.idsArr.reduce((acc, id) => {
-			if(posts.byId[id].category === currentCategory) {
-				acc.push(posts.byId[id]);
-			}
-			return acc;
-		}, []),
-		sorts: Object.keys(sortList)
+		posts: applySort(arrPost, currentSort), 
+		sorts: Object.keys(sortList).map(sort => sortList[sort]),
 	}
 }
 
@@ -65,7 +86,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		fetchPostCategory: (category) => {dispatch(fetchAllPostCategory(category))},
 		fetchCategories: () => dispatch(fetchAllCategories()),
-		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText))
+		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
+		onSelectSort: sort => dispatch(selectSort(sort))
 	}
 }
 

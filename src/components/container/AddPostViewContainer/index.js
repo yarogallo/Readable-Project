@@ -24,7 +24,6 @@ class AddPostViewContainer extends Component {
 		if (!this.props.categories.length) {
 			this.props.getCategories();
 		}
-		console.log(this.props);
 		this.props.getPostToEdit(this.props.match.params.id);
 	}
 	

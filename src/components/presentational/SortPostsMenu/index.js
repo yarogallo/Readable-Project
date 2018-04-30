@@ -1,25 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 function SortPostsMenu(props) {
 	const {
 		sortValues,
-		onSelectSort
+		onSelectSort,
+		path
 	} = props;
 		
 	return (
 		<div className="col-12 sort-menu d-flex flex-column flex-sm-row justify-content-end btn-group" role="group">
 			<ul className="nav" id="sort-list">
 				<li className="nav-item">
-					<a className="nav-link disabled" href="#sort-list" disabled>Sort By:</a>
+					<p className="nav-link disabled">Sort By:</p>
 				</li>
+				<li className="nav-item" >
+						<Link className="nav-link" to={`${path}`} onClick={ evt => {
+							onSelectSort('none');
+						}}>none</Link>
+					</li>
 				{ sortValues.map( value => (
 					<li className="nav-item" key={value} >
-						<a className="nav-link" href="#sort-list" onClick={ evt => {
-							console.log(value);
-							evt.preventDefault();
+						<Link className="nav-link" to={`${path}/sort-by/${value}`} onClick={ evt => {
 							onSelectSort(value);
-						}}>{value}</a>
+						}}>{value}</Link>
 					</li>
 				)) }
 			</ul>
@@ -31,12 +36,14 @@ SortPostsMenu.propTypes = {
 	//sort list criterias
 	sortValues: PropTypes.array.isRequired,
 	//action to be executed when a sort is selected
-	onSelectSort: PropTypes.func
+	onSelectSort: PropTypes.func,
+	path: PropTypes.string.isRequired,
 };
 
 SortPostsMenu.defaultProps = {
 	sortValues: [],
-	onSelectSort: () => {}, 
+	onSelectSort: () => {},
+	path: "" 
 };
 
 export default SortPostsMenu;

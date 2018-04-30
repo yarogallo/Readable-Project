@@ -24,7 +24,7 @@ function HomePage(props) {
 				</nav>				
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu sortValues={sorts} onSelectSort={onSelectSort}/>
+				<SortPostsMenu sortValues={sorts} onSelectSort={onSelectSort} />
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories}/>

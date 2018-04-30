@@ -16,6 +16,7 @@ function CategoryView(props) {
 		sorts,
 		onSelectSort,
 		onVotePost,
+		path,
 	} = props;
 	
 	return(
@@ -29,7 +30,7 @@ function CategoryView(props) {
 				<h2 className="col-12 col-sm text-sm-right text-capitalize text-white">{category}</h2>			
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu onSelectSort={onSelectSort} sortValues={sorts}/>
+				<SortPostsMenu onSelectSort={onSelectSort} sortValues={sorts} path={path}/>
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories} currentCategory={category}/>

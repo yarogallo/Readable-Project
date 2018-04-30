@@ -72,7 +72,7 @@ class PostDetailView extends Component{
 							onVotePost(post.id, voteText);
 						}}/>
 						<div className="btn-group text-capitalize" role="group">
-							<Link className="btn text-info" to={`/add-post/${post.id}`}>edit</Link>
+							<Link className="btn text-info" to={`/edit-post/${post.id}`}>edit</Link>
 							<button className="btn text-info" onClick={() => {
 								this.openModal();
 							}}>delete</button>

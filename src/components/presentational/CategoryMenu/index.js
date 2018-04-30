@@ -16,7 +16,7 @@ function CategoryMenu(props) {
 	
 	return(
 		<nav className="col-12 col-sm-2 nav flex-column">
-			<a className="nav-link text-center disabled text-uppercase" href="#catMenu">Categories:</a>
+			<p className="nav-link text-center text-uppercase text-muted">Categories:</p>
 			<div id="catMenu">
 				{categories.map( category => createLink(category))}
 			</div>
