@@ -24,7 +24,7 @@ function HomePage(props) {
 				</nav>				
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu sortValues={sorts} onSelectSort={onSelectSort} />
+				<SortPostsMenu sortValues={sorts}/>
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories}/>
@@ -42,8 +42,6 @@ HomePage.propTypes = {
 	categories: PropTypes.array.isRequired,
 	//sort criterias list
 	sorts: PropTypes.array.isRequired,
-	//when a sort value is selected
-	onSelectSort: PropTypes.func,
 	//when a post is voted
 	onVotePost: PropTypes.func
 };
@@ -52,7 +50,6 @@ HomePage.defaultProps = {
 	posts: [],
 	categories: [],
 	sorts: [],
-	onSelectSort: () => {},
 	onVotePost: () => {},
 };
 

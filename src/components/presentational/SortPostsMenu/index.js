@@ -16,15 +16,11 @@ function SortPostsMenu(props) {
 					<p className="nav-link disabled">Sort By:</p>
 				</li>
 				<li className="nav-item" >
-						<Link className="nav-link" to={`${path}`} onClick={ evt => {
-							onSelectSort('none');
-						}}>none</Link>
+						<Link className="nav-link" to={`${path}`}>none</Link>
 					</li>
 				{ sortValues.map( value => (
 					<li className="nav-item" key={value} >
-						<Link className="nav-link" to={`${path}/sort-by/${value}`} onClick={ evt => {
-							onSelectSort(value);
-						}}>{value}</Link>
+						<Link className="nav-link" to={`${path}/sort-by/${value}`}>{value}</Link>
 					</li>
 				)) }
 			</ul>
@@ -37,6 +33,7 @@ SortPostsMenu.propTypes = {
 	sortValues: PropTypes.array.isRequired,
 	//action to be executed when a sort is selected
 	onSelectSort: PropTypes.func,
+	//path to Link component
 	path: PropTypes.string.isRequired,
 };
 

@@ -36,7 +36,7 @@ const initialCategories = {
 	categoriesNames: []
 };
 
-const initialSort = '';
+const initialSort = 'none';
 
 function postsReducer(state=initialPosts, action) {
 	switch (action.type) {
@@ -114,15 +114,6 @@ function categoriesReducer(state=initialCategories, action) {
 	}
 }
 
-function currentSortReducer(state=initialSort, action) {
-	switch (action.type) {
-		case SELECT_SORT:
-			return action.sort;
-		default:
-			return state;
-	}
-}
-
 function activePostReducer(state=initialActivePost, action) {
 	switch (action.type) {
 		case POST_ACTIVE_ID:
@@ -176,7 +167,6 @@ const rootReducer = combineReducers({
 	posts: postsReducer,
 	activePost: activePostReducer,
 	categories: categoriesReducer,
-	currentSort: currentSortReducer
 });
 export default rootReducer;
 

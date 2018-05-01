@@ -88,16 +88,6 @@ export function fetchAllPostCategory(category) {
 	};
 }
 
-// select sort
-
-export function selectSort(sort) {
-	return {
-		type: SELECT_SORT,
-		sort
-	};
-}
-
-
 // vote post
 
 export function votePostScore(id, voteText) {

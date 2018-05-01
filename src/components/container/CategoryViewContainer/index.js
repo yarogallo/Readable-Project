@@ -6,7 +6,6 @@ import {
 	fetchAllCategories,
 	fetchAllPostCategory,
 	votePostScore,
-	selectSort
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
@@ -43,7 +42,6 @@ class CategoryViewContainer extends Component {
 				categories={categories}
 				sorts={sorts}
 				onVotePost={onVotePost}
-				onSelectSort={onSelectSort}
 				path={`/categories/${category}`}/>
 		);
 	}
@@ -66,7 +64,8 @@ function applySort(arr, sort) {
 
 function mapStateToProps(state, {match,location}) {
 	const currentCategory = match.params.category;
-	const { posts, categories, currentSort } = state;
+	const currentSort = match.params.sort;
+	const { posts, categories } = state;
 	const arrPost = posts.idsArr.reduce((acc, id) => {
 		if(posts.byId[id].category === currentCategory) {
 			acc.push(posts.byId[id]);
@@ -87,7 +86,6 @@ function mapDispatchToProps(dispatch) {
 		fetchPostCategory: (category) => {dispatch(fetchAllPostCategory(category))},
 		fetchCategories: () => dispatch(fetchAllCategories()),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
-		onSelectSort: sort => dispatch(selectSort(sort))
 	}
 }
 

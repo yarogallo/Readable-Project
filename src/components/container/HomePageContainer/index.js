@@ -4,7 +4,6 @@ import {
 	sortList, 
 	fetchAllCategories,
 	fetchAllPosts,
-	selectSort,
 	votePostScore
 } from '../../../actions';
 import {connect} from 'react-redux';
@@ -22,7 +21,6 @@ class HomePageContainer extends Component {
 			categories,
 			posts,
 			sorts,
-			onSelectSort,
 			onVotePost,
 		} = this.props;
 		return(
@@ -30,7 +28,6 @@ class HomePageContainer extends Component {
 				posts={posts} 
 				categories={categories}
 				sorts={sorts} 
-				onSelectSort={onSelectSort}
 				onVotePost={onVotePost}/>
 		);
 	}
@@ -52,14 +49,15 @@ function applySort(arr, sort) {
 }
 
 function mapStateToProps(state, {match}) {
+	const currentSort = match.params.sort || 'none';
 	const currentPosts = state.posts.idsArr.reduce( (acc, id) =>	 {
 		id && acc.push(state.posts.byId[id]);
 		return acc;	
 	}, []);
 	return {
 		categories: [...state.categories.categoriesNames],
-		posts: applySort(currentPosts, state.currentSort),
-		sorts: Object.keys(sortList)
+		posts: applySort(currentPosts, currentSort),
+		sorts: Object.keys(sortList),
 	}
 }
 
@@ -67,7 +65,6 @@ function mapDispatchToProps(dispatch) {
 	return {
 		fetchCategories: () => dispatch(fetchAllCategories()),
 		fetchPosts: () => dispatch(fetchAllPosts()),
-		onSelectSort: sort => dispatch(selectSort(sort)),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
 	};
 }
