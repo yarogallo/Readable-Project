@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 function SortPostsMenu(props) {
 	const {
 		sortValues,
-		onSelectSort,
 		path
 	} = props;
 		

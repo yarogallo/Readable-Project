@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import logo from './icons/left-arrow.svg';
@@ -47,7 +47,7 @@ function PostDetailView(props) {
 						onVotePost(post.id, voteText);
 					}}/>
 					<div className="btn-group text-capitalize" role="group">
-						<Link className="btn text-info" to={`/edit-post/${post.id}`}>edit</Link>
+						<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>
 						<DeletePost onDeletePost={() => onDeletePost(post.id)} path="/"/>
 					</div>
 				</div>

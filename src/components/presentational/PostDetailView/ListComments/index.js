@@ -25,7 +25,7 @@ function ListComments(props) {
 				</ul>
 			</div>
 			<div>
-				<a className="btn btn-link text-info text-uppercase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+				<a className="btn btn-link text-link text-uppercase" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					add comment
 				</a>
 				<div className="collapse" id="collapseExample">

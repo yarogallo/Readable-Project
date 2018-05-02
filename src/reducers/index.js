@@ -4,8 +4,6 @@ import {
 	
 	ALL_CATEGORIES_SUCCESS,
 	
-	SELECT_SORT,
-	
 	POST_ACTIVE_ID,
 	POST_ACTIVE_COMMENTS,
 	
@@ -35,8 +33,6 @@ const initialCategories = {
 	allCategories: {},
 	categoriesNames: []
 };
-
-const initialSort = 'none';
 
 function postsReducer(state=initialPosts, action) {
 	switch (action.type) {

@@ -34,7 +34,6 @@ class CategoryViewContainer extends Component {
 			categories,
 			sorts,
 			onVotePost,
-			onSelectSort,
 			onDeletePost,
 		} = this.props;
 		return (

@@ -11,7 +11,6 @@ function HomePage(props) {
 		posts,
 		categories,
 		sorts,
-		onSelectSort,
 		onVotePost,
 		onDeletePost
 	} = props;

@@ -20,7 +20,8 @@ function ThumbnailPostList(props) {
 						<Link to={`/post-details/${post.id}`} ><h5>{post.title}</h5></Link>					
 						<div>
 							<ScoreMenu scoreValue={post.voteScore} onVote={voteText => onVotePost(post.id, voteText)}/>
-							<DeletePost onDeletePost={() => onDeletePost(post.id)}/>		
+							<DeletePost onDeletePost={() => onDeletePost(post.id)}/>
+							<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>		
 							<p className="text-info d-inline">{`comments: ${post.commentCount}`}</p>	
 						</div>				
 					</li>
