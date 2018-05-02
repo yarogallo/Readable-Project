@@ -14,7 +14,7 @@ function CategoryView(props) {
 		posts,
 		categories,
 		sorts,
-		onSelectSort,
+		sort,
 		onVotePost,
 		path,
 		onDeletePost
@@ -31,7 +31,7 @@ function CategoryView(props) {
 				<h2 className="col-12 col-sm text-sm-right text-capitalize text-white">{category}</h2>			
 			</header>
 			<section className="row bg-light">
-				<SortPostsMenu onSelectSort={onSelectSort} sortValues={sorts} path={path}/>
+				<SortPostsMenu sort={sort} sortValues={sorts} path={path}/>
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories} currentCategory={category}/>
@@ -54,8 +54,8 @@ CategoryView.propTypes = {
 	categories: PropTypes.array.isRequired,
 	 //al sorts value
 	sorts: PropTypes.array.isRequired,
-	//onSelect sort
-	onSelectSort: PropTypes.func,
+	//selected sort
+	sort: PropTypes.string,
 	//vote post
 	onVotePost: PropTypes.func,
 	onDeletePost: PropTypes.func,
@@ -66,7 +66,6 @@ CategoryView.defaultProps = {
 	posts: [],
 	categories: [],
 	sorts: [],
-	onSelectSort: () => {},
 	onVotePost: () => {},
 	onDeletePost: () => {},
 };

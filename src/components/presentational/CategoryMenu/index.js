@@ -7,6 +7,7 @@ function CategoryMenu(props) {
 		categories,
 		currentCategory
 	} = props;
+	
 	const createLink = function(category) {
 		return (category === currentCategory 
 			? <Link className="nav-link active text-center text-danger" key={category} to={`/categories/${category}`}>{category}</Link>

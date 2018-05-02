@@ -33,6 +33,7 @@ class CategoryViewContainer extends Component {
 			posts,
 			categories,
 			sorts,
+			sort,
 			onVotePost,
 			onDeletePost,
 		} = this.props;
@@ -42,6 +43,7 @@ class CategoryViewContainer extends Component {
 				category={category} 
 				categories={categories}
 				sorts={sorts}
+				sort={sort}
 				onVotePost={onVotePost}
 				onDeletePost={onDeletePost}
 				path={`/categories/${category}`}/>
@@ -77,6 +79,7 @@ function mapStateToProps(state, {match,location}) {
 	
 	return {
 		category: currentCategory,
+		sort: currentSort,
 		categories: [...categories.categoriesNames],
 		posts: applySort(arrPost, currentSort), 
 		sorts: Object.keys(sortList).map(sort => sortList[sort]),

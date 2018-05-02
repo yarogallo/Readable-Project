@@ -22,6 +22,7 @@ class HomePageContainer extends Component {
 			categories,
 			posts,
 			sorts,
+			sort,
 			onVotePost,
 			onDeletePost
 		} = this.props;
@@ -29,7 +30,8 @@ class HomePageContainer extends Component {
 			<HomePage 
 				posts={posts} 
 				categories={categories}
-				sorts={sorts} 
+				sorts={sorts}
+				sort={sort} 
 				onVotePost={onVotePost}
 				onDeletePost={onDeletePost}/>
 		);
@@ -52,7 +54,7 @@ function applySort(arr, sort) {
 }
 
 function mapStateToProps(state, {match}) {
-	const currentSort = match.params.sort || 'none';
+	const currentSort = match.params.sort;
 	const currentPosts = state.posts.idsArr.reduce( (acc, id) =>	 {
 		!state.posts.byId[id].deleted && acc.push(state.posts.byId[id]);
 		return acc;	
@@ -61,6 +63,7 @@ function mapStateToProps(state, {match}) {
 		categories: [...state.categories.categoriesNames],
 		posts: applySort(currentPosts, currentSort),
 		sorts: Object.keys(sortList),
+		sort: currentSort,
 	}
 }
 
