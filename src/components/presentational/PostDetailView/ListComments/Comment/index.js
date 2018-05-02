@@ -124,10 +124,6 @@ Comment.propTypes = {
 
 Comment.defaultProps = {
 	comment: {},
-	onVoteComment: () => {},
-	onSaveComment: () => {},
-	onDeleteComment: () => {},
-	onChangeScore: () => {},
 };
 
 export default Comment;

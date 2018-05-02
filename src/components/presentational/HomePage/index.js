@@ -6,14 +6,14 @@ import SortPostsMenu from '../SortPostsMenu';
 import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
 
-
 function HomePage(props) {
 	const {
 		posts,
 		categories,
 		sorts,
 		onSelectSort,
-		onVotePost
+		onVotePost,
+		onDeletePost
 	} = props;
 	return (
 		<section className="container-fluid">
@@ -28,7 +28,7 @@ function HomePage(props) {
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories}/>
-				<ThumbnailPostList posts={posts} onVotePost={onVotePost}/>				
+				<ThumbnailPostList posts={posts} onVotePost={onVotePost} onDeletePost={onDeletePost}/>				
 			</section>	
 		</section>
 	);
@@ -43,7 +43,9 @@ HomePage.propTypes = {
 	//sort criterias list
 	sorts: PropTypes.array.isRequired,
 	//when a post is voted
-	onVotePost: PropTypes.func
+	onVotePost: PropTypes.func,
+	//delete a post
+	onDeletePost: PropTypes.func,
 };
 
 HomePage.defaultProps = {
@@ -51,6 +53,8 @@ HomePage.defaultProps = {
 	categories: [],
 	sorts: [],
 	onVotePost: () => {},
+	onDeletePost: () => {},
+	
 };
 
 export default HomePage;

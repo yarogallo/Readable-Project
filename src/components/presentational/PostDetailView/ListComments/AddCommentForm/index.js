@@ -73,8 +73,4 @@ AddCommentForm.propTypes = {
 	onSubmitForm: PropTypes.func
 };
 
-AddCommentForm.defaultProps = {
-	onSubmitForm: () => {}
-}
-
 export default AddCommentForm;

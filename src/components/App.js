@@ -13,8 +13,7 @@ class App extends Component {
       <BrowserRouter>
         <section className="app">
         
-        
-          <Route exact path="/"  component={HomePageContainer}/>
+          <Route exact path="/" component={HomePageContainer}/>
           <Route exact path="/sort-by/:sort"  component={HomePageContainer}/>
             
           <Route exact path="/categories/:category" component={CategoryViewContainer}/>

@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import index from '../../../container/PostDetailViewContainer';
 
 Modal.setAppElement('#root');
 
@@ -13,9 +14,15 @@ function DeletePostModal(props){
     		right: 'auto',
    			bottom: 'auto',
     		marginRight: '-50%',
-    		transform: 'translate(-50%, -50%)'
+			transform: 'translate(-50%, -50%)',
 		}
 	};
+	
+	const handleDeleteClick = function() {
+		props.closeModal();
+		props.onDelete();
+	};
+	
 	return(
 		<Modal 
 			isOpen={props.isOpen}
@@ -27,14 +34,23 @@ function DeletePostModal(props){
 				<button type="button" className="btn text-info" onClick={() => {
 					props.closeModal();
 				}}>Cancel</button>
-				<Link className="btn text-info" to={props.path} onClick={() => {
-					props.closeModal();
-					props.onDelete();
-				}}>Delete</Link>
-			</div>
-			
+				{props.path 
+					? <Link className="btn text-info" to={props.path} onClick={handleDeleteClick}>Delete</Link>
+					: <button className="btn text-info" onClick={handleDeleteClick}>Delete</button>}
+			</div>			
 		</Modal>
 	);
+}
+
+DeletePostModal.propTypes = {
+	text: PropTypes.string,
+	path: PropTypes.string,
+	closeModal: PropTypes.func,
+	onDelete: PropTypes.func,	
+};
+
+DeletePostModal.defaultProps = {
+	text: "Sure you want delete",
 }
 
 export default DeletePostModal;

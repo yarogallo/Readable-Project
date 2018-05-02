@@ -49,12 +49,4 @@ ListComments.propTypes = {
 	voteComment: PropTypes.func,
 };
 
-ListComments.defaultProps = {
-	comments: [],
-	addNewComment: () => {},
-	editComment: () => {},
-	deleteComment: () => {},
-	voteComment: () => {},
-};
-
 export default ListComments;

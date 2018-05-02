@@ -17,6 +17,7 @@ function CategoryView(props) {
 		onSelectSort,
 		onVotePost,
 		path,
+		onDeletePost
 	} = props;
 	
 	return(
@@ -34,7 +35,11 @@ function CategoryView(props) {
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories} currentCategory={category}/>
-				<ThumbnailPostList posts={posts} onVotePost={onVotePost}/>				
+				{posts.length
+					? <ThumbnailPostList posts={posts} onVotePost={onVotePost} onDeletePost={onDeletePost}/>
+					: <div className="col-12 col-sm-10" role="group">
+							<p className="text-danger text-uppercase text-center">{`Sorry, no posts in ${category} category`}</p>
+						</div>}				
 			</section>	
 		</section>
 	);
@@ -53,6 +58,7 @@ CategoryView.propTypes = {
 	onSelectSort: PropTypes.func,
 	//vote post
 	onVotePost: PropTypes.func,
+	onDeletePost: PropTypes.func,
 };
 
 CategoryView.defaultProps = {
@@ -62,6 +68,7 @@ CategoryView.defaultProps = {
 	sorts: [],
 	onSelectSort: () => {},
 	onVotePost: () => {},
+	onDeletePost: () => {},
 };
 
 export default CategoryView

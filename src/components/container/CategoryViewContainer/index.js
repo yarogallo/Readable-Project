@@ -6,6 +6,7 @@ import {
 	fetchAllCategories,
 	fetchAllPostCategory,
 	votePostScore,
+	deleteThisPost
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
@@ -34,6 +35,7 @@ class CategoryViewContainer extends Component {
 			sorts,
 			onVotePost,
 			onSelectSort,
+			onDeletePost,
 		} = this.props;
 		return (
 			<CategoryView 
@@ -42,6 +44,7 @@ class CategoryViewContainer extends Component {
 				categories={categories}
 				sorts={sorts}
 				onVotePost={onVotePost}
+				onDeletePost={onDeletePost}
 				path={`/categories/${category}`}/>
 		);
 	}
@@ -67,7 +70,7 @@ function mapStateToProps(state, {match,location}) {
 	const currentSort = match.params.sort;
 	const { posts, categories } = state;
 	const arrPost = posts.idsArr.reduce((acc, id) => {
-		if(posts.byId[id].category === currentCategory) {
+		if(posts.byId[id].category === currentCategory && !posts.byId[id].deleted) {
 			acc.push(posts.byId[id]);
 		}
 		return acc;
@@ -86,6 +89,7 @@ function mapDispatchToProps(dispatch) {
 		fetchPostCategory: (category) => {dispatch(fetchAllPostCategory(category))},
 		fetchCategories: () => dispatch(fetchAllCategories()),
 		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
+		onDeletePost: id => dispatch(deleteThisPost(id)),
 	}
 }
 
