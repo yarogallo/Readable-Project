@@ -13,7 +13,6 @@ import {
 	deletePost,
 	addNewPost,
 	editPost,
-
 } from '../helper/postAPI';
 
 //actions types 
@@ -208,6 +207,7 @@ function savedPost(id, title, body) {
 export function addComment(parentId, author, body) {
 	const comment = {
 		id: uuid(),
+		voteScore: 1,
 		timestamp: Date.now(),
 		body,
 		author,
