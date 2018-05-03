@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TextareaForm({name, label, value, onChange}) {	
+function TextareaForm({name, label, value, onChange, placeholder}) {	
 	return(
 		<div className="form-group">
 			<label htmlFor="content-post">{label}</label>
@@ -10,7 +10,7 @@ function TextareaForm({name, label, value, onChange}) {
 				name={name}
 				className="form-control"
 				rows="3"
-				placeholder="write the content here"
+				placeholder={placeholder}
 				id="content-post" 
 				value={value}
 				onChange={evt => {

@@ -7,6 +7,10 @@ import TextareaForm from './TextareaForm';
 import InputForm from './InputForm';
 import SelectForm from './SelectForm';
 
+function allFieldsFilled(title,body,author,category) {
+	return title && body && author && category;
+}
+
 class AddPostView extends Component {
 	constructor(props) {
 		super(props);
@@ -68,7 +72,9 @@ class AddPostView extends Component {
 		} = this.state;
 		
 		if(this.state.mode === 'add') {
-			this.props.onSubmit(title, body, author, category);
+			allFieldsFilled(title, body, author, category) 
+				? this.props.onSubmit(title, body, author, category) 
+				: window.alert('No emty field are alowed')
 		} else {
 			this.props.onSubmit(title, body);
 		}
@@ -89,13 +95,13 @@ class AddPostView extends Component {
 		const label = this.state.mode === 'add' ? 'submit' : 'save';
 		return (
 			<form className="col-12 col-md-10 col-lg-8" onSubmit={ evt => this.handleSubmitForm(evt)}>
-				<InputForm name="title" label="title" value={title} onChange={this.handleInputChange}/>
-				<TextareaForm name="body" label="content" value={body} onChange={this.handleInputChange}/>
+				<InputForm name="title" label="title" value={title} onChange={this.handleInputChange} placeholder="Post title"/>
+				<TextareaForm name="body" label="content" value={body} onChange={this.handleInputChange} placeholder="Post content..."/>
 				{ this.state.mode === 'edit' 
 					? null 
 					: <div>
 							<SelectForm name="category" label="categories" value={category} options={categories} onChange={this.handleInputChange}/>
-							<InputForm name="author" label="author" value={author} onChange={this.handleInputChange}/>
+							<InputForm name="author" label="author" value={author} onChange={this.handleInputChange} placeholder="John Doe"/>
 						</div>
 				}
 				<button type="submit" datatype="edit" className="btn bg-success">{label}</button>
