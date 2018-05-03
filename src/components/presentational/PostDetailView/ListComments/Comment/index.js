@@ -11,8 +11,10 @@ class Comment extends Component {
 		super(props);
 		this.state = {
 			onEditMode: false,
-			value: this.props.comment.body	
+			value: this.props.comment.body,	
 		};
+		
+		this.textInput = React.createRef();
 		this.onChangeValue = this.onChangeValue.bind(this);
 		this.handleVoteComment = this.handleVoteComment.bind(this); 
 	}
@@ -23,6 +25,11 @@ class Comment extends Component {
 				onEditMode: !prevState.onEditMode
 			};
 		});
+	}
+	
+	
+	componentDidUpdate() {
+		this.state.onEditMode && this.textInput.current.focus();
 	}
 	
 	closeEditHandler() {
@@ -49,13 +56,14 @@ class Comment extends Component {
 				evt.preventDefault();
 				this.closeEditHandler();
 			}}>
-				<button className="btn btn-link float-right text-info" type="submit">save</button>
 				<textarea
+					ref={this.textInput}
 					className="form-control" 
 					value={this.state.value}
 					onChange={evt => {
 						this.onChangeValue(evt.target.value);
-				}}></textarea>				
+				}}></textarea>
+				<button className="btn btn-link float-right text-info" type="submit">save</button>				
 			</form>
 		);
 	}
