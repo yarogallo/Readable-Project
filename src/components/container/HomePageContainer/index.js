@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import HomePage from '../../presentational/HomePage';
 import {
-	sortList, 
-	fetchAllCategories,
-	fetchAllPosts,
-	votePostScore,
-	deleteThisPost
+	postActions,
+	categoryActions,
+	constants,
 } from '../../../actions';
 import {connect} from 'react-redux';
 
@@ -39,6 +37,7 @@ class HomePageContainer extends Component {
 }
 
 function applySort(arr, sort) {
+	const {sortList} = constants;
 	switch (sort) {
 		case sortList.newest:
 			return arr.sort((a, b) => a.timestamp - b.timestamp).reverse();
@@ -62,17 +61,17 @@ function mapStateToProps(state, {match}) {
 	return {
 		categories: [...state.categories.categoriesNames],
 		posts: applySort(currentPosts, currentSort),
-		sorts: Object.keys(sortList),
+		sorts: Object.keys(constants.sortList),
 		sort: currentSort,
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		fetchCategories: () => dispatch(fetchAllCategories()),
-		fetchPosts: () => dispatch(fetchAllPosts()),
-		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
-		onDeletePost: id => dispatch(deleteThisPost(id)),
+		fetchCategories: () => dispatch(categoryActions.fetchAllCategories()),
+		fetchPosts: () => dispatch(postActions.fetchAllPosts()),
+		onVotePost: (id, voteText) => dispatch(postActions.votePostScore(id, voteText)),
+		onDeletePost: id => dispatch(postActions.deleteThisPost(id)),
 	};
 }
 

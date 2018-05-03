@@ -1,23 +1,5 @@
 import { combineReducers } from 'redux';
-import {
-	ALL_POSTS_SUCCESS,
-	
-	ALL_CATEGORIES_SUCCESS,
-	
-	POST_ACTIVE_ID,
-	POST_ACTIVE_COMMENTS,
-	
-	ADD_POST,
-	DELETED_POST,
-	SAVED_POST,
-	CHANGE_POST_SCORE,
-	
-	ADDED_COMMENT,
-	EDITED_COMMENT,
-	DELETED_COMMENT,
-	CHANGE_COMMENT_SCORE,
-	
-} from '../actions';
+import {constants} from '../actions';
 
 const initialPosts = {
 	byId: {},
@@ -37,7 +19,7 @@ const initialCategories = {
 
 function postsReducer(state=initialPosts, action) {
 	switch (action.type) {
-		case ALL_POSTS_SUCCESS:
+		case constants.ALL_POSTS_SUCCESS:
 			return {
 				byId: action.posts.reduce( (postObj, post) => {
 					postObj[post.id] = postObj[post.id] || post;
@@ -45,7 +27,7 @@ function postsReducer(state=initialPosts, action) {
 				}, {}),
 				idsArr: action.posts.map(post => post.id)	
 			};
-		case CHANGE_POST_SCORE:
+		case constants.CHANGE_POST_SCORE:
 			return {
 				...state,
 				byId: {
@@ -56,7 +38,7 @@ function postsReducer(state=initialPosts, action) {
 					}
 				},
 			};
-		case ADD_POST: 
+		case constants.ADD_POST: 
 			return {
 				...state,
 				byId: {
@@ -67,7 +49,7 @@ function postsReducer(state=initialPosts, action) {
 				},
 				idsArr: state.idsArr.concat(action.post.id)
 			};	
-		case DELETED_POST:
+		case constants.DELETED_POST:
 			return {
 				...state,
 				byId: {
@@ -78,7 +60,7 @@ function postsReducer(state=initialPosts, action) {
 					}
 				}
 			};
-		case SAVED_POST: 
+		case constants.SAVED_POST: 
 			return {
 				...state,
 					byId: {
@@ -97,7 +79,7 @@ function postsReducer(state=initialPosts, action) {
 
 function categoriesReducer(state=initialCategories, action) {
 	switch (action.type) {
-		case ALL_CATEGORIES_SUCCESS:
+		case constants.ALL_CATEGORIES_SUCCESS:
 			return {
 				...state,
 				allCategories: action.categories.reduce((acc, category) => {
@@ -113,12 +95,12 @@ function categoriesReducer(state=initialCategories, action) {
 
 function activePostReducer(state=initialActivePost, action) {
 	switch (action.type) {
-		case POST_ACTIVE_ID:
+		case constants.POST_ACTIVE_ID:
 			return {
 				...state,
 				postId: action.id
 			};
-		case POST_ACTIVE_COMMENTS:
+		case constants.POST_ACTIVE_COMMENTS:
 			return {
 				...state,
 				comments: action.comments.reduce( (acc, comment) => {
@@ -127,11 +109,11 @@ function activePostReducer(state=initialActivePost, action) {
 				}, {}),
 				idsCommentsArr: action.comments.map( comment => comment.id)
 			};
-		case DELETED_POST: 
+		case constants.DELETED_POST: 
 			return {
 				...initialActivePost
 			};
-		case ADDED_COMMENT:
+		case constants.ADDED_COMMENT:
 			return {
 				...state,
 				comments: {
@@ -140,7 +122,7 @@ function activePostReducer(state=initialActivePost, action) {
 				},
 				idsCommentsArr: [...state.idsCommentsArr, action.comment.id]
 			};
-		case EDITED_COMMENT: 
+		case constants.EDITED_COMMENT: 
 			return {
 				...state,
 				comments: {
@@ -152,7 +134,7 @@ function activePostReducer(state=initialActivePost, action) {
 					}
 				}
 			}
-		case DELETED_COMMENT: 
+		case constants.DELETED_COMMENT: 
 			return {
 				...state,
 				comments: {
@@ -163,7 +145,7 @@ function activePostReducer(state=initialActivePost, action) {
 					}
 				}
 			};
-		case CHANGE_COMMENT_SCORE:
+		case constants.CHANGE_COMMENT_SCORE:
 			return {
 				...state,
 				comments: {
@@ -180,6 +162,7 @@ function activePostReducer(state=initialActivePost, action) {
 			return state;
 	}
 }
+
 const rootReducer = combineReducers({
 	posts: postsReducer,
 	activePost: activePostReducer,

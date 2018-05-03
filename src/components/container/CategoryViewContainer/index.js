@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {
-	sortList,
-	fetchAllCategories,
-	fetchAllPostCategory,
-	votePostScore,
-	deleteThisPost
+	postActions,
+	categoryActions,
+	constants,
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
@@ -52,6 +50,7 @@ class CategoryViewContainer extends Component {
 }
 
 function applySort(arr, sort) {
+	const {sortList} = constants;
 	switch (sort) {
 		case sortList.newest:
 			return arr.sort((a, b) => a.timestamp - b.timestamp).reverse();
@@ -82,16 +81,16 @@ function mapStateToProps(state, {match,location}) {
 		sort: currentSort,
 		categories: [...categories.categoriesNames],
 		posts: applySort(arrPost, currentSort), 
-		sorts: Object.keys(sortList).map(sort => sortList[sort]),
+		sorts: Object.keys(constants.sortList).map(sort => constants.sortList[sort]),
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		fetchPostCategory: (category) => {dispatch(fetchAllPostCategory(category))},
-		fetchCategories: () => dispatch(fetchAllCategories()),
-		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
-		onDeletePost: id => dispatch(deleteThisPost(id)),
+		fetchPostCategory: (category) => {dispatch(postActions.fetchAllPostCategory(category))},
+		fetchCategories: () => dispatch(categoryActions.fetchAllCategories()),
+		onVotePost: (id, voteText) => dispatch(postActions.votePostScore(id, voteText)),
+		onDeletePost: id => dispatch(postActions.deleteThisPost(id)),
 	}
 }
 

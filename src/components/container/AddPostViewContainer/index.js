@@ -3,12 +3,7 @@ import AddPostView from '../../presentational/AddPostView';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
-import { 
-	fetchAllCategories,
-	addThisNewPost,
-	fetchActivePost,
-	savePost
- } from '../../../actions';
+import {postActions, categoryActions} from '../../../actions';
 
 class AddPostViewContainer extends Component {
 	constructor(props) {
@@ -90,10 +85,10 @@ function mapStateToProps(state, {match}) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		getPostToEdit: id => dispatch(fetchActivePost(id)),
-		getCategories: () => dispatch(fetchAllCategories()),
-		onAddPost: (title, body, author, category) => dispatch(addThisNewPost(title, body, author, category)),
-		onEditPost: (id, title, body) => dispatch(savePost(id, title, body))
+		getPostToEdit: id => dispatch(postActions.fetchActivePost(id)),
+		getCategories: () => dispatch(categoryActions.fetchAllCategories()),
+		onAddPost: (title, body, author, category) => dispatch(postActions.addThisNewPost(title, body, author, category)),
+		onEditPost: (id, title, body) => dispatch(postActions.savePost(id, title, body))
 	};
 }
 

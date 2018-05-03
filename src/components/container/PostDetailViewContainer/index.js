@@ -1,15 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {
-	votePostScore,
-	fetchActivePost,
-	fetchActiveComments,
-	deleteThisPost,
-	addComment,
-	editComment,
-	deleteComment,
-	voteCommentScore
-} from '../../../actions';
+import {postActions, commentsActions} from '../../../actions';
 import PostDetailView from '../../presentational/PostDetailView';
 
 class PostDetailViewContainer extends Component {
@@ -64,14 +55,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		getPost: id => dispatch(fetchActivePost(id)),
-		getComments: id => dispatch(fetchActiveComments(id)),
-		onDeletePost: id => dispatch(deleteThisPost(id)),
-		onVotePost: (id, voteText) => dispatch(votePostScore(id, voteText)),
-		onAddNewCommentToPost: (parentId, author, body) => dispatch(addComment(parentId, author, body)),
-		onEditPostComment: (id, body) => dispatch(editComment(id, body)),
-		onDeletePostComment: id => dispatch(deleteComment(id)),
-		onVoteComment: (id, voteText) => dispatch(voteCommentScore(id, voteText))
+		getPost: id => dispatch(postActions.fetchActivePost(id)),
+		onDeletePost: id => dispatch(postActions.deleteThisPost(id)),
+		onVotePost: (id, voteText) => dispatch(postActions.votePostScore(id, voteText)),
+		getComments: id => dispatch(commentsActions.fetchActiveComments(id)),
+		onAddNewCommentToPost: (parentId, author, body) => dispatch(commentsActions.addComment(parentId, author, body)),
+		onEditPostComment: (id, body) => dispatch(commentsActions.editComment(id, body)),
+		onDeletePostComment: id => dispatch(commentsActions.deleteComment(id)),
+		onVoteComment: (id, voteText) => dispatch(commentsActions.voteCommentScore(id, voteText))
 	};
 }
 
