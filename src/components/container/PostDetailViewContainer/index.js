@@ -21,6 +21,7 @@ class PostDetailViewContainer extends Component {
 		this.props.getPost(this.props.match.params.id);
 		this.props.getComments(this.props.match.params.id);
 	}
+	
 	handleAddCommentToPost(author, body) {
 		this.props.onAddNewCommentToPost(this.props.post.id, author, body);
 	}
@@ -49,10 +50,15 @@ class PostDetailViewContainer extends Component {
 }
 
 function mapStateToProps(state) {
+	const {comments} = state.activePost;
 	const allPosts = state.posts.byId;
+	const currentComments = state.activePost.idsCommentsArr.reduce( (acc, commentId) => {	
+		!comments[commentId].deleted && acc.push(comments[commentId]);
+		return acc;
+	}, []);
 	return {
 		post: {...allPosts[state.activePost.postId]},
-		comments: [...state.activePost.comments]
+		comments: currentComments,
 	};
 }
 

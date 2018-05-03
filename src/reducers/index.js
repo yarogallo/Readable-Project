@@ -26,7 +26,8 @@ const initialPosts = {
 
 const initialActivePost = {
 	postId: '',
-	comments: []
+	comments: {},
+	idsCommentsArr: [],
 };
 
 const initialCategories = {
@@ -120,7 +121,11 @@ function activePostReducer(state=initialActivePost, action) {
 		case POST_ACTIVE_COMMENTS:
 			return {
 				...state,
-				comments: [...action.comments]
+				comments: action.comments.reduce( (acc, comment) => {
+					 acc[comment.id] = comment;
+					 return acc;
+				}, {}),
+				idsCommentsArr: action.comments.map( comment => comment.id)
 			};
 		case DELETED_POST: 
 			return {
@@ -129,31 +134,47 @@ function activePostReducer(state=initialActivePost, action) {
 		case ADDED_COMMENT:
 			return {
 				...state,
-				comments: [...state.comments, action.comment]
+				comments: {
+					...state.comments,
+					[action.comment.id]: action.comment
+				},
+				idsCommentsArr: [...state.idsCommentsArr, action.comment.id]
 			};
 		case EDITED_COMMENT: 
 			return {
 				...state,
-				comments: state.comments.map( comment => {
-					return comment.id === action.id	
-						? {...comment, body: action.body, timestamp: action.timestamp}
-						: comment
-				})
+				comments: {
+					...state.comments,
+					[action.id]: {
+						...state.comments[action.id],
+						body: action.body,
+						timestamp: action.timestamp
+					}
+				}
 			}
 		case DELETED_COMMENT: 
 			return {
 				...state,
-				comments: state.comments.filter(comment => comment.id !== action.id)
+				comments: {
+					...state.comments,
+					[action.id]: {
+						...state.comments[action.id],
+						deleted: true
+					}
+				}
 			};
 		case CHANGE_COMMENT_SCORE:
 			return {
 				...state,
-				comments: state.comments.map( comment => {
-					if (comment.id === action.id) {
-						comment.voteScore = action.voteText === "upVote" ? comment.voteScore + 1 : comment.voteScore - 1;
+				comments: {
+					...state.comments,
+					[action.id]: {
+						...state.comments[action.id],
+						voteScore: action.voteText === "upVote" 
+							? state.comments[action.id].voteScore + 1 
+							: state.comments[action.id].voteScore - 1
 					}
-					return comment;
-				})	
+				}
 			};	
 		default:
 			return state;
