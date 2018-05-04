@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import DeletePostModal from './DeletePostModal';
+import DeleteModal from './DeleteModal';
 
-class DeletePost extends Component {
+class DeleteButton extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,28 +24,29 @@ class DeletePost extends Component {
 	render() {
 		return (
 			<div className="d-inline">
-				<button className="btn text-primary" onClick={() => this.openModal()}>delete</button>
-				<DeletePostModal
-					text="Shure you want delete this post?"
+				<button className="btn btn-link" onClick={() => this.openModal()}>delete</button>
+				<DeleteModal
+					text={this.props.text}
 					isOpen={this.state.isOpenModal}
 					closeModal={this.closeModal}
 					path={this.props.path}
-					onDelete={this.props.onDeletePost}
+					onDelete={this.props.onDelete}
 				/>
 			</div>
 		);
 	}
 }
 
-DeletePost.propTypes = {
+DeleteButton.propTypes = {
 	path: PropTypes.string,
-	onDeletePost: PropTypes.func,
+	onDelete: PropTypes.func,
+	text: PropTypes.string,
 };
 
-DeletePost.defaultProps = {
+DeleteButton.defaultProps = {
 	path: '',
-	onDeletePost: () => {}
+	text: '',
+	onDelete: () => {}
 };
 
-
-export default DeletePost;
+export default DeleteButton;

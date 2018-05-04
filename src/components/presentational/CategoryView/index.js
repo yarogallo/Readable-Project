@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import backIcon from './icons/left-arrow.svg';
 
+import PageHeader from '../PageHeader';
 import SortPostsMenu from '../SortPostsMenu';
 import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
@@ -22,14 +22,7 @@ function CategoryView(props) {
 	
 	return(
 		<section className="container-fluid">
-			<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-info">
-				<nav className="col-12 col-sm-2 col-lg-1 navbar">
-					<Link to="/" className="navbar-brand text-uppercase text-white bg-secondary">
-						<img src={backIcon} alt="back"/>
-					</Link>
-				</nav>
-				<h2 className="col-12 col-sm text-sm-right text-capitalize text-white">{category}</h2>			
-			</header>
+			<PageHeader title={category} linkPath="/" linkContent={<img src={backIcon} alt="back" />} classname="text-uppercase"/>
 			<section className="row bg-light">
 				<SortPostsMenu sort={sort} sortValues={sorts} path={path}/>
 			</section>
@@ -58,6 +51,7 @@ CategoryView.propTypes = {
 	sort: PropTypes.string,
 	//vote post
 	onVotePost: PropTypes.func,
+	//on delete a post
 	onDeletePost: PropTypes.func,
 };
 

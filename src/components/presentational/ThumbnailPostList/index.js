@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import ScoreMenu from '../ScoreMenu';
-import DeletePost from '../DeletePost';
+import DeleteButton from '../DeleteButton';
 
 function ThumbnailPostList(props) {
 	const {
@@ -20,7 +20,7 @@ function ThumbnailPostList(props) {
 						<Link to={`/post-details/${post.id}`} ><h5>{post.title}</h5></Link>					
 						<div>
 							<ScoreMenu scoreValue={post.voteScore} onVote={voteText => onVotePost(post.id, voteText)}/>
-							<DeletePost onDeletePost={() => onDeletePost(post.id)}/>
+							<DeleteButton onDelete={() => onDeletePost(post.id)} text="Want delete this post?"/>
 							<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>		
 							<p className="text-info d-inline">{`comments: ${post.commentCount}`}</p>	
 						</div>				

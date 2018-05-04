@@ -4,6 +4,10 @@ body {
   height: 100%;
 }
 
+li {
+  list-style: none;
+}
+
 button {
   outline: transparent;
 }
@@ -31,13 +35,10 @@ header .navbar-brand {
   padding: 10px 0;
 }
 
-.score-menu {
-  margin-right: 20px;
-}
-
 .score-menu button {
   background-color: transparent;
   border: none;
+  outline: none;
 }
 
 .score-menu button:hover {

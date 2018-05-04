@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 
+import PageHeader from '../PageHeader';
 import backIcon from './icons/left-arrow.svg';
 import TextareaForm from './TextareaForm';
 import InputForm from './InputForm';
@@ -100,9 +100,9 @@ class AddPostView extends Component {
 				{ this.state.mode === 'edit' 
 					? null 
 					: <div>
-							<SelectForm name="category" label="categories" value={category} options={categories} onChange={this.handleInputChange}/>
-							<InputForm name="author" label="author" value={author} onChange={this.handleInputChange} placeholder="John Doe"/>
-						</div>
+						<SelectForm name="category" label="categories" value={category} options={categories} onChange={this.handleInputChange}/>
+						<InputForm name="author" label="author" value={author} onChange={this.handleInputChange} placeholder="John Doe"/>
+					</div>
 				}
 				<button type="submit" datatype="edit" className="btn bg-success">{label}</button>
 			</form>
@@ -112,12 +112,7 @@ class AddPostView extends Component {
 	render() {
 		return (
 			<section className="container-fluid">
-				<header className="row flex-column flex-sm-row d-flex align-items-baseline bg-success">
-					<nav className="col-12 col-sm-2 col-lg-1 navbar">
-						<Link to="/" className="navbar-brand bg-light"><img src={backIcon} alt="back homepage icon"/></Link>
-					</nav>	
-					<h2 className="col-12 col-sm text-sm-center text-uppercase">{`${this.state.mode} form`}</h2>			
-				</header>				
+				<PageHeader title={`${this.state.mode} post`} linkPath="/" linkContent={<img src={backIcon} alt="back homepage icon"/>} classname="text-uppercase"/>				
 				<section className="row d-flex justify-content-around bg-light text-capitalize">														
 					{this.completeForm()}					
 				</section>

@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import removeIcon from './icons/remove.svg';
-import editIcon from './icons/edit.svg';
-
 import ScoreMenu from '../../../ScoreMenu';
+import DeleteButton from '../../../DeleteButton';
 
 class Comment extends Component {
 	constructor(props) {
@@ -16,7 +14,8 @@ class Comment extends Component {
 		
 		this.textInput = React.createRef();
 		this.onChangeValue = this.onChangeValue.bind(this);
-		this.handleVoteComment = this.handleVoteComment.bind(this); 
+		this.handleVoteComment = this.handleVoteComment.bind(this);
+		this.toggleEditHandler = this.toggleEditHandler.bind(this);
 	}
 	
 	toggleEditHandler() {
@@ -27,16 +26,13 @@ class Comment extends Component {
 		});
 	}
 	
-	
 	componentDidUpdate() {
 		this.state.onEditMode && this.textInput.current.focus();
 	}
 	
 	closeEditHandler() {
-		this.setState(prevState => {
-			return {
-				onEditMode: false
-			};
+		this.setState({
+			onEditMode: false
 		});
 	}
 	
@@ -63,7 +59,7 @@ class Comment extends Component {
 					onChange={evt => {
 						this.onChangeValue(evt.target.value);
 				}}></textarea>
-				<button className="btn btn-link float-right text-info" type="submit">save</button>				
+				<button className="btn btn-link" type="submit">save</button>				
 			</form>
 		);
 	}
@@ -71,7 +67,7 @@ class Comment extends Component {
 	commentForm() {
 		return (
 			<div>
-				<i>{`By: ${this.props.comment.author}`}</i>
+				<b className="text-capitalize">{`${this.props.comment.author}`}</b>
 				<p className="text-muted">{this.props.comment.body}</p>
 			</div>
 		);
@@ -91,26 +87,17 @@ class Comment extends Component {
 		} = this.props;
 		
 		return (
-			<div className="list-group-item d-flex flex-column flex-sm-row justify-content-between row">
-				<div className="text-left col-12 col-sm-10">							
+			<div className="list-group-item d-flex flex-column">
+				<div className="text-left col-12">							
 					{this.state.onEditMode
 						? this.editForm()
 						: this.commentForm()
-					}
-					<ScoreMenu scoreValue={comment.voteScore} onVote={this.handleVoteComment}/>							
+					}						
 				</div>
-				<div className="btn-group d-flex flex-row-reverse flex-sm-column" role="group">
-					<button className="btn" onClick={() => {
-							this.toggleEditHandler();
-						}}>
-						<img src={editIcon} alt="edit comment icon"/>
-					</button>					
-					<button className="btn" onClick={() => {	
-							const confirmDelete = window.confirm('Shure you want delete this comment???');
-							confirmDelete && onDeleteComment(comment.id);
-						}}>
-						<img src={removeIcon} alt="delete comment icon"/>
-					</button>
+				<div>
+					<ScoreMenu scoreValue={comment.voteScore} onVote={this.handleVoteComment}/>
+					<button className="btn btn-link" onClick={() => this.toggleEditHandler()}>edit</button>
+					<DeleteButton text="Want to delete this comment?" onDelete={() => onDeleteComment(comment.id)}/>					
 				</div>
 			</div>
 		);

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import logo from './icons/left-arrow.svg';
 
+import PageHeader from '../PageHeader';
 import ScoreMenu from '../ScoreMenu';
-import DeletePost from '../DeletePost';
+import DeleteButton from '../DeleteButton';
 import ListComments from './ListComments';
 
 function getPostDate(timestamp) {
@@ -29,27 +30,16 @@ function PostDetailView(props) {
 	
 	return (
 		<section className="container-fluid">
-			<header className="row flex-column flex-sm-row d-flex align-items-baseline post-detail-header text-uppercase bg-info">
-				<nav className="col-12 col-sm-2 col-lg-1 navbar">
-					<Link to="/" className="navbar-brand text-uppercase text-white bg-light"><img src={logo} alt="back homepage icon"/></Link>
-				</nav>	
-				<div className="col-12 col-sm text-sm-center">
-					<h2>{post.title}</h2>
-					<p className="lead">{`By: ${post.author} `}<small className="text-muted">{`${postDate}`}</small></p>
-				</div>			
-			</header>
+			<PageHeader title={post.title} linkPath="/" linkContent={<img src={logo} alt="back homepage icon"/>} classname="font-weight-light"/>
 			<section className="row d-flex justify-content-around" id="post-details">
-				<p className="col-12 col-md-8 lead">
-					{post.body}
-				</p>
-				<div className="col-12 col-md-8 d-flex justify-content-between">
-					<ScoreMenu scoreValue={post.voteScore} onVote={(voteText) => {
-						onVotePost(post.id, voteText);
-					}}/>
-					<div className="btn-group text-capitalize" role="group">
-						<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>
-						<DeletePost onDeletePost={() => onDeletePost(post.id)} path="/"/>
-					</div>
+				<div className="col-12 col-md-8">
+					<p className="text-capitalize lead">{`${post.author} `}<small className="text-muted">{`${postDate}`}</small></p>
+					<p>{post.body}</p>
+				</div>
+				<div className="col-12 col-md-8 d-flex">
+					<ScoreMenu scoreValue={post.voteScore} onVote={voteText => onVotePost(post.id, voteText)}/>
+					<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>
+					<DeleteButton onDelete={() => onDeletePost(post.id)} path="/" text="Want delete this post"/>
 				</div>
 			</section>
 			<section className="row d-flex justify-content-around">	

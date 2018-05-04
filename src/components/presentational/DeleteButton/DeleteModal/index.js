@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
-function DeletePostModal(props){
+function DeleteModal(props){
 	const customStyle = {
 		content: {
 			top: '50%',
@@ -41,15 +41,15 @@ function DeletePostModal(props){
 	);
 }
 
-DeletePostModal.propTypes = {
+DeleteModal.propTypes = {
 	text: PropTypes.string,
 	path: PropTypes.string,
 	closeModal: PropTypes.func,
 	onDelete: PropTypes.func,	
 };
 
-DeletePostModal.defaultProps = {
+DeleteModal.defaultProps = {
 	text: "Sure you want delete",
 }
 
-export default DeletePostModal;
+export default DeleteModal;
