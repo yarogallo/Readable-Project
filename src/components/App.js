@@ -23,6 +23,7 @@ class App extends Component {
           
             <Route exact path="/add-post" component={AddPostViewContainer}/>
             <Route exact path="/edit-post/:id" component={AddPostViewContainer}/>
+            <Route path="*" component={HomePageContainer}/>
           </Switch>
         </section>
       </BrowserRouter>

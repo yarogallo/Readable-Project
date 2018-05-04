@@ -41,10 +41,9 @@ class AddPostViewContainer extends Component {
 			categories,
 			postToEdit,
 		} = this.props;
-		
 		return (
-			this.state.fireRedirect 
-				? <Redirect to={`/post-details/${this.props.postToEdit.id}`}/>
+			this.state.fireRedirect
+				? <Redirect to={`/category/${postToEdit.category}/post/${postToEdit.id}`}/>
 				: <AddPostView categories={categories} postToEdit={postToEdit} onSubmit={this.handlerEditPost}/>
 		);
 	}
