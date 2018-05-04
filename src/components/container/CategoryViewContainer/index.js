@@ -33,7 +33,7 @@ class CategoryViewContainer extends Component {
 			sorts,
 			sort,
 			onVotePost,
-			onDeletePost,
+			onDeletePost
 		} = this.props;
 		return (
 			<CategoryView 
@@ -43,8 +43,7 @@ class CategoryViewContainer extends Component {
 				sorts={sorts}
 				sort={sort}
 				onVotePost={onVotePost}
-				onDeletePost={onDeletePost}
-				path={`/categories/${category}`}/>
+				onDeletePost={onDeletePost}/>
 		);
 	}
 }

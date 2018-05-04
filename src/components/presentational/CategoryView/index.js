@@ -16,7 +16,6 @@ function CategoryView(props) {
 		sorts,
 		sort,
 		onVotePost,
-		path,
 		onDeletePost
 	} = props;
 	
@@ -24,7 +23,7 @@ function CategoryView(props) {
 		<section className="container-fluid">
 			<PageHeader title={category} linkPath="/" linkContent={<img src={backIcon} alt="back" />} classname="text-uppercase"/>
 			<section className="row bg-light">
-				<SortPostsMenu sort={sort} sortValues={sorts} path={path}/>
+				<SortPostsMenu sort={sort} sortValues={sorts} path={`/category/${category}`}/>
 			</section>
 			<section className="row bg-light">
 				<CategoryMenu categories={categories} currentCategory={category}/>
@@ -39,12 +38,12 @@ function CategoryView(props) {
 }
 
 CategoryView.propTypes = {
-	//Selected Category
-	category: PropTypes.string.isRequired,
 	//all post in the selected category
 	posts: PropTypes.array.isRequired,
 	//all categories available
 	categories: PropTypes.array.isRequired,
+	 //Selected Category
+	category: PropTypes.string.isRequired,
 	 //al sorts value
 	sorts: PropTypes.array.isRequired,
 	//selected sort

@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 
 class HomePageContainer extends Component {
 	componentDidMount() {
+		console.log('mount');
 		if(!this.props.categories.length) {
 			this.props.fetchCategories();
 		}

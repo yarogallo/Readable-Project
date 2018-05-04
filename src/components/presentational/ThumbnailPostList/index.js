@@ -17,7 +17,7 @@ function ThumbnailPostList(props) {
 			<ul className="list-group list-group-flush">
 				{ posts.map( post => (
 					<li className="list-group-item post-thumbnail" key={post.id}>
-						<Link to={`/post-details/${post.id}`} ><h5>{post.title}</h5></Link>					
+						<Link to={`/category/${post.category}/post/${post.id}`} ><h5>{post.title}</h5></Link>					
 						<div>
 							<ScoreMenu scoreValue={post.voteScore} onVote={voteText => onVotePost(post.id, voteText)}/>
 							<DeleteButton onDelete={() => onDeletePost(post.id)} text="Want delete this post?"/>

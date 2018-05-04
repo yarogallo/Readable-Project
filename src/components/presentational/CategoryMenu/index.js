@@ -10,8 +10,8 @@ function CategoryMenu(props) {
 	
 	const createLink = function(category) {
 		return (category === currentCategory 
-			? <Link className="nav-link active text-center text-danger" key={category} to={`/categories/${category}`}>{category}</Link>
-			: <Link className="nav-link active text-center" key={category} to={`/categories/${category}`}>{category}</Link>
+			? <Link className="nav-link active text-center text-danger" key={category} to={`/category/${category}`}>{category}</Link>
+			: <Link className="nav-link active text-center" key={category} to={`/category/${category}`}>{category}</Link>
 		);
 	}
 	

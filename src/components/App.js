@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import HomePageContainer from './container/HomePageContainer';
 import CategoryViewContainer from './container/CategoryViewContainer';
@@ -12,18 +12,18 @@ class App extends Component {
     return (
       <BrowserRouter>
         <section className="app">
-        
-          <Route exact path="/" component={HomePageContainer}/>
-          <Route exact path="/sort-by/:sort"  component={HomePageContainer}/>
-            
-          <Route exact path="/categories/:category" component={CategoryViewContainer}/>
-          <Route exact path="/categories/:category/sort-by/:sort" component={CategoryViewContainer}/>
-        
-          <Route exact path="/post-details/:id" component={PostDetailViewContainer}/>
-        
-          <Route exact path="/add-post" component={AddPostViewContainer}/>
-          <Route exact path="/edit-post/:id" component={AddPostViewContainer}/>
-      
+          <Switch>
+            <Route exact path="/" component={HomePageContainer}/>
+            <Route exact path="/sort-by/:sort"  component={HomePageContainer}/>
+              
+            <Route exact path="/category/:category" component={CategoryViewContainer}/>
+            <Route exact path="/category/:category/sort-by/:sort" component={CategoryViewContainer}/>
+          
+            <Route exact path="/category/:category/post/:id" component={PostDetailViewContainer}/>
+          
+            <Route exact path="/add-post" component={AddPostViewContainer}/>
+            <Route exact path="/edit-post/:id" component={AddPostViewContainer}/>
+          </Switch>
         </section>
       </BrowserRouter>
     );
