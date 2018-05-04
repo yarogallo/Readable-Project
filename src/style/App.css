@@ -52,6 +52,11 @@ header .navbar-brand {
   padding-bottom: 30px;
 }
 
+.post-thumbnail:focus, .post-thumbnail:hover {
+  z-index: 0;
+}
+
 ul.list-group {
   padding-right: 0;
+  z-index: 0;
 }

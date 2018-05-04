@@ -88,7 +88,7 @@ class Comment extends Component {
 		
 		return (
 			<div className="list-group-item d-flex flex-column">
-				<div className="text-left col-12">							
+				<div className="text-left">							
 					{this.state.onEditMode
 						? this.editForm()
 						: this.commentForm()
