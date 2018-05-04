@@ -51,8 +51,9 @@ header .navbar-brand {
 .post-thumbnail{
   padding-bottom: 30px;
 }
-
-.post-thumbnail:focus, .post-thumbnail:hover {
+ 
+.list-group-item:focus, 
+.list-group-item:hover{
   z-index: 0;
 }
 

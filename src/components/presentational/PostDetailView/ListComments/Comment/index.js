@@ -16,6 +16,11 @@ class Comment extends Component {
 		this.onChangeValue = this.onChangeValue.bind(this);
 		this.handleVoteComment = this.handleVoteComment.bind(this);
 		this.toggleEditHandler = this.toggleEditHandler.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	
+	componentDidUpdate() {
+		this.state.onEditMode && this.textInput.current.focus();
 	}
 	
 	toggleEditHandler() {
@@ -24,10 +29,6 @@ class Comment extends Component {
 				onEditMode: !prevState.onEditMode
 			};
 		});
-	}
-	
-	componentDidUpdate() {
-		this.state.onEditMode && this.textInput.current.focus();
 	}
 	
 	closeEditHandler() {
@@ -42,16 +43,18 @@ class Comment extends Component {
 		});
 	}
 	
+	handleSubmit(evt) {
+		this.props.onSaveComment(
+			this.props.comment.id, 
+			this.state.value
+		);
+		evt.preventDefault();
+		this.closeEditHandler();
+	}
+	
 	editForm() {
 		return (
-			<form id="edit-comment-form" onSubmit={(evt) => {
-				this.props.onSaveComment(
-					this.props.comment.id, 
-					this.state.value
-				);
-				evt.preventDefault();
-				this.closeEditHandler();
-			}}>
+			<form id="edit-comment-form" onSubmit={(evt) => this.handleSubmit(evt)}>
 				<textarea
 					ref={this.textInput}
 					className="form-control" 
@@ -89,10 +92,7 @@ class Comment extends Component {
 		return (
 			<div className="list-group-item d-flex flex-column">
 				<div className="text-left">							
-					{this.state.onEditMode
-						? this.editForm()
-						: this.commentForm()
-					}						
+					{this.state.onEditMode ? this.editForm() : this.commentForm()}						
 				</div>
 				<div>
 					<ScoreMenu scoreValue={comment.voteScore} onVote={this.handleVoteComment}/>

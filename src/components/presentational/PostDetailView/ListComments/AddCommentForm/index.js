@@ -28,16 +28,22 @@ class AddCommentForm extends Component {
 		});	
 	}
 	
+	handleSubmit(evt) {
+		if (this.state.author && this.state.body) {
+			this.props.onSubmitForm(
+				this.state.author,
+				this.state.body
+			);
+		} else {
+			window.alert('Not empty field are allowed');
+		}
+		this.resetValues();
+		evt.preventDefault();
+	}
+	
 	render() {
 		return (
-			<form onSubmit={(evt) => {
-				evt.preventDefault();
-				this.props.onSubmitForm(
-					this.state.author,
-					this.state.body
-				);
-				this.resetValues();
-			}}>
+			<form onSubmit={(evt) => this.handleSubmit(evt)}>
 				<div className="form-group">
 					<label className="float-left" htmlFor="input-author">author</label>
 					<input 

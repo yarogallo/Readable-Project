@@ -18,7 +18,7 @@ function ListComments(props) {
 			<div>
 				<ul className="list-group">
 					{comments.map( comment => (
-						<li key={comments.id}>
+						<li key={comment.id}>
 							<Comment comment={comment} onSaveComment={editComment} onDeleteComment={deleteComment} onChangeScore={voteComment}/>
 						</li>
 					))}
