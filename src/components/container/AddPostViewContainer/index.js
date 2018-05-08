@@ -75,7 +75,7 @@ function mapStateToProps(state, {match}) {
 	
 	const postToEdit = !postId 
 		? null 
-		: {...allPosts[state.activePost.postId]};
+		: {...allPosts[postId]};
 	return {
 		postToEdit,
 		categories: [...state.categories.categoriesNames]
