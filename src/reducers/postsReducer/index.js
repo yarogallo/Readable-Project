@@ -59,7 +59,7 @@ export default function postsReducer(state=initialPosts, action) {
 							body: action.body,							
 						}
 				}
-			};	
+			};
 		default:
 			return state;
 	}

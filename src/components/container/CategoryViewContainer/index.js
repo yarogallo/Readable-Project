@@ -8,6 +8,8 @@ import {
 } from '../../../actions';
 
 import CategoryView from '../../presentational/CategoryView';
+import PageNotFound from '../../presentational/PageNotFound';
+import applySort from '../../../helper/applySort.js';
 
 class CategoryViewContainer extends Component {
 	componentDidMount() {
@@ -18,13 +20,12 @@ class CategoryViewContainer extends Component {
 			this.props.fetchCategories();
 		}
 	}
-	componentWillReceiveProps(nextProps) {
-		if(this.props.category !== nextProps.category) {
-			this.props.fetchPostCategory(
-				nextProps.category
-			);
+	componentDidUpdate(prevProps){
+		if (prevProps.category !== this.props.category) {
+			this.props.fetchPostCategory(this.props.category);
 		}
 	}
+	
 	render() {
 		const {
 			category,
@@ -35,51 +36,35 @@ class CategoryViewContainer extends Component {
 			onVotePost,
 			onDeletePost
 		} = this.props;
+		
 		return (
-			<CategoryView 
-				posts={posts} 
-				category={category} 
-				categories={categories}
-				sorts={sorts}
-				sort={sort}
-				onVotePost={onVotePost}
-				onDeletePost={onDeletePost}/>
+			categories.indexOf(category) === -1  
+				? <PageNotFound body={`${category} category does not exist`}/>
+				: <CategoryView 
+					posts={posts} 
+					category={category} 
+					categories={categories}
+					sorts={sorts}
+					sort={sort}
+					onVotePost={onVotePost}
+					onDeletePost={onDeletePost}/>
 		);
 	}
 }
 
-function applySort(arr, sort) {
-	const {sortList} = constants;
-	switch (sort) {
-		case sortList.newest:
-			return arr.sort((a, b) => a.timestamp - b.timestamp).reverse();
-		case sortList.oldest:
-			return arr.sort((a, b) => a.timestamp - b.timestamp);
-		case sortList.max_score:
-			return arr.sort((a, b) => a.voteScore - b.votePostScore);
-		case sortList.min_score:
-			return arr.sort((a, b) => a.voteScore - b.votePostScore).reverse();		
-		default:
-			return arr;
-	}
-}
-
-function mapStateToProps(state, {match,location}) {
-	const currentCategory = match.params.category;
-	const currentSort = match.params.sort;
-	const { posts, categories } = state;
+function mapStateToProps({posts, categories}, {match}) {
 	const arrPost = posts.idsArr.reduce((acc, id) => {
-		if(posts.byId[id].category === currentCategory && !posts.byId[id].deleted) {
+		if(posts.byId[id].category === match.params.category && !posts.byId[id].deleted) {
 			acc.push(posts.byId[id]);
 		}
 		return acc;
 	}, [])
 	
 	return {
-		category: currentCategory,
-		sort: currentSort,
+		category: match.params.category,
+		sort: match.params.sort,
 		categories: [...categories.categoriesNames],
-		posts: applySort(arrPost, currentSort), 
+		posts: applySort(arrPost, match.params.sort), 
 		sorts: Object.keys(constants.sortList).map(sort => constants.sortList[sort]),
 	}
 }

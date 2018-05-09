@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {postActions, commentsActions} from '../../../actions';
 import PostDetailView from '../../presentational/PostDetailView';
+import PageNotFound from '../../presentational/PageNotFound';
 
 class PostDetailViewContainer extends Component {
 	constructor(props) {
@@ -26,29 +27,30 @@ class PostDetailViewContainer extends Component {
 			onDeletePostComment,
 			onVoteComment
 		} = this.props;
+		
 		return (
-			<PostDetailView 
-				post={post}
-				comments={comments}
-				onVotePost={onVotePost}
-				onDeletePost={onDeletePost}
-				onAddNewComment={this.handleAddCommentToPost}
-				onEditComment={onEditPostComment}
-				onDeleteComment={onDeletePostComment}
-				onVoteComment={onVoteComment}/>
+			Object.keys(post).length === 0
+				? <PageNotFound title="Page not found" body="the current post does not exist"/>
+				: <PostDetailView 
+					post={post}
+					comments={comments}
+					onVotePost={onVotePost}
+					onDeletePost={onDeletePost}
+					onAddNewComment={this.handleAddCommentToPost}
+					onEditComment={onEditPostComment}
+					onDeleteComment={onDeletePostComment}
+					onVoteComment={onVoteComment}/>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	const {comments} = state.activePost;
-	const allPosts = state.posts.byId;
-	const currentComments = state.activePost.idsCommentsArr.reduce( (acc, commentId) => {	
-		!comments[commentId].deleted && acc.push(comments[commentId]);
+function mapStateToProps({activePost, posts}, {match}) {
+	const currentComments = activePost.idsCommentsArr.reduce( (acc, commentId) => {	
+		!activePost.comments[commentId].deleted && acc.push(activePost.comments[commentId]);
 		return acc;
 	}, []);
 	return {
-		post: {...allPosts[state.activePost.postId]},
+		post: {...posts.byId[match.params.id]},
 		comments: currentComments,
 	};
 }

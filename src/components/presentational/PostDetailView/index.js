@@ -36,10 +36,11 @@ function PostDetailView(props) {
 					<p className="text-capitalize lead">{`${post.author} `}<small className="text-muted">{`${postDate}`}</small></p>
 					<p>{post.body}</p>
 				</div>
-				<div className="col-12 col-md-8 d-flex">
+				<div className="col-12 col-md-8">
 					<ScoreMenu scoreValue={post.voteScore} onVote={voteText => onVotePost(post.id, voteText)}/>
 					<Link className="btn text-link" to={`/edit-post/${post.id}`}>edit</Link>
 					<DeleteButton onDelete={() => onDeletePost(post.id)} path="/" text="Want delete this post"/>
+					<p className="text-info d-inline">{`comments: ${comments.length}`}</p>
 				</div>
 			</section>
 			<section className="row d-flex justify-content-around">	

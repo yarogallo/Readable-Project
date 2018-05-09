@@ -99,9 +99,11 @@ export function fetchActivePost(id) {
 		const data = getState().posts.byId[id];
 		if (!data) {
 			getPostDetail(id)
-				.then(data => data && dispatch(addPostState(data)));
-		}
-		dispatch(postActiveId(id));	
+				.then(data => data && dispatch(addPostState(data)))
+				.then( () => dispatch(postActiveId(id)));
+		} else {
+			dispatch(postActiveId(id));	
+		}		
 	};
 }
 

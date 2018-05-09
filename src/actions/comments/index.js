@@ -69,7 +69,9 @@ export function addComment(parentId, author, body) {
 		timestamp: Date.now(),
 		body,
 		author,
-		parentId
+		parentId,
+		deleted: false,
+		parentDeleted: false
 	};
 	return dispatch => {
 		addCommentToPost(comment)

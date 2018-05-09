@@ -8,27 +8,22 @@ class DeleteButton extends Component {
 		this.state = {
 			isOpenModal: false
 		};
-		this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
+		this.toggleModal = this.toggleModal.bind(this);
 	}
-	openModal() {
+	toggleModal() {
 		this.setState({
-			isOpenModal: true
+			isOpenModal: !this.state.isOpenModal
 		});
 	}
-	closeModal() {
-		this.setState({
-			isOpenModal: false
-		});
-	}
+	
 	render() {
 		return (
 			<div className="d-inline">
-				<button className="btn btn-link" onClick={() => this.openModal()}>delete</button>
+				<button className="btn btn-link" onClick={() => this.toggleModal()}>delete</button>
 				<DeleteModal
 					text={this.props.text}
 					isOpen={this.state.isOpenModal}
-					closeModal={this.closeModal}
+					closeModal={this.toggleModal}
 					path={this.props.path}
 					onDelete={this.props.onDelete}
 				/>

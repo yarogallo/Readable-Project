@@ -19,7 +19,9 @@ class AddPostViewContainer extends Component {
 		if (!this.props.categories.length) {
 			this.props.getCategories();
 		}
-		this.props.getPostToEdit(this.props.match.params.id);
+		if(this.props.match.params.id){
+			this.props.getPostToEdit(this.props.match.params.id);
+		}
 	}
 	
 	handlerEditPost(title, body) {
@@ -69,16 +71,10 @@ class AddPostViewContainer extends Component {
 
 }
 
-function mapStateToProps(state, {match}) {
-	const postId = match.params.id;
-	const allPosts = state.posts.byId;
-	
-	const postToEdit = !postId 
-		? null 
-		: {...allPosts[postId]};
+function mapStateToProps({categories, posts}, {match}) {
 	return {
-		postToEdit,
-		categories: [...state.categories.categoriesNames]
+		postToEdit: !match.params.id ? null : {...posts.byId[match.params.id]},
+		categories: [...categories.categoriesNames]
 	};
 }
 
