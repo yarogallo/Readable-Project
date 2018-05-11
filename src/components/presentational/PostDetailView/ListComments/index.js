@@ -4,15 +4,7 @@ import PropTypes from 'prop-types';
 import Comment from './Comment';
 import AddCommentForm from './AddCommentForm';
 
-function ListComments(props) {
-	const {
-		comments,
-		addNewComment,
-		editComment,
-		deleteComment,
-		voteComment
-	} = props;
-			
+function ListComments({comments, addNewComment, editComment, deleteComment, voteComment}) {		
 	return (
 		<div className="col-12 col-md-8 text-right">
 			<div>

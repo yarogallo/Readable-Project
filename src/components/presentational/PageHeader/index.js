@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-function PageHeader(props) {
-	const {
-		title,
-		linkPath,
-		linkContent,
-		classname
-	} = props;
+function PageHeader({title, linkPath, linkContent, classname}) {
 	return (
 		<header className={`row flex-column flex-sm-row d-flex align-items-baseline text-white bg-dark ${classname}`}>
 			<nav className="col-12 col-sm-2 col-lg-1 navbar">

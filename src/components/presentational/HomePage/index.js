@@ -6,15 +6,7 @@ import SortPostsMenu from '../SortPostsMenu';
 import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
 
-function HomePage(props) {
-	const {
-		posts,
-		categories,
-		sorts,
-		sort,
-		onVotePost,
-		onDeletePost
-	} = props;
+function HomePage({posts, categories, sorts, sort, onVotePost, onDeletePost}) {
 	return (
 		<section className="container-fluid">
 			<PageHeader title="readable app" linkPath="/add-post" linkContent="add" classname="text-uppercase"/>

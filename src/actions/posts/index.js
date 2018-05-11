@@ -109,22 +109,15 @@ export function fetchActivePost(id) {
 
 //add new post
 export function addThisNewPost(title, body, author, category) {
-	return dispatch => {
-		const newPost = {
-			id: uuid(),
-			timestamp: Date.now(),
-			title,
-			body,
-			author,
-			category,
-		};
-		addNewPost(newPost).then(result => {
-			if (!result) {
-				window.alert('there was a problem, try again');
-			}
-		});
+	const newPost = {
+		id: uuid(),
+		timestamp: Date.now(),
+		title,
+		body,
+		author,
+		category,
 	};
-		
+	return () => addNewPost(newPost);		
 }
 
 //delete post
@@ -137,10 +130,6 @@ export function deleteThisPost(id) {
 
 //edit post
 export function savePost(id, title, body) {
-	return dispatch => {
-		editPost(id, title, body)
-			.then(data => data && dispatch(savedPost(id, title, body)));
-		
-	};
+	return dispatch => editPost(id, title, body).then(data => data && dispatch(savedPost(id, title, body)));
 }
 

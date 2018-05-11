@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import down from './icons/thumbs-down.svg';
 import up from './icons/thumbs-up.svg';
 
-function ScoreMenu(props) {
-	const {
-		scoreValue,
-		onVote,
-	} = props;
-	
+function ScoreMenu({scoreValue, onVote}) {
 	return (
 		<span className="score-menu">
 			<button><img src={up} alt="increment score" onClick={ () => {

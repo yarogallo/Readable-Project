@@ -7,33 +7,16 @@ import PageHeader from '../PageHeader';
 import ScoreMenu from '../ScoreMenu';
 import DeleteButton from '../DeleteButton';
 import ListComments from './ListComments';
+import formatData from '../../../helper/formatDate';
 
-function getPostDate(timestamp) {
-	const postDate = new Date(timestamp);
-	return `${postDate.getMonth()}/${postDate.getDate()}/${postDate.getFullYear()}`;
-}
 
-function PostDetailView(props) {
-	
-	const {
-		post,
-		comments,
-		onVotePost,
-		onAddNewComment,
-		onEditComment,
-		onDeleteComment,
-		onVoteComment, 
-		onDeletePost
-	} = props;
-
-	const postDate = getPostDate(post.timestamp);
-	
+function PostDetailView({post, comments, onVotePost, onAddNewComment, onEditComment, onDeleteComment, onVoteComment, onDeletePost}) {
 	return (
 		<section className="container-fluid">
 			<PageHeader title={post.title} linkPath="/" linkContent={<img src={logo} alt="back homepage icon"/>} classname="font-weight-light"/>
 			<section className="row d-flex justify-content-around" id="post-details">
 				<div className="col-12 col-md-8">
-					<p className="text-capitalize lead">{`${post.author} `}<small className="text-muted">{`${postDate}`}</small></p>
+					<p className="text-capitalize lead">{`${post.author} `}<small className="text-muted">{`${formatData(post.timestamp)}`}</small></p>
 					<p>{post.body}</p>
 				</div>
 				<div className="col-12 col-md-8">

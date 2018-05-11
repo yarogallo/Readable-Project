@@ -8,9 +8,9 @@ function applySort(arr, sort) {
 		case sortList.oldest:
 			return arr.sort((a, b) => a.timestamp - b.timestamp);
 		case sortList.max_score:
-			return arr.sort((a, b) => a.voteScore - b.votePostScore);
+			return arr.sort((a, b) => a.voteScore - b.voteScore).reverse();
 		case sortList.min_score:
-			return arr.sort((a, b) => a.voteScore - b.votePostScore).reverse();		
+			return arr.sort((a, b) => a.voteScore - b.voteScore);		
 		default:
 			return arr;
 	}

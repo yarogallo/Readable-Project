@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-function CategoryMenu(props) {
-	const {
-		categories,
-		currentCategory
-	} = props;
+function CategoryMenu({categories, currentCategory}) {
 	
 	const createLink = function(category) {
 		return (category === currentCategory 

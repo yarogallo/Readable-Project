@@ -8,17 +8,7 @@ import ThumbnailPostList from '../ThumbnailPostList';
 import CategoryMenu from '../CategoryMenu';
 
 
-function CategoryView(props) {
-	const {
-		category,
-		posts,
-		categories,
-		sorts,
-		sort,
-		onVotePost,
-		onDeletePost
-	} = props;
-	
+function CategoryView({category, posts, categories, sorts, sort, onVotePost, onDeletePost}) {
 	return(
 		<section className="container-fluid">
 			<PageHeader title={category} linkPath="/" linkContent={<img src={backIcon} alt="back" />} classname="text-uppercase"/>

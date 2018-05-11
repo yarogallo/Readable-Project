@@ -5,20 +5,14 @@ import {Link} from 'react-router-dom';
 import ScoreMenu from '../ScoreMenu';
 import DeleteButton from '../DeleteButton';
 
-function ThumbnailPostList(props) {
-	const {
-		posts,
-		onVotePost,
-		onDeletePost,
-	} = props;
-	
+function ThumbnailPostList({posts, onVotePost, onDeletePost}) {
 	return (
 		<div className="col-12 col-sm-10" role="group">
 			<ul className="list-group list-group-flush">
 				{ posts.map( post => (
 					<li className="list-group-item post-thumbnail" key={post.id}>
 						<div>
-							<Link to={`/category/${post.category}/post/${post.id}`} ><h5 className="d-inline">{post.title}</h5></Link>
+							<Link to={`/category/${post.category}/${post.id}`} ><h5 className="d-inline">{post.title}</h5></Link>
 							<small className="text-muted text-capitalize">{` by: ${post.author}`}</small>
 						</div>					
 						<div>

@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
-function DeleteModal(props){
+function DeleteModal({text, path, closeModal, onDelete, isOpen}){
 	const customStyle = {
 		content: {
 			top: '50%',
@@ -18,23 +18,23 @@ function DeleteModal(props){
 	};
 	
 	const handleDeleteClick = function() {
-		props.closeModal();
-		props.onDelete();
+		closeModal();
+		onDelete();
 	};
 	
 	return(
 		<Modal 
-			isOpen={props.isOpen}
-			onRequestClose={props.closeModal}
+			isOpen={isOpen}
+			onRequestClose={closeModal}
 			style={customStyle}
 		>
-			<p>{props.text}</p>
+			<p>{text}</p>
 			<div>
 				<button type="button" className="btn text-info" onClick={() => {
-					props.closeModal();
+					closeModal();
 				}}>Cancel</button>
-				{props.path 
-					? <Link className="btn text-info" to={props.path} onClick={handleDeleteClick}>Delete</Link>
+				{path 
+					? <Link className="btn text-info" to={path} onClick={handleDeleteClick}>Delete</Link>
 					: <button className="btn text-info" onClick={handleDeleteClick}>Delete</button>}
 			</div>			
 		</Modal>
@@ -46,6 +46,7 @@ DeleteModal.propTypes = {
 	path: PropTypes.string,
 	closeModal: PropTypes.func,
 	onDelete: PropTypes.func,	
+	isOpen: PropTypes.bool,	
 };
 
 DeleteModal.defaultProps = {

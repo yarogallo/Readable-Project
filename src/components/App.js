@@ -19,7 +19,7 @@ class App extends Component {
             <Route exact path="/category/:category" component={CategoryViewContainer}/>
             <Route exact path="/category/:category/sort-by/:sort" component={CategoryViewContainer}/>
           
-            <Route exact path="/category/:category/post/:id" component={PostDetailViewContainer}/>
+            <Route exact path="/category/:category/:id" component={PostDetailViewContainer}/>
           
             <Route exact path="/add-post" component={AddPostViewContainer}/>
             <Route exact path="/edit-post/:id" component={AddPostViewContainer}/>

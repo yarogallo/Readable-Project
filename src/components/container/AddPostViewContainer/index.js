@@ -25,48 +25,27 @@ class AddPostViewContainer extends Component {
 	}
 	
 	handlerEditPost(title, body) {
-		this.props.onEditPost(this.props.postToEdit.id, title, body);
-		this.setState({
-			fireRedirect: true
-		});
+		this.props.onEditPost(this.props.postToEdit.id, title, body)
+			.then(data => data && this.setState({ fireRedirect: true}));	
 	}
 	
 	handlerNewPost(title, body, author, category) {
-		this.props.onAddPost(title, body, author, category);
-		this.setState({
-			fireRedirect: true
-		});
-	}
-	
-	renderEditView() {
-		const {
-			categories,
-			postToEdit,
-		} = this.props;
-		return (
-			this.state.fireRedirect
-				? <Redirect to={`/category/${postToEdit.category}/post/${postToEdit.id}`}/>
-				: <AddPostView categories={categories} postToEdit={postToEdit} onSubmit={this.handlerEditPost}/>
-		);
-	}
-	
-	renderAddView() {
-		const {
-			categories,
-		} = this.props;
-		
-		return (
-			this.state.fireRedirect 
-				? <Redirect to="/"/>
-				: <AddPostView categories={categories} onSubmit={this.handlerNewPost}/>
-		);
+		this.props.onAddPost(title, body, author, category)
+			.then(result => result && this.setState({fireRedirect: true}));
 	}
 	
 	render() {
-		const {
-			postToEdit,
-		} = this.props;
-		return postToEdit ?  this.renderEditView() : this.renderAddView();			
+		const {postToEdit, categories} = this.props;
+		const path = postToEdit ? `/category/${postToEdit.category}/${postToEdit.id}` : "/";
+		return (
+			this.state.fireRedirect 
+				? <Redirect to={path}/>
+				: <AddPostView 
+					postToEdit={postToEdit} 
+					categories={categories} 
+					onEditPost={this.handlerEditPost}
+					onAddNewPost={this.handlerNewPost}/>
+		);			
 	}
 
 }
